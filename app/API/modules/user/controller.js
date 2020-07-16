@@ -16,11 +16,11 @@ export default class UserController extends BaseController {
     uploadAvatar(file, id) {
         return this.service.uploadAvatar(file, id)
     }
-    passwordConfirm(password, id) {
-        return this.service.passwordConfirm(password, id)
+    passwordConfirm(req) {
+        return this.service.passwordConfirm(req)
     }
     getListOffSet(offset, limit) {
-        return this.service.getListOffSet(offset, limit,['ID', 'FullName', 'Username', 'Email', 'Address', 'Avatar', 'PhoneNumber', 'BirthDay'])
+        return this.service.getListOffSet(offset, limit,'roles',['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
     }
     getMe(decode) {
         return this.service.getMe(decode)

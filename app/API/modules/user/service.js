@@ -27,10 +27,19 @@ export default class UserService extends BaseServices {
 
     async create(param) {
         try {
-            const checkUser = await this.respository.getBy({
-                Username: param.Username
+            param.Gender = JSON.parse(param.Gender)
+            const checkEmail = await this.respository.getBy({
+                Email: param.Email
             })
-            const Slug = getSlug(param.FullName + ' ' + Date.now(), {
+            if (checkEmail) {
+                return {
+                    status: 400,
+                    error: {
+                        message: 'Email is registered by another people !!!'
+                    }
+                }
+            }
+            const Slug = getSlug(param.Name + ' ' + Date.now(), {
                 replacement: '.',
                 lower: true
             })
@@ -47,34 +56,30 @@ export default class UserService extends BaseServices {
             } else {
                 param.Role_Id = checkRole.ID
             }
-            if (checkUser) {
-                return {
-                    status: 400,
-                    error: {
-                        message: 'Username is registered by another people !!!'
-                    }
-                }
-            }
+           
             const dataFetch = await this.respository.create(param);
             return {
                 status: 201,
                 message: 'Success !!!',
-                data: dataFetch
             };
         } catch (error) {
-            return error
+            console.log('ERROR REGISTER', error.toString());
+            return {
+                status: 400,
+                message: 'Create failed',
+                error: error.toString()
+            }
         }
     }
 
     async login(param) {
         const queryData = await this.respository.getBy({
-            Username: param.Username
-        });
+            Email: param.Email
+        }).withGraphFetched('roles')
         if (queryData) {
             const checkPassWordHashed = bcrypt.compareSync(param.Password, queryData.Password)
             if (checkPassWordHashed) {
                 const token = await jwt.sign({
-                    Username: queryData.Username,
                     ID: queryData.ID,
                 }, process.env.JWT_KEY, {
                     expiresIn: "2h"
@@ -86,7 +91,8 @@ export default class UserService extends BaseServices {
                     data: {
                         Email: queryData.Email,
                         Slug: queryData.Slug,
-                        FullName: queryData.FullName
+                        Name: queryData.Name,
+                        Role: queryData.roles.Name
                     }
                 }
             } else {
@@ -106,18 +112,23 @@ export default class UserService extends BaseServices {
     async updateUserById(req, id) {
         try {
             const data = req.body
-            console.log(data)
+            const checkEmail = await this.respository.getBy({
+                Email: data.Email
+            })
+            if(checkEmail) {
+                return {
+                    status:400,
+                    message: 'Email is registered by another people !!!'
+                }
+            }
             data.Password = bcrypt.hashSync(data.Password, 10)
             const dataFetch = await this.respository.updateAndFetchById(data, id)
             const result = {
-                Username: dataFetch.Username,
-                FullName: dataFetch.FullName,
+                Name: dataFetch.Name,
                 Email: dataFetch.Email,
                 ID: dataFetch.ID,
-                PhoneNumber: dataFetch.PhoneNumber,
-                BirthDay: dataFetch.BirthDay,
                 Slug: dataFetch.Slug,
-                Address: dataFetch.Address
+                Gender: dataFetch.Gender
             }
             return {
                 status: 200,
@@ -155,8 +166,10 @@ export default class UserService extends BaseServices {
             }
         }
     }
-    async passwordConfirm(password, id) {
+    async passwordConfirm(req) {
         try {
+            const password = req.body.Password
+            const id = req.userData.ID
             const data = await this.respository.findAt(id)
             const status = bcrypt.compareSync(password, data.Password)
             if (status) {
@@ -181,7 +194,7 @@ export default class UserService extends BaseServices {
     async getMe(decode) {
         try {
             const data = await this.respository
-                .findAt(decode.ID, ['ID', 'FullName', 'Username', 'Email', 'Address', 'Avatar', 'PhoneNumber', 'BirthDay', 'Slug'])
+                .findAt(decode.ID, ['ID', 'Name', 'Email', 'Avatar', 'Gender', 'Slug'])
                 .withGraphFetched('roles')
             return {
                 status: 200,

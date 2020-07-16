@@ -13,10 +13,10 @@ module.exports = {
       pool: { min: 0, max: 7 },
       debug: true,
       migrations: {
-        directory: './Database/Migrations'
+        directory: './app/Database/Migrations'
       },
-      seed: {
-        directory: './Database/Seeds'
+      seeds: {
+        directory: './app/Database/Seeds'
       }
   }
 };

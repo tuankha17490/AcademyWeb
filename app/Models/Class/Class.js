@@ -1,10 +1,10 @@
 import Model from '../Schema'
-import Roles from './Roles'
-import Class from '../Class/Class'
-import Post from '../Class/Post'
-export default class Users extends Model {
+import Users from '../Users/Users'
+import Subject from './Subject'
+import Post from './Post'
+export default class Class extends Model {
     static get tableName() {
-        return 'Users'
+        return 'Class'
     }
     static get idColumn() {
         return 'id'
@@ -21,29 +21,20 @@ export default class Users extends Model {
     static get jsonSchema() {
         return {
             type: 'object',
-            required: ['Email', 'Password'],
+            required: ['Name', 'Detail'],
             properties: {
                 id: {
                     type: 'integer'
-                },
-                Email: {
-                    type: "string",
-                    format: "email"
-                },
-                Password: {
-                    type: "string",
-                    minLength: 6
                 },
                 Name: {
                     type: "string",
                     minLength: 1,
                     maxLength: 255
                 },
-                Gender: {
-                    type: "boolean",
-                },
-                Avatar: {
-                    type: "string"
+                Detail: {
+                    type: "string",
+                    minLength: 1,
+                    maxLength: 255
                 },
             },
         }
@@ -51,32 +42,32 @@ export default class Users extends Model {
     static get relationMappings() {
 
         return {
-            roles: {
-                relation: Model.HasOneRelation,
-                modelClass: Roles,
+            users: {
+                relation: Model.ManyToManyRelation,
+                modelClass: Users,
                 join: {
-                    from: 'Users.Role_Id',
-                    to: 'Roles.ID'
+                    from: 'Class.ID',
+                    through: {
+                        from: 'User_Class.Class_Id',
+                        to: 'User_Class.User_Id'
+                    },
+                    to: 'Users.ID'
                 }
             },
-            class: {
-                relation: Model.ManyToManyRelation,
-                modelClass: Class,
+            subject: {
+                relation: Model.HasOneRelation,
+                modelClass: Subject,
                 join: {
-                    from: 'Users.ID',
-                    through: {
-                        from: 'User_Class.User_Id',
-                        to: 'User_Class.Class_Id'
-                    },
-                    to: 'Class.ID'
+                    from: 'Class.Subject_Id',
+                    to: 'Subject.ID'
                 }
             },
             post: {
                 relation: Model.HasManyRelation,
                 modelClass: Post,
                 join: {
-                    from: 'Users.ID',
-                    to: 'Post.User_Id'
+                    from: 'Class.ID',
+                    to: 'Post.Class_Id'
                 }
             }
         }

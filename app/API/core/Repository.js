@@ -41,10 +41,16 @@ export default class BaseRespository {
     updateAndFetchById(data, id) {
         return this.tableQuery().patchAndFetchById(id, data)
     }
-    relatedQuery(table, id) {
-        return  this.tableName.relatedQuery(table).for(id)
+    relatedQuery(table, id, condition = {}) {
+        return this.tableName.relatedQuery(table).for(id).where(condition)
     }
-    graphFetchedWithOffSet(offsetValue,limitValue,column = ['*'],table) {
+    graphFetched(offsetValue,limitValue,table,column = ['*']) {
         return this.listOffSet(offsetValue,limitValue,column).withGraphFetched(table);
+    }
+    relatedDelete(table, id, condition = {}) {
+        return this.relatedQuery(table, id, condition).delete()
+    }
+    graphInsert(data) {
+        return this.tableQuery().insertGraph(data)
     }
 }

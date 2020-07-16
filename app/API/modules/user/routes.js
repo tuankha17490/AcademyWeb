@@ -23,9 +23,9 @@ router.get('/me',authorization,(req, res) => {
         return res.json({error: error.toString()})
     }
 })
-router.get('/list-pagination/:offset&:limit',authorization, (req, res) => {
+router.get('/:page&:limit',authorization, (req, res) => {
     try {
-        controller.getListOffSet(req.params.offset,req.params.limit).then(result => {return res.json({result})})
+        controller.getListOffSet(req.params.page,req.params.limit).then(result => {return res.json({result})})
     } catch (error) {
         console.log('CONTROLLER_GET_USER_LIST_PAGINATION');
         return res.json({error: error.toString()})
@@ -39,9 +39,9 @@ router.get('/:id',authorization, (req, res) => {
         return res.json({error: error.toString()})
     }
 })
-router.post('/check-password/:id', authorization, (req, res) => {
+router.post('/check-password', authorization, (req, res) => {
     try {
-        controller.passwordConfirm(req.body.Password, req.params.id).then(result => {return res.json(result)})
+        controller.passwordConfirm(req).then(result => {return res.json(result)})
     } catch (error) {
         return res.json({error: error.toString()})
     }

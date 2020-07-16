@@ -10,16 +10,17 @@ export default class BaseServices {
             return error.toString()
         }
     }
-    async getListOffSet(offset, limit, column = ['*']) {
+    async getListOffSet(page, limit,table, column = ['*']) {
         try {
             const count = await this.respository.count();
-            if(offset > count) {
+            const offset = (page - 1) * limit
+            if (offset > count) {
                 return {
                     status: 400,
                     message: 'Offset can not be greater than the number of data'
                 }
             }
-            const data = await this.respository.graphFetchedWithOffSet(offset, limit, column, 'roles')
+            const data = await this.respository.graphFetched(offset, limit, table, column)
             return {
                 status: 200,
                 message: 'Success !!!',
@@ -38,7 +39,7 @@ export default class BaseServices {
             const dataFetch = await this.respository.create(param);
             return dataFetch;
         } catch (error) {
-           return error
+            return error
         }
     }
     async getInforById(id) {

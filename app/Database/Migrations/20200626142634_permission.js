@@ -2,9 +2,9 @@ export function up(knex) {
     return knex.schema.createTable('Permissions', t => {
         t.increments('ID')
         t.integer('Method_Id').unsigned()
-        t.foreign('Method_Id').references('Methods.ID')
+        t.foreign('Method_Id').references('Methods.ID').onDelete('CASCADE').onUpdate('CASCADE')
         t.integer('Module_Id').unsigned()
-        t.foreign('Module_Id').references('Modules.ID')
+        t.foreign('Module_Id').references('Modules.ID').onDelete('CASCADE').onUpdate('CASCADE')
     })
 }
 

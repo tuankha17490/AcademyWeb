@@ -17,51 +17,29 @@ export default class BaseValidator {
             })
         }
     }
-    usernameValidate(req, res) {
+    nameValidate(req, res) {
         try {
-            if (!validator.isLength(req.body.Username, {
-                    min: 5,
-                    max: 30
-                })) {
-                return res.status(400).json({
-                    status: 400,
-                    error: 'Username is invalid',
-                    message: 'Username is too long or too short'
-                })
-            }
-            return true
-        } catch (error) {
-            return res.status(400).json({
-                status: 400,
-                message: 'Username error',
-                error: error.toString()
-            })
-        }
-    }
-    fullnameValidate(req, res) {
-        try {
-            if (!validator.isLength(req.body.FullName, {
+            if (!validator.isLength(req.body.Name, {
                     min: 1,
                     max: 255
                 })) {
                 return res.status(400).json({
                     status: 400,
-                    error: 'Fullname is invalid',
-                    message: 'Fullname is too long or null'
+                    error: 'Name is invalid',
+                    message: 'Name is too long or null'
                 })
             }
             return true
         } catch (error) {
             return res.status(400).json({
                 status: 400,
-                message: 'Fullname error',
+                message: 'Name error',
                 error: error.toString()
             })
         }
     }
     passwordValidate(req, res) {
         try {
-
             if (!validator.isLength(req.body.Password, {
                     min: 6
                 }) || !validator.isAlphanumeric(req.body.Password)) {
@@ -80,64 +58,19 @@ export default class BaseValidator {
             })
         }
     }
-    phoneValidate(req, res) {
+    genderValidate(req, res) {
         try {
-            if (req.body.PhoneNumber != undefined) {
-                if (!validator.isMobilePhone(req.body.PhoneNumber, ['vi-VN', 'en-US'])) {
-                    return res.status(400).json({
-                        status: 400,
-                        error: 'Phone number is invalid'
-                    })
-                }
+            if (!validator.isBoolean(req.body.Gender)) {
+                return res.status(400).json({
+                    status: 400,
+                    error: 'Gender is invalid'
+                })
             }
             return true
         } catch (error) {
             return res.status(400).json({
                 status: 400,
-                message: 'Phone number error',
-                error: error.toString()
-            })
-        }
-    }
-    birthdayValidate(req, res) {
-        try {
-            if (req.body.BirthDday != undefined) {
-                if (!validator.isDate(req.body.BirthDday)) {
-                    return res.status(400).json({
-                        status: 400,
-                        error: 'Bitrhday is invalid'
-                    })
-                }
-            }
-            return true
-        } catch (error) {
-            return res.status(400).json({
-                status: 400,
-                message: 'Birthday error',
-                error: error.toString()
-            })
-        }
-    }
-    addressValidate(req, res) {
-        try {
-            if (req.body.Address != undefined) {
-                if (!validator.isLength(req.body.Address, {
-                        min: 1,
-                        max: 255
-                    })) {
-
-                    return res.status(400).json({
-                        status: 400,
-                        error: 'Address is invalid'
-                    })
-
-                }
-            }
-            return true
-        } catch (error) {
-            return res.status(400).json({
-                status: 400,
-                message: 'Address error',
+                message: 'Gender error',
                 error: error.toString()
             })
         }
@@ -146,10 +79,10 @@ export default class BaseValidator {
         try {
             if (req.file == undefined) {
                 // if (!validator.isURL(req.file)) {
-                    return res.status(400).json({
-                        status: 400,
-                        error: 'Avatar is invalid'
-                    })
+                return res.status(400).json({
+                    status: 400,
+                    error: 'Avatar is invalid'
+                })
 
                 // }
             }

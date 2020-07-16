@@ -10,7 +10,7 @@ export default class Methods extends Model {
     static get relationMappings() {
         return {
             permission: {
-                relation: Model.BelongsToOneRelation,
+                relation: Model.HasOneRelation,
                 modelClass: Permissions,
                 join: {
                     from: 'Methods.ID',

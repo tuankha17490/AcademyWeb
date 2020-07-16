@@ -9,7 +9,8 @@
     "dev": "nodemon --exec babel-node ./app/server.js",
     "clean": "rm -rf build && mkdir build",
     "build": "npm run clean && npm run build-babel",
-    "build-babel": "babel -d ./build ./app -s"
+    "build-babel": "babel -d ./build ./app -s",
+    "knex": "node -r esm node_modules/knex/bin/cli.js"
   },
   "compilerOptions": {
     "module": "commonjs"
@@ -34,10 +35,11 @@
     "cloudinary": "^1.22.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "faker": "^4.1.0",
     "firebase": "^7.15.5",
     "firebase-admin": "^8.13.0",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.21.1",
+    "knex": "^0.21.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
