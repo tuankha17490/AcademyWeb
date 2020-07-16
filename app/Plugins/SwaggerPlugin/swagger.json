@@ -36,7 +36,7 @@
         "/user": {
            "$ref":"./paths/user.json#/getInformation"
         },
-        "/user/list-pagination/{offset}&{limit}": {
+        "/user/{page}&{limit}": {
             "$ref":"./paths/user.json#/pagination"
         },
         "/register": {
@@ -50,7 +50,7 @@
                 "summary": "Logs user into the system",
                 "operationId": "loginUser",
                 "parameters": [{
-                    "name": "username",
+                    "name": "Email",
                     "in": "query",
                     "description": "The user name for login",
                     "required": true,
@@ -59,7 +59,7 @@
                     }
                 },
                 {
-                    "name": "password",
+                    "name": "Password",
                     "in": "query",
                     "description": "The password for login in clear text",
                     "required": true,
@@ -107,21 +107,7 @@
                 }
             }
         },
-        "/logout": {
-            "get": {
-                "tags": [
-                    "user"
-                ],
-                "summary": "Logs out current logged in user session",
-                "operationId": "logoutUser",
-                "responses": {
-                    "default": {
-                        "description": "successful operation",
-                        "content": {}
-                    }
-                }
-            }
-        },
+        
         "/user/me" : {
             "$ref":"./paths/user.json#/getMe"
         },
@@ -129,7 +115,7 @@
         "/user/{id}": {
             "$ref": "./paths/user.json#/specifyUser/id"
         },
-        "/user/check-password/{id}": {
+        "/user/check-password": {
             "$ref": "./paths/user.json#/check_password"
         },
         "/user/upload-avatar": {

@@ -76,7 +76,7 @@
                 }
             },
             {
-                "name": "offset",
+                "name": "page",
                 "in": "path",
                 "description": "The offset that needs to be fetched.",
                 "required": true,
@@ -279,15 +279,6 @@
                 "required": true,
                 "schema": {
                     "type": "string"
-                }
-            },
-            {
-                "name": "id",
-                "in": "path",
-                "description": "ID of user",
-                "required": true,
-                "schema": {
-                    "type": "integer"
                 }
             },
             {

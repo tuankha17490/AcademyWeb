@@ -5,39 +5,25 @@
             "id": {
                 "type": "integer"
             },
-            "Username": {
+            "Email": {
                 "type": "string",
-                "minLength":5,
-                "maxLength":30
+                "format": "email"
             },
             "Password": {
                 "type": "string",
                 "minLength": 6
             },
-            "FullName": {
+            "Name": {
                 "type": "string",
-                "minLength":1,
-                "maxLength":255
+                "minLength": 1,
+                "maxLength": 255
             },
-            "Email": {
-                "type": "string",
-                "format": "email"
-            },
-            "BirthDay": {
-                "type": "string",
-                "format": "date"
-            },
-            "Address": {
-                "type": "string"
+            "Gender": {
+                "type": "boolean"
             },
             "Avatar": {
                 "type": "string"
-            },
-            "PhoneNumber": {
-                "type": "string",
-                "minLength":5,
-                "maxLength":15
-            },
+            }
         },
         "xml": {
             "name": "User"
