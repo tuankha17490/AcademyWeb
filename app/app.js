@@ -3,7 +3,7 @@ const app = express();
 import morgan from 'morgan';
 import { urlencoded,json} from 'body-parser';
 import swaggerUi from "swagger-ui-express"
-import swaggerDocs from "./Plugins/SwaggerPlugin/bundled.json"
+import swaggerDocs from "../Plugins/SwaggerPlugin/bundled.json"
 import initRoute from "./Config/routes"
 
 app.use('/documentations', swaggerUi.serve, swaggerUi.setup(swaggerDocs))

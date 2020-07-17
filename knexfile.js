@@ -1,6 +1,5 @@
-import dotenv from "dotenv"
+const dotenv = require("dotenv")
 dotenv.config({ silent: process.env.NODE_ENV === 'production' });
-import process from "process"
 module.exports = {
   development: {
       client:  process.env.CLIENT,
