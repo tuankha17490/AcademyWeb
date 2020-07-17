@@ -1,7 +1,7 @@
 import express from "express"
 const router = express.Router();
 import UserController from "./controller"
-import authorization from "../../../Middleware/check_authorize"
+import authorization from "../../../Middleware/Authorization"
 import UserValidator from "./validator"
 import multer from "../../../Config/multer"
 const controller = new UserController()
@@ -62,7 +62,7 @@ router.put('/upload-avatar',authorization,multer.single('avatar'),validator.uplo
 
 router.put('/:id',authorization,validator.updateTask,  (req, res) => {
     try {
-        controller.updateUserById(req, req.params.id).then(result => {return res.status(201).json(result)})
+        controller.updateUserById(req, req.params.id).then(result => {return res.status(2).json(result)})
     } catch (error) {
         console.log('CONTROLLER_UPDATE_USER')
         return res.status(400).json({error})
