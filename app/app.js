@@ -5,7 +5,8 @@ import { urlencoded,json} from 'body-parser';
 import swaggerUi from "swagger-ui-express"
 import swaggerDocs from "../Plugins/SwaggerPlugin/bundled.json"
 import initRoute from "./Config/routes"
-
+import mkdirp from "mkdirp"
+mkdirp('./app/public/Image');
 app.use('/documentations', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use(morgan('dev'));
 app.use(urlencoded({extended: false}));
