@@ -7,18 +7,15 @@ export default class BaseServices {
             const data = await this.respository.listBy();
             return data;
         } catch (error) {
-            return error.toString()
+            throw error.toString()
         }
     }
-    async getListOffSet(page, limit,table, column = ['*']) {
+    async getListOffSet(page, limit, table, column = ['*']) {
         try {
             const count = await this.respository.count();
             const offset = (page - 1) * limit
             if (offset > count) {
-                return {
-                    status: 400,
-                    message: 'Offset can not be greater than the number of data'
-                }
+                throw 'Offset can not be greater than the number of data'
             }
             const data = await this.respository.graphFetched(offset, limit, table, column)
             return {
@@ -27,11 +24,8 @@ export default class BaseServices {
                 data
             }
         } catch (error) {
-            return {
-                status: 400,
-                message: 'Get list failed',
-                error: error.toString()
-            }
+            console.log('Get list failed');
+            throw error.toString()
         }
     }
     async create(param) {
@@ -39,7 +33,7 @@ export default class BaseServices {
             const dataFetch = await this.respository.create(param);
             return dataFetch;
         } catch (error) {
-            return error
+            throw error.toString()
         }
     }
     async getInforById(id) {
@@ -47,7 +41,7 @@ export default class BaseServices {
             const data = await this.respository.findAt(id);
             return data;
         } catch (error) {
-            return error
+            throw error.toString()
         }
     }
     async getInformation(condition) {
@@ -55,7 +49,7 @@ export default class BaseServices {
             const data = await this.respository.getBy(condition);
             return data;
         } catch (error) {
-            return error
+            throw error.toString()
         }
     }
     async updateById(data, id) {
@@ -63,7 +57,7 @@ export default class BaseServices {
             const result = await this.respository.updateById(data, id)
             return result
         } catch (error) {
-            return error;
+            throw error.toString()
         }
     }
     async deleteById(id) {
@@ -71,7 +65,7 @@ export default class BaseServices {
             const result = await this.respository.deleteById(id);
             return result;
         } catch (error) {
-            return error
+            throw error.toString()
         }
     }
 }

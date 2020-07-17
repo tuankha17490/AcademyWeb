@@ -13,8 +13,8 @@ export default class UserController extends BaseController {
     updateUserById(data, id) {
         return this.service.updateUserById(data, id);
     }
-    uploadAvatar(file, id) {
-        return this.service.uploadAvatar(file, id)
+    uploadAvatar(req) {
+        return this.service.uploadAvatar(req)
     }
     passwordConfirm(req) {
         return this.service.passwordConfirm(req)

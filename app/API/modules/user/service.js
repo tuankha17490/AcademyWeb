@@ -32,12 +32,7 @@ export default class UserService extends BaseServices {
                 Email: param.Email
             })
             if (checkEmail) {
-                return {
-                    status: 400,
-                    error: {
-                        message: 'Email is registered by another people !!!'
-                    }
-                }
+                throw 'Email is registered by another people !!!'
             }
             const Slug = getSlug(param.Name + ' ' + Date.now(), {
                 replacement: '.',
@@ -56,7 +51,7 @@ export default class UserService extends BaseServices {
             } else {
                 param.Role_Id = checkRole.ID
             }
-           
+
             const dataFetch = await this.respository.create(param);
             return {
                 status: 201,
@@ -64,48 +59,40 @@ export default class UserService extends BaseServices {
             };
         } catch (error) {
             console.log('ERROR REGISTER', error.toString());
-            return {
-                status: 400,
-                message: 'Create failed',
-                error: error.toString()
-            }
+            throw error.toString()
         }
     }
 
     async login(param) {
-        const queryData = await this.respository.getBy({
-            Email: param.Email
-        }).withGraphFetched('roles')
-        if (queryData) {
-            const checkPassWordHashed = bcrypt.compareSync(param.Password, queryData.Password)
-            if (checkPassWordHashed) {
-                const token = await jwt.sign({
-                    ID: queryData.ID,
-                }, process.env.JWT_KEY, {
-                    expiresIn: "2h"
-                })
-                return {
-                    status: 200,
-                    message: 'Login Success',
-                    token,
-                    data: {
+        try {
+            const queryData = await this.respository.getBy({
+                Email: param.Email
+            }).withGraphFetched('roles')
+            if (queryData) {
+                const checkPassWordHashed = bcrypt.compareSync(param.Password, queryData.Password)
+                if (checkPassWordHashed) {
+                    const token = await jwt.sign({
+                        ID: queryData.ID,
+                    }, process.env.JWT_KEY, {
+                        expiresIn: "2h"
+                    })
+                    return {
+                        status: 200,
+                        message: 'Login Success',
+                        token,
                         Email: queryData.Email,
                         Slug: queryData.Slug,
                         Name: queryData.Name,
                         Role: queryData.roles.Name
                     }
+                } else {
+                    throw 'Login Failed !!! Password is wrong'
                 }
             } else {
-                return {
-                    status: 400,
-                    message: 'Login Failed !!! Password is wrong'
-                }
+                throw 'Login Failed !!! Account is not registered'
             }
-        } else {
-            return {
-                status: 400,
-                message: 'Login Failed !!! Account is not registered'
-            }
+        } catch (error) {
+            throw error.toString()
         }
     }
 
@@ -115,11 +102,8 @@ export default class UserService extends BaseServices {
             const checkEmail = await this.respository.getBy({
                 Email: data.Email
             })
-            if(checkEmail) {
-                return {
-                    status:400,
-                    message: 'Email is registered by another people !!!'
-                }
+            if (checkEmail) {
+                throw 'Email is registered by another people !!!'
             }
             data.Password = bcrypt.hashSync(data.Password, 10)
             const dataFetch = await this.respository.updateAndFetchById(data, id)
@@ -133,18 +117,17 @@ export default class UserService extends BaseServices {
             return {
                 status: 200,
                 message: 'User uploaded successfully',
-                data: result
+                result
             }
         } catch (error) {
-            return {
-                status: 400,
-                error: error.toString(),
-                message: 'Update information of user failed'
-            }
+            console.log('Update information of user failed');
+            throw error.toString()
         }
     }
-    async uploadAvatar(file, id) {
+    async uploadAvatar(req) {
         try {
+            const file = req.file
+            const id = req.userData.ID
             const image = await uploads(file.path, 'Images');
             const Avatar = image.url
             await this.respository.updateById({
@@ -154,16 +137,11 @@ export default class UserService extends BaseServices {
             return {
                 status: 200,
                 message: 'Avatar of user uploaded successfully',
-                data: {
-                    Avatar
-                }
+                Avatar
             }
         } catch (error) {
-            return {
-                status: 400,
-                error: error.toString(),
-                message: 'Upload avatar failed'
-            }
+            console.log('Upload avatar failed');
+            throw error.toString()
         }
     }
     async passwordConfirm(req) {
@@ -178,17 +156,11 @@ export default class UserService extends BaseServices {
                     message: 'Password correct. Confirm password successful !!!'
                 }
             } else {
-                return {
-                    status: 400,
-                    message: 'Password is incorrect'
-                }
+                throw 'Password is incorrect'
             }
         } catch (error) {
-            return {
-                status: 400,
-                error: error.toString(),
-                message: 'Password confirm failed'
-            }
+            console.log('Password confirm failed');
+            throw error.toString()
         }
     }
     async getMe(decode) {
@@ -202,11 +174,8 @@ export default class UserService extends BaseServices {
                 data
             }
         } catch (error) {
-            return {
-                status: 400,
-                message: 'Fail to get profile user',
-                error: error.toString()
-            }
+            console.log( 'Fail to get profile user');
+            throw error.toString()
         }
     }
 }

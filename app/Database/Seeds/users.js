@@ -5,7 +5,8 @@ const createUsers = () => ({
   Name: faker.name.findName(),
   Password: faker.internet.password(),
   Avatar: faker.internet.avatar(),
-  Slug: faker.lorem.slug()
+  Slug: faker.lorem.slug(),
+  Gender: faker.random.boolean()
 })
 exports.seed = async function (knex) {
   const fakeUsers = [];
