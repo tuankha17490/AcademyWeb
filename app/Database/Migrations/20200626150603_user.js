@@ -7,8 +7,7 @@ export function up(knex) {
         t.string('Avatar').nullable()
         t.bool('Gender').nullable()
         t.string('Slug')
-        t.timestamp('Updated_At').defaultTo(knex.fn.now());
-        t.timestamp('Created_At').defaultTo(knex.fn.now());
+        t.timestamps()
         t.integer('Role_Id').unsigned()
         t.foreign('Role_Id').references('Roles.ID').onDelete('CASCADE').onUpdate('CASCADE')
     })
