@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "setup": "mkdirp  ./app/public/Image",
     "heroku-prebuild": "npm install --only=dev",
     "start": "npm run build && node ./build/server.js",
     "dev": "nodemon --exec babel-node ./app/server.js",

@@ -33,7 +33,7 @@ export default class UserService extends BaseServices {
                 Email: param.Email
             })
             if (checkEmail) {
-                throw 'Email is registered by another people !!!'
+                throw 'error.EmailAlreadyRegister'
 
             }
             const Slug = getSlug(param.Name + ' ' + Date.now(), {
@@ -71,6 +71,7 @@ export default class UserService extends BaseServices {
                 if (checkPassWordHashed) {
                     const token = await jwt.sign({
                         ID: queryData.ID,
+                        Email: queryData.Email
                     }, process.env.JWT_KEY, {
                         expiresIn: "2h"
                     })
@@ -86,10 +87,10 @@ export default class UserService extends BaseServices {
                         }
                     }
                 } else {
-                    throw 'Login Failed !!! Password is wrong'
+                    throw 'error.PasswordIsWrong'
                 }
             } else {
-                throw 'Login Failed !!! Account is not registered'
+                throw 'error.AccountIsNotRegistered'
             }
         } catch (error) {
             return response(400, error.toString())
@@ -103,7 +104,7 @@ export default class UserService extends BaseServices {
                 Email: data.Email
             })
             if (checkEmail && id != checkEmail.ID) {
-                throw 'Email is registered by another people !!!'
+                throw 'error.EmailAlreadyRegister'
             }
             data.Password = bcrypt.hashSync(data.Password, 10)
             const dataFetch = await this.respository.updateAndFetchById(data, id)
@@ -143,7 +144,7 @@ export default class UserService extends BaseServices {
             if (status) {
                 return response(200, 'Password correct. Confirm password successful !!!')
             } else {
-                throw 'Password is incorrect'
+                throw 'error.IncorrectPassword'
             }
         } catch (error) {
             return response(400, error.toString())
