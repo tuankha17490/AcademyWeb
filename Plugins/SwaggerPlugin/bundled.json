@@ -16,6 +16,15 @@
     "description": "Find out more about Cudidi",
     "url": "http://localhost:3000"
   },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
   "servers": [
     {
       "url": "http://localhost:3000"
@@ -26,7 +35,7 @@
   ],
   "tags": [
     {
-      "name": "article",
+      "name": "class",
       "description": "Everything about your Articles"
     },
     {
@@ -132,16 +141,12 @@
         "summary": "Get list user",
         "description": "Get information with offset and limit to paginate.",
         "operationId": "Pagination",
-        "parameters": [
+        "security": [
           {
-            "name": "token",
-            "in": "header",
-            "description": "Format: Bearer token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
           {
             "name": "page",
             "in": "path",
@@ -371,15 +376,11 @@
         "summary": "Get me",
         "description": "Get information my user.",
         "operationId": "getMyUser",
-        "parameters": {
-          "name": "token",
-          "in": "header",
-          "description": "Format: Bearer token",
-          "required": true,
-          "schema": {
-            "type": "string"
+        "security": [
+          {
+            "bearerAuth": []
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -403,16 +404,12 @@
         ],
         "summary": "Get user by user id",
         "operationId": "getUserById",
-        "parameters": [
+        "security": [
           {
-            "name": "token",
-            "in": "header",
-            "description": "Format: Bearer token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
           {
             "name": "id",
             "in": "path",
@@ -510,16 +507,12 @@
         "summary": "Updated user",
         "description": "Update information of user by id.",
         "operationId": "updateUserById",
-        "parameters": [
+        "security": [
           {
-            "name": "token",
-            "in": "header",
-            "description": "Format: Bearer token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
           {
             "name": "id",
             "in": "path",
@@ -587,16 +580,12 @@
         "summary": "Delete user",
         "description": "Delete specify user by id.",
         "operationId": "deleleUserById",
-        "parameters": [
+        "security": [
           {
-            "name": "token",
-            "in": "header",
-            "description": "Format: Bearer token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
           {
             "name": "id",
             "in": "path",
@@ -619,48 +608,6 @@
         }
       }
     },
-    "/user/check-password": {
-      "post": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Confirm password",
-        "description": "Confirm passord to update the new password.",
-        "operationId": "checkPassword",
-        "parameters": [
-          {
-            "name": "token",
-            "in": "header",
-            "description": "Format: Bearer token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Password",
-            "in": "query",
-            "description": "Password need to confirm.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Check password of user",
-          "required": true,
-          "content": {}
-        },
-        "responses": {
-          "default": {
-            "description": "successful operation",
-            "content": {}
-          }
-        },
-        "x-codegen-request-body-name": "body"
-      }
-    },
     "/user/upload-avatar": {
       "put": {
         "tags": [
@@ -669,15 +616,11 @@
         "summary": "Upload avatar of user",
         "description": "Upload avatar of user by id.",
         "operationId": "uploadAvatar",
-        "parameters": {
-          "name": "token",
-          "in": "header",
-          "description": "Format: Bearer token",
-          "required": true,
-          "schema": {
-            "type": "string"
+        "security": [
+          {
+            "bearerAuth": []
           }
-        },
+        ],
         "requestBody": {
           "description": "Upload user object",
           "content": {
@@ -685,10 +628,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userId": {
-                    "type": "integer"
-                  },
-                  "fileName": {
+                  "avatar": {
                     "type": "string",
                     "format": "binary"
                   }
@@ -700,6 +640,10 @@
         "responses": {
           "400": {
             "description": "Invalid user supplied",
+            "content": {}
+          },
+          "401": {
+            "description": "Access token is missing or invalid",
             "content": {}
           },
           "404": {

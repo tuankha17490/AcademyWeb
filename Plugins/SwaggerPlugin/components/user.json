@@ -65,16 +65,12 @@
         "summary": "Get list user",
         "description": "Get information with offset and limit to paginate.",
         "operationId": "Pagination",
-        "parameters": [
+        "security": [
             {
-                "name": "token",
-                "in": "header",
-                "description": "Format: Bearer token",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            },
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
             {
                 "name": "page",
                 "in": "path",
@@ -128,16 +124,12 @@
                 ],
                 "summary": "Get user by user id",
                 "operationId": "getUserById",
-                "parameters": [
+                "security": [
                     {
-                        "name": "token",
-                        "in": "header",
-                        "description": "Format: Bearer token",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
                     {
                         "name": "id",
                         "in": "path",
@@ -181,16 +173,12 @@
                 "summary": "Updated user",
                 "description": "Update information of user by id.",
                 "operationId": "updateUserById",
-                "parameters": [
+                "security": [
                     {
-                        "name": "token",
-                        "in": "header",
-                        "description": "Format: Bearer token",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
                     {
                         "name": "id",
                         "in": "path",
@@ -231,16 +219,12 @@
                 "summary": "Delete user",
                 "description": "Delete specify user by id.",
                 "operationId": "deleleUserById",
-                "parameters": [
+                "security": [
                     {
-                        "name": "token",
-                        "in": "header",
-                        "description": "Format: Bearer token",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
                     {
                         "name": "id",
                         "in": "path",
@@ -273,15 +257,6 @@
         "operationId": "checkPassword",
         "parameters": [
             {
-                "name": "token",
-                "in": "header",
-                "description": "Format: Bearer token",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            },
-            {
                 "name": "Password",
                 "in": "query",
                 "description": "Password need to confirm.",
@@ -311,15 +286,11 @@
         "summary": "Upload avatar of user",
         "description": "Upload avatar of user by id.",
         "operationId": "uploadAvatar",
-        "parameters": {
-            "name": "token",
-            "in": "header",
-            "description": "Format: Bearer token",
-            "required": true,
-            "schema": {
-                "type": "string"
+        "security": [
+            {
+                "bearerAuth": []
             }
-        },
+        ],
         "requestBody": {
             "description": "Upload user object",
             "content": {
@@ -327,10 +298,7 @@
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "userId": {
-                                "type": "integer"
-                            },
-                            "fileName": {
+                            "avatar": {
                                 "type": "string",
                                 "format": "binary"
                             }
@@ -347,6 +315,10 @@
             "404": {
                 "description": "User not found",
                 "content": {}
+            },
+            "401": {
+                "description": "Access token is missing or invalid",
+                "content": {}
             }
         }
     },
@@ -357,15 +329,11 @@
         "summary": "Get me",
         "description": "Get information my user.",
         "operationId": "getMyUser",
-        "parameters": {
-            "name": "token",
-            "in": "header",
-            "description": "Format: Bearer token",
-            "required": true,
-            "schema": {
-                "type": "string"
+        "security": [
+            {
+                "bearerAuth": []
             }
-        },
+        ],
         "responses": {
             "200": {
                 "description": "successful operation",

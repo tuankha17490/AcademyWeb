@@ -71,7 +71,8 @@ export default class UserService extends BaseServices {
                 if (checkPassWordHashed) {
                     const token = await jwt.sign({
                         ID: queryData.ID,
-                        Email: queryData.Email
+                        Email: queryData.Email,
+                        Name: queryData.Name
                     }, process.env.JWT_KEY, {
                         expiresIn: "2h"
                     })
@@ -124,7 +125,7 @@ export default class UserService extends BaseServices {
         try {
             const file = req.file
             const id = req.userData.ID
-            const image = await uploads(file.path, 'Images');
+            const image = await uploads(file.path, req.userData.Name);
             const Avatar = image.url
             await this.respository.updateById({
                 Avatar

@@ -16,6 +16,15 @@
         "description": "Find out more about Cudidi",
         "url": "http://localhost:3000"
     },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
     "servers": [{
         "url": "http://localhost:3000"
     },
@@ -24,7 +33,7 @@
     }
     ],
     "tags": [{
-        "name": "article",
+        "name": "class",
         "description": "Everything about your Articles"
     },
     {
@@ -114,9 +123,6 @@
        
         "/user/{id}": {
             "$ref": "./paths/user.json#/specifyUser/id"
-        },
-        "/user/check-password": {
-            "$ref": "./paths/user.json#/check_password"
         },
         "/user/upload-avatar": {
             "$ref": "./paths/user.json#/uploadAvatar"
