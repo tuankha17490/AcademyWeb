@@ -4,11 +4,12 @@ import UserController from "./controller"
 import authorization from "../../../Middleware/Authorization"
 import UserValidator from "./validator"
 import multer from "../../../Config/multer"
-import permission from "../../../Middleware/Permission"
+import UserPermission from "../../../Middleware/Permission"
 const controller = new UserController()
 const validator = new UserValidator()
+const permission = new UserPermission('Users')
 
-router.get('/',authorization,permission,(req, res) => {
+router.get('/',authorization,permission.Read,(req, res) => {
     try {
         controller.getList().then(result => {return res.json(result)})
     } catch (error) {
@@ -62,7 +63,7 @@ router.post('/check-password', authorization, (req, res) => {
     }
 })
 
-router.put('/upload-avatar',authorization,multer.single('avatar'),validator.uploadImage, (req, res) => {
+router.put('/upload-avatar',authorization,permission.Update,multer.single('avatar'),validator.uploadImage, (req, res) => {
     try {
         controller.uploadAvatar(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -83,7 +84,7 @@ router.put('/:id',authorization,validator.updateTask,  (req, res) => {
 })
 
 
-router.delete('/:id',authorization, (req, res) => {
+router.delete('/:id',authorization,permission.Delete, (req, res) => {
     try {
         controller.deleteById(req.params.id).then(result => {return res.status(200).json(result)})
     } catch (error) {
