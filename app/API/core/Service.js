@@ -19,7 +19,25 @@ export default class BaseServices {
                 throw 'Offset can not be greater than the number of data'
             }
             const data = await this.respository.graphFetched(offset, limit, table, column)
-            return response(200,'Success !!!', data)
+            return {
+                status: 200,
+                message: 'Success !!!',
+                totalRow: count[0].CNT,
+                data
+            }
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async search(query,searchBy = [], column = ['*']) {
+        try {
+            for(let i = 0; i < searchBy.length; i ++) {
+                const data = await this.respository.listBy(column).where(searchBy[i], 'like', `%${query}%`)
+                if(data.length != 0) {
+                    return response(200,'Success !!!',data)
+                }
+            }
+            return response(200,'Success !!!')
         } catch (error) {
             return response(400, error.toString())
         }

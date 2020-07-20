@@ -11,7 +11,7 @@ router.post('/login',(req, res) => {
         controller.login(req.body).then(result => {return res.status(200).json(result)})
     } catch (error) {
         console.log('CONTROLLER_GET_USER_LIST');
-        return res.status(400).json(error)
+        return res.status(200).json(error)
     }
 })
 
@@ -20,7 +20,7 @@ router.post('/register',validator.registerTask,async (req, res) => {
         controller.create(req.body).then(result => {return res.status(201).json(result)})
     } catch (error) {
         console.log('CONTROLLER_REGISTER_USER')
-        return res.status(400).json(error)
+        return res.status(200).json(error)
     }
 })
 export default router

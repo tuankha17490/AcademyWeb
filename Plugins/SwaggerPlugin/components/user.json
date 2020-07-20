@@ -25,6 +25,51 @@
         },
         "x-codegen-request-body-name": "body"
     },
+    "search": {
+        "tags": [
+            "user"
+        ],
+        "summary": "Search user",
+        "description": "Search user follow name and email.",
+        "operationId": "searchUser",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "search field",
+                "in": "query",
+                "description": "Filter name and email",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/user.json#/User"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/user.json#/User"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "User not found",
+                "content": {}
+            }
+        }
+    },
     "get": {
         "tags": [
             "user"

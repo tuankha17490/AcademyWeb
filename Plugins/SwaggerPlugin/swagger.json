@@ -126,6 +126,9 @@
         },
         "/user/upload-avatar": {
             "$ref": "./paths/user.json#/uploadAvatar"
+        },
+        "/user/search": {
+            "$ref": "./paths/user.json#/search"
         }
     }
 }

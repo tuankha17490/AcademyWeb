@@ -43,5 +43,10 @@
                 "$ref": "../components/user.json#/specifyUser/id/delete"
             }
         }
+    },
+    "search": {
+        "get": {
+            "$ref":"../components/user.json#/search"
+        }
     }
 }

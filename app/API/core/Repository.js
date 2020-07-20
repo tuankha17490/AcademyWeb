@@ -15,7 +15,7 @@ export default class BaseRespository {
         return this.tableQuery().select(column).findById(id);
     }
     count() {
-        return this.tableQuery().count();
+        return this.tableQuery().count('id as CNT');
     }
     countBy(condition = {}) {
         return this.tableQuery().where(condition).count();
