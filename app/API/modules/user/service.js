@@ -43,11 +43,11 @@ export default class UserService extends BaseServices {
             param.Slug = Slug
             param.Password = bcrypt.hashSync(param.Password, 10)
             const checkRole = await RoleRespository.Instance().getBy({
-                Name: 'Client'
+                Name: 'Student'
             })
             if (!checkRole) {
                 const createRole = await RoleRespository.Instance().create({
-                    Name: 'Client'
+                    Name: 'Student'
                 })
                 param.Role_Id = createRole.ID
             } else {
@@ -72,7 +72,7 @@ export default class UserService extends BaseServices {
                     const token = await jwt.sign({
                         ID: queryData.ID,
                         Email: queryData.Email,
-                        Name: queryData.Name
+                        Role: queryData.roles.Name
                     }, process.env.JWT_KEY, {
                         expiresIn: "2h"
                     })

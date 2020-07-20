@@ -1,4 +1,5 @@
 import faker from 'faker'
+import bcript from "bcrypt"
 
 const createUsers = () => ({
   Email: faker.internet.email(),
@@ -7,17 +8,19 @@ const createUsers = () => ({
   Avatar: faker.internet.avatar(),
   Slug: faker.lorem.slug(),
   Gender: faker.random.boolean(),
-  Role_Id: 3
+  Role_Id: 4
 })
+
 const createAdmin = {
   Email: 'admin@gmail.com',
   Name: 'admin',
-  Password: 'admin123',
+  Password: bcript.hashSync('admin123',10),
   Avatar: faker.internet.avatar(),
   Slug: 'admin123',
   Gender: true,
   Role_Id: 1
 }
+
 exports.seed = async function (knex) {
   const fakeUsers = [];
   fakeUsers.push(createAdmin)

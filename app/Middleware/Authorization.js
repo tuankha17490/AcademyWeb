@@ -15,14 +15,15 @@ export default async (req, res, next) => {
             next()
         }
         else {
-            return res.status(401).json({
+            return res.status(200).json({
                 status: 401,
                 message: 'Format token is wrong !!!',
             })
         }
         
     } catch (error) {
-        return res.status(401).json({
+        return res.status(200).json({
+            status:401,
             message: 'Authorize failed !!!',
             error
         })

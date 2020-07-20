@@ -4,10 +4,11 @@ import UserController from "./controller"
 import authorization from "../../../Middleware/Authorization"
 import UserValidator from "./validator"
 import multer from "../../../Config/multer"
+import permission from "../../../Middleware/Permission"
 const controller = new UserController()
 const validator = new UserValidator()
 
-router.get('/',authorization,(req, res) => {
+router.get('/',authorization,permission,(req, res) => {
     try {
         controller.getList().then(result => {return res.json(result)})
     } catch (error) {
@@ -25,7 +26,8 @@ router.get('/me',authorization,(req, res) => {
         return res.status(200).json(error)
     }
 })
-router.get('/:page&:limit', (req, res) => {
+
+router.get('/:page&:limit',authorization, (req, res) => {
     try {
         controller.getListOffSet(req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -33,6 +35,7 @@ router.get('/:page&:limit', (req, res) => {
         return res.status(200).json(error)
     }
 })
+
 router.get('/search',authorization, (req, res) => {
     try {
         controller.search(req.query.data).then(result => {return res.status(200).json(result)})
@@ -50,6 +53,7 @@ router.get('/:id',authorization, (req, res) => {
         return res.status(200).json(error)
     }
 })
+
 router.post('/check-password', authorization, (req, res) => {
     try {
         controller.passwordConfirm(req).then(result => {return res.status(201).json(result)})
