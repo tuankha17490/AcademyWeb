@@ -28,7 +28,6 @@ export default class UserService extends BaseServices {
 
     async register(param) {
         try {
-            param.Gender = JSON.parse(param.Gender)
             const checkEmail = await this.respository.getBy({
                 Email: param.Email
             })
@@ -89,7 +88,6 @@ export default class UserService extends BaseServices {
                 }
             }
             
-            param.Gender = JSON.parse(param.Gender)
             const checkEmail = await this.respository.getBy({
                 Email: param.Email
             })
@@ -159,7 +157,7 @@ export default class UserService extends BaseServices {
             if (checkEmail && id != checkEmail.ID) {
                 throw 'error.EmailAlreadyRegister'
             }
-            data.Password = bcrypt.hashSync(data.Password, 10)
+            // data.Password = bcrypt.hashSync(data.Password, 10)
             const dataFetch = await this.respository.updateAndFetchById(data, id)
             const result = {
                 Name: dataFetch.Name,
@@ -177,13 +175,14 @@ export default class UserService extends BaseServices {
     async updateUserById(req, id) {
         try {
             const data = req.body
+            console.log(data.Gender);
             const checkEmail = await this.respository.getBy({
                 Email: data.Email
             })
             if (checkEmail && id != checkEmail.ID) {
                 throw 'error.EmailAlreadyRegister'
             }
-            data.Password = bcrypt.hashSync(data.Password, 10)
+            // data.Password = bcrypt.hashSync(data.Password, 10)
             const dataFetch = await this.respository.updateAndFetchById(data, id)
             const result = {
                 Name: dataFetch.Name,

@@ -60,13 +60,15 @@ export default class BaseValidator {
     }
     genderValidate(req, res) {
         try {
-            if (!validator.isBoolean(req.body.Gender)) {
-                return res.status(200).json({
-                    status: 400,
-                    error: 'Gender is invalid'
-                })
+            console.log(req.body.Gender != true);
+            if (req.body.Gender == true || req.body.Gender == false) {
+                return true
+               
             }
-            return true
+            return res.status(200).json({
+                status: 400,
+                error: 'Gender is required boolean'
+            })
         } catch (error) {
             return res.status(200).json({
                 status: 400,

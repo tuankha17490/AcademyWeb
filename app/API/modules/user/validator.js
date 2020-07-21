@@ -23,36 +23,12 @@ export default class UserValidator extends BaseValidator {
     }
     updateTask(req, res, next) {
         try {
-            if(req.body.Email == undefined) {
-                return {
-                    status: 400,
-                    message: 'Invalid Email'
-                }
-            }
-            if(req.body.Name == undefined) {
-                return {
-                    status: 400,
-                    message: 'Invalid Name'
-                }
-            }
-            if(req.body.Password == undefined) {
-                return {
-                    status: 400,
-                    message: 'Invalid Password'
-                }
-            }
-            if(req.body.Gender == undefined) {
-                return {
-                    status: 400,
-                    message: 'Invalid Gender'
-                }
-            }
             const checkEmail = super.emailValidate(req, res)
             if(checkEmail != true) return checkEmail;
             const checkName = super.nameValidate(req, res)
             if(checkName != true) return checkName;
-            const checkPassword = super.passwordValidate(req, res)
-            if(checkPassword != true) return checkPassword;
+            // const checkPassword = super.passwordValidate(req, res)
+            // if(checkPassword != true) return checkPassword;
             const checkGender = super.genderValidate(req, res)
             if(checkGender != true) return checkGender
             next()
