@@ -90,6 +90,18 @@ modules.forEach(module => {
         })
       }
     }
+    // if(module.Name == 'Class') {
+    //   if(method.Name == 'Read' || method.Name == 'UpdateMyUser') {
+    //     permissions.forEach(permission => {
+    //       if(permission.Method_Id == method.ID && permission.Module_Id == module.ID) {
+    //         student_role_permission.push({
+    //           Role_Id: 4,
+    //           Permission_Id: permission.ID
+    //         })
+    //       }
+    //     })
+    //   }
+    // }
   })
   
 });

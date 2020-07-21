@@ -25,7 +25,7 @@ export default async (req, res, next) => {
         return res.status(200).json({
             status:401,
             message: 'Authorize failed !!!',
-            error
+            error:error.toString()
         })
     }
 }
