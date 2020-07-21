@@ -205,6 +205,41 @@
             }
         }
     },
+    "updateInformation": {
+        "tags": [
+            "user"
+        ],
+        "summary": "Updated user",
+        "description": "Update information of user.",
+        "operationId": "updateInfomation",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "requestBody": {
+            "description": "Updated user object",
+            "content": {
+                "*/*": {
+                    "schema": {
+                        "$ref": "../schemas/user.json#/User"
+                    }
+                }
+            },
+            "required": true
+        },
+        "responses": {
+            "400": {
+                "description": "Invalid user supplied",
+                "content": {}
+            },
+            "404": {
+                "description": "User not found",
+                "content": {}
+            }
+        },
+        "x-codegen-request-body-name": "body"
+    },
     "specifyUser": {
         "id": {
             "get": {

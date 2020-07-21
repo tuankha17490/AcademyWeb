@@ -11,6 +11,7 @@
         }
        
     },
+    
     "getInformation": {
         "get": {
             "$ref": "../components/user.json#/get"
@@ -53,6 +54,11 @@
     "search": {
         "get": {
             "$ref":"../components/user.json#/search"
+        }
+    },
+    "updateInformation": {
+        "put": {
+            "$ref": "../components/user.json#/updateInformation"
         }
     }
 }

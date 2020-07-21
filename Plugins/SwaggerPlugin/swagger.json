@@ -130,6 +130,9 @@
         "/user/upload-avatar": {
             "$ref": "./paths/user.json#/uploadAvatar"
         },
+        "/user/update-information": {
+            "$ref": "./paths/user.json#/updateInformation"
+        },
         "/user/search/{limit}?data={}": {
             "$ref": "./paths/user.json#/search"
         }
