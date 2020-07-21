@@ -65,7 +65,9 @@ export default class UserService extends BaseServices {
             if(req.userData.Role == 'Moderator' && req.body.Role != undefined) {
                 return response(403, 'error.isNotPermittedToAccess')
             }
-            
+            if(req.userData.Role == 'Moderator') {
+                param.Role = 'Student'
+            }
             if(req.userData.Role == 'Admin') {
                 if(param.Role == undefined || param.Role == '') {
                     return response(400, 'error.RoleUndefined')
@@ -73,19 +75,20 @@ export default class UserService extends BaseServices {
                 if(param.Role == 'Admin') {
                     return response(403, 'error.isNotPermittedToAccess')
                 }
-                const checkRole = await RoleRespository.Instance().getBy({
+               
+            }
+            const checkRole = await RoleRespository.Instance().getBy({
+                Name: param.Role
+            })
+            if (!checkRole) {
+                const createRole = await RoleRespository.Instance().create({
                     Name: param.Role
                 })
-                if (!checkRole) {
-                    const createRole = await RoleRespository.Instance().create({
-                        Name: param.Role
-                    })
-                    param.Role_Id = createRole.ID
-                    param.Role = undefined
-                } else {
-                    param.Role_Id = checkRole.ID
-                    param.Role = undefined
-                }
+                param.Role_Id = createRole.ID
+                param.Role = undefined
+            } else {
+                param.Role_Id = checkRole.ID
+                param.Role = undefined
             }
             
             const checkEmail = await this.respository.getBy({
