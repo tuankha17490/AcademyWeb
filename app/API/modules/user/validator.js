@@ -15,7 +15,7 @@ export default class UserValidator extends BaseValidator {
             if(checkGender != true) return checkGender
             next()
         } catch (error) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: 400,
                 error: error.toString()
             })
@@ -57,7 +57,7 @@ export default class UserValidator extends BaseValidator {
             if(checkGender != true) return checkGender
             next()
         } catch (error) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: 400,
                 error: error.toString(),
             })
@@ -69,7 +69,7 @@ export default class UserValidator extends BaseValidator {
             if(checkAvatar != true) return checkAvatar;
             next()
         } catch (error) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: 400,
                 error: error.toString()
             })

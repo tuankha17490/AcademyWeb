@@ -3,14 +3,14 @@ export default class BaseValidator {
     emailValidate(req, res) {
         try {
             if (!validator.isEmail(req.body.Email)) {
-                return res.status(400).json({
+                return res.status(200).json({
                     status: 400,
                     error: 'Email is invalid'
                 })
             }
             return true
         } catch (error) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: 400,
                 message: 'Email error',
                 error: error.toString()
@@ -23,7 +23,7 @@ export default class BaseValidator {
                     min: 1,
                     max: 255
                 })) {
-                return res.status(400).json({
+                return res.status(200).json({
                     status: 400,
                     error: 'Name is invalid',
                     message: 'Name is too long or null'
@@ -31,7 +31,7 @@ export default class BaseValidator {
             }
             return true
         } catch (error) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: 400,
                 message: 'Name error',
                 error: error.toString()
@@ -43,7 +43,7 @@ export default class BaseValidator {
             if (!validator.isLength(req.body.Password, {
                     min: 6
                 }) || !validator.isAlphanumeric(req.body.Password)) {
-                return res.status(400).json({
+                return res.status(200).json({
                     status: 400,
                     error: 'Paswword is invalid',
                     message: 'Password is greater than 6 character and only number,alphabet'
@@ -51,7 +51,7 @@ export default class BaseValidator {
             }
             return true
         } catch (error) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: 400,
                 message: 'Password error',
                 error: error.toString()
@@ -61,14 +61,14 @@ export default class BaseValidator {
     genderValidate(req, res) {
         try {
             if (!validator.isBoolean(req.body.Gender)) {
-                return res.status(400).json({
+                return res.status(200).json({
                     status: 400,
                     error: 'Gender is invalid'
                 })
             }
             return true
         } catch (error) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: 400,
                 message: 'Gender error',
                 error: error.toString()
@@ -79,7 +79,7 @@ export default class BaseValidator {
         try {
             if (req.file == undefined) {
                 // if (!validator.isURL(req.file)) {
-                return res.status(400).json({
+                return res.status(200).json({
                     status: 400,
                     error: 'Avatar is invalid'
                 })
@@ -88,7 +88,7 @@ export default class BaseValidator {
             }
             return true
         } catch (error) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: 400,
                 message: 'Avatar error',
                 error: error.toString()
