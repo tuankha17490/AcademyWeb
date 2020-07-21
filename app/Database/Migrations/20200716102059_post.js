@@ -1,6 +1,6 @@
 export function up(knex) {
     return knex.schema.createTable('Post', t => {
-        t.increments('ID')
+        t.increments('ID').primary()
         t.string('Title')
         t.string('Content')
         t.integer('User_Id').unsigned()

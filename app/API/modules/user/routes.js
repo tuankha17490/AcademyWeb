@@ -7,6 +7,7 @@ import multer from "../../../Config/multer"
 import UserPermission from "../../../Middleware/Permission"
 const controller = new UserController()
 const validator = new UserValidator()
+const permission = new UserPermission('Users')
 router.get('/',authorization,(req, res) => {
     try {
         controller.getList().then(result => {return res.json(result)})
@@ -16,7 +17,7 @@ router.get('/',authorization,(req, res) => {
     }
 })
 
-router.post('/create',authorization,UserPermission.Instance('Create', 'Users').Excute,validator.registerTask,async (req, res) => {
+router.post('/create',authorization,permission.Create,validator.registerTask,async (req, res) => {
     try {
         controller.create(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -33,7 +34,7 @@ router.get('/me',authorization,(req, res) => {
     }
 })
 
-router.get('/:page&:limit',authorization,UserPermission.Instance('GetList', 'Users').Excute, (req, res) => {
+router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
     try {
         controller.getListOffSet(req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -42,7 +43,7 @@ router.get('/:page&:limit',authorization,UserPermission.Instance('GetList', 'Use
     }
 })
 
-router.get('/search/:page&:limit',authorization,UserPermission.Instance('Search', 'Users').Excute, (req, res) => {
+router.get('/search/:page&:limit',authorization,permission.Search, (req, res) => {
     try {
         controller.search(req.query.data,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -51,7 +52,7 @@ router.get('/search/:page&:limit',authorization,UserPermission.Instance('Search'
     }
 })
 
-router.get('/:id',authorization,UserPermission.Instance('Read', 'Users').Excute, (req, res) => {
+router.get('/:id',authorization,permission.Read, (req, res) => {
     try {
         controller.getInforById(req.params.id).then(result =>{return res.status(200).json(result)})
     } catch (error) {
@@ -68,7 +69,7 @@ router.post('/check-password', authorization, (req, res) => {
     }
 })
 
-router.put('/upload-avatar',authorization,UserPermission.Instance('UpdateMyUser', 'Users').Excute,multer.single('avatar'),validator.uploadImage, (req, res) => {
+router.put('/upload-avatar',authorization,permission.UpdateMyUser,multer.single('avatar'),validator.uploadImage, (req, res) => {
     try {
         controller.uploadAvatar(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -77,7 +78,7 @@ router.put('/upload-avatar',authorization,UserPermission.Instance('UpdateMyUser'
     }
 })
 
-router.put('/update-information',authorization,UserPermission.Instance('UpdateMyUser', 'Users').Excute,validator.updateTask, (req, res) => {
+router.put('/update-information',authorization,permission.UpdateMyUser,validator.updateTask, (req, res) => {
     try {
         controller.updateUserById(req).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -88,7 +89,7 @@ router.put('/update-information',authorization,UserPermission.Instance('UpdateMy
 })
 
 
-router.put('/:id',authorization,UserPermission.Instance('Update', 'Users').Excute,validator.updateTask, (req, res) => {
+router.put('/:id',authorization,permission.Update,validator.updateTask, (req, res) => {
     try {
         controller.updateUserById(req, req.params.id).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -99,7 +100,7 @@ router.put('/:id',authorization,UserPermission.Instance('Update', 'Users').Excut
 })
 
 
-router.delete('/:id',authorization,UserPermission.Instance('Delete', 'Users').Excute, (req, res) => {
+router.delete('/:id',authorization,permission.Delete, (req, res) => {
     try {
         controller.deleteById(req).then(result => {return res.status(200).json(result)})
     } catch (error) {

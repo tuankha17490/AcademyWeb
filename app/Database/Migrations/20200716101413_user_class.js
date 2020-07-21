@@ -1,7 +1,7 @@
 
 export function up(knex) {
     return knex.schema.createTable('User_Class', t => {
-        t.increments('ID')
+        t.increments('ID').primary()
         t.integer('User_Id').unsigned()
         t.foreign('User_Id').references('Users.ID').onDelete('CASCADE').onUpdate('CASCADE')
         t.integer('Class_Id').unsigned()

@@ -1,7 +1,7 @@
 
 export function up(knex) {
     return knex.schema.createTable('Modules', t => {
-        t.increments('ID')
+        t.increments('ID').primary()
         t.string('Name')
     })
 }
