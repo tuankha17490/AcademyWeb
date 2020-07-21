@@ -49,8 +49,9 @@
             "$ref":"./paths/user.json#/pagination"
         },
         "/register": {
-            "$ref":"./paths/user.json#/create"
+            "$ref":"./paths/user.json#/register"
          },
+      
         "/login": {
             "post": {
                 "tags": [
@@ -120,14 +121,16 @@
         "/user/me" : {
             "$ref":"./paths/user.json#/getMe"
         },
-       
+        "/user/create": {
+            "$ref":"./paths/user.json#/create"
+         },
         "/user/{id}": {
             "$ref": "./paths/user.json#/specifyUser/id"
         },
         "/user/upload-avatar": {
             "$ref": "./paths/user.json#/uploadAvatar"
         },
-        "/user/search": {
+        "/user/search/{limit}?data={}": {
             "$ref": "./paths/user.json#/search"
         }
     }

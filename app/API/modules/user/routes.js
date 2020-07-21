@@ -16,7 +16,14 @@ router.get('/',authorization,(req, res) => {
     }
 })
 
-
+router.post('/create',authorization,UserPermission.Instance('Create', 'Users').Excute,validator.registerTask,async (req, res) => {
+    try {
+        controller.create(req).then(result => {return res.status(201).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_CREATE_USER')
+        return res.status(200).json(error)
+    }
+})
 router.get('/me',authorization,(req, res) => {
     try {
         controller.getMe(req.userData).then(result => {return res.status(200).json(result)})
@@ -35,9 +42,9 @@ router.get('/:page&:limit',authorization,UserPermission.Instance('GetList', 'Use
     }
 })
 
-router.get('/search',authorization,UserPermission.Instance('Search', 'Users').Excute, (req, res) => {
+router.get('/search/:limit',authorization,UserPermission.Instance('Search', 'Users').Excute, (req, res) => {
     try {
-        controller.search(req.query.data).then(result => {return res.status(200).json(result)})
+        controller.search(req.query.data,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
         console.log('CONTROLLER_SEARCH_USER');
         return res.status(200).json(error)
@@ -61,7 +68,7 @@ router.post('/check-password', authorization, (req, res) => {
     }
 })
 
-router.put('/upload-avatar',authorization,UserPermission.Instance('Update', 'Users').Excute,multer.single('avatar'),validator.uploadImage, (req, res) => {
+router.put('/upload-avatar',authorization,UserPermission.Instance('UpdateMyUser', 'Users').Excute,multer.single('avatar'),validator.uploadImage, (req, res) => {
     try {
         controller.uploadAvatar(req).then(result => {return res.status(201).json(result)})
     } catch (error) {

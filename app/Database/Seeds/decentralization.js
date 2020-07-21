@@ -143,14 +143,6 @@ function ModeratorRole(moduleName, methodNames = []) {
   })
 
 }
-
-
-
-
-
-
-
-
 // modules.forEach(module => {
 //   methods.forEach(method => {
 //     if(module.Name == 'Users') {
@@ -169,8 +161,6 @@ function ModeratorRole(moduleName, methodNames = []) {
 //   })
 
 // });
-
-
 exports.seed = async function (knex) {
   await StudentRole('Users', ['UpdateMyUser'])
   await StudentRole('Class', ['Read'])

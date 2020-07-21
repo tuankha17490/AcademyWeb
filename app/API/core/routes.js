@@ -17,7 +17,7 @@ router.post('/login',(req, res) => {
 
 router.post('/register',validator.registerTask,async (req, res) => {
     try {
-        controller.create(req.body).then(result => {return res.status(201).json(result)})
+        controller.register(req.body).then(result => {return res.status(201).json(result)})
     } catch (error) {
         console.log('CONTROLLER_REGISTER_USER')
         return res.status(200).json(error)

@@ -5,6 +5,32 @@
         ],
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
+        "operationId": "register",
+        "requestBody": {
+            "description": "Created user object",
+            "content": {
+                "*/*": {
+                    "schema": {
+                        "$ref": "../schemas/user.json#/User"
+                    }
+                }
+            },
+            "required": true
+        },
+        "responses": {
+            "default": {
+                "description": "successful operation",
+                "content": {}
+            }
+        },
+        "x-codegen-request-body-name": "body"
+    },
+    "create": {
+        "tags": [
+            "user"
+        ],
+        "summary": "Create user",
+        "description": "This can only be done by the logged in user.",
         "operationId": "createUser",
         "requestBody": {
             "description": "Created user object",
@@ -42,6 +68,24 @@
                 "name": "search field",
                 "in": "query",
                 "description": "Filter name and email",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "data",
+                "in": "query",
+                "description": "The data that needs to be searched.",
                 "required": true,
                 "schema": {
                     "type": "string"

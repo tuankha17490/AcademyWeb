@@ -1,7 +1,13 @@
 {
-    "create": {
+    "register": {
         "post": {
             "$ref": "../components/user.json#/post"
+        }
+       
+    },
+    "create": {
+        "post": {
+            "$ref": "../components/user.json#/create"
         }
        
     },

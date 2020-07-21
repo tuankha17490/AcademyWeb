@@ -60,7 +60,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "ID": {
                       "type": "integer"
                     },
                     "Email": {
@@ -81,6 +81,22 @@
                     },
                     "Avatar": {
                       "type": "string"
+                    },
+                    "Role": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      },
+                      "xml": {
+                        "name": "User"
+                      }
                     }
                   },
                   "xml": {
@@ -92,7 +108,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "ID": {
                       "type": "integer"
                     },
                     "Email": {
@@ -113,6 +129,22 @@
                     },
                     "Avatar": {
                       "type": "string"
+                    },
+                    "Role": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      },
+                      "xml": {
+                        "name": "User"
+                      }
                     }
                   },
                   "xml": {
@@ -174,7 +206,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "ID": {
                       "type": "integer"
                     },
                     "Email": {
@@ -195,6 +227,22 @@
                     },
                     "Avatar": {
                       "type": "string"
+                    },
+                    "Role": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      },
+                      "xml": {
+                        "name": "User"
+                      }
                     }
                   },
                   "xml": {
@@ -206,7 +254,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "ID": {
                       "type": "integer"
                     },
                     "Email": {
@@ -227,6 +275,22 @@
                     },
                     "Avatar": {
                       "type": "string"
+                    },
+                    "Role": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      },
+                      "xml": {
+                        "name": "User"
+                      }
                     }
                   },
                   "xml": {
@@ -254,7 +318,7 @@
         ],
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
-        "operationId": "createUser",
+        "operationId": "register",
         "requestBody": {
           "description": "Created user object",
           "content": {
@@ -262,7 +326,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "id": {
+                  "ID": {
                     "type": "integer"
                   },
                   "Email": {
@@ -283,6 +347,22 @@
                   },
                   "Avatar": {
                     "type": "string"
+                  },
+                  "Role": {
+                    "type": "object",
+                    "properties": {
+                      "ID": {
+                        "type": "integer"
+                      },
+                      "Name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255
+                      }
+                    },
+                    "xml": {
+                      "name": "User"
+                    }
                   }
                 },
                 "xml": {
@@ -397,6 +477,77 @@
         }
       }
     },
+    "/user/create": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "integer"
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "Password": {
+                    "type": "string",
+                    "minLength": 6
+                  },
+                  "Name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "Gender": {
+                    "type": "boolean"
+                  },
+                  "Avatar": {
+                    "type": "string"
+                  },
+                  "Role": {
+                    "type": "object",
+                    "properties": {
+                      "ID": {
+                        "type": "integer"
+                      },
+                      "Name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255
+                      }
+                    },
+                    "xml": {
+                      "name": "User"
+                    }
+                  }
+                },
+                "xml": {
+                  "name": "User"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
     "/user/{id}": {
       "get": {
         "tags": [
@@ -428,7 +579,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "ID": {
                       "type": "integer"
                     },
                     "Email": {
@@ -449,6 +600,22 @@
                     },
                     "Avatar": {
                       "type": "string"
+                    },
+                    "Role": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      },
+                      "xml": {
+                        "name": "User"
+                      }
                     }
                   },
                   "xml": {
@@ -460,7 +627,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "ID": {
                       "type": "integer"
                     },
                     "Email": {
@@ -481,6 +648,22 @@
                     },
                     "Avatar": {
                       "type": "string"
+                    },
+                    "Role": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      },
+                      "xml": {
+                        "name": "User"
+                      }
                     }
                   },
                   "xml": {
@@ -530,7 +713,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "id": {
+                  "ID": {
                     "type": "integer"
                   },
                   "Email": {
@@ -551,6 +734,22 @@
                   },
                   "Avatar": {
                     "type": "string"
+                  },
+                  "Role": {
+                    "type": "object",
+                    "properties": {
+                      "ID": {
+                        "type": "integer"
+                      },
+                      "Name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255
+                      }
+                    },
+                    "xml": {
+                      "name": "User"
+                    }
                   }
                 },
                 "xml": {
@@ -653,7 +852,7 @@
         }
       }
     },
-    "/user/search": {
+    "/user/search/{limit}?data={}": {
       "get": {
         "tags": [
           "user"
@@ -675,6 +874,24 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "The limit that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "The data that needs to be searched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -685,7 +902,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "ID": {
                       "type": "integer"
                     },
                     "Email": {
@@ -706,6 +923,22 @@
                     },
                     "Avatar": {
                       "type": "string"
+                    },
+                    "Role": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      },
+                      "xml": {
+                        "name": "User"
+                      }
                     }
                   },
                   "xml": {
@@ -717,7 +950,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "ID": {
                       "type": "integer"
                     },
                     "Email": {
@@ -738,6 +971,22 @@
                     },
                     "Avatar": {
                       "type": "string"
+                    },
+                    "Role": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer"
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      },
+                      "xml": {
+                        "name": "User"
+                      }
                     }
                   },
                   "xml": {

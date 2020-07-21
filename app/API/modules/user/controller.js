@@ -25,10 +25,13 @@ export default class UserController extends BaseController {
     getMe(decode) {
         return this.service.getMe(decode)
     }
-    search(data) {
-        return this.service.search(data, ['Name', 'Email'],['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
+    search(data, limit) {
+        return this.service.search(data, limit, ['Name', 'Email'],['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
     }
     updateInformation(req) {
         return this.service.updateInformation(req)
+    }
+    register(req) {
+        return this.service.register(req)
     }
 }

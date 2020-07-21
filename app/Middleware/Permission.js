@@ -27,7 +27,7 @@ export default class Permissions {
             if(i == data.length -1) {
                 return res.status(200).json({
                     status:403,
-                    message: 'error.NotPermisssionToAccess'
+                    message: 'error.isNotPermittedToAccess'
                 })
             }
         }

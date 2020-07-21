@@ -26,7 +26,7 @@ export default class UserService extends BaseServices {
         return UserRespository.Instance();
     }
 
-    async create(param) {
+    async register(param) {
         try {
             param.Gender = JSON.parse(param.Gender)
             const checkEmail = await this.respository.getBy({
@@ -53,6 +53,57 @@ export default class UserService extends BaseServices {
             } else {
                 param.Role_Id = checkRole.ID
             }
+
+            await this.respository.create(param);
+            return response(201, 'Success !!!')
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async create(req) {
+        try {
+            const param = req.body
+            if(req.userData.Role == 'Moderator' && req.body.Role != undefined) {
+                return response(403, 'error.isNotPermittedToAccess')
+            }
+            
+            if(req.userData.Role == 'Admin') {
+                if(param.Role == undefined || param.Role == '') {
+                    return response(400, 'error.RoleUndefined')
+                }
+                if(param.Role == 'Admin') {
+                    return response(403, 'error.isNotPermittedToAccess')
+                }
+                const checkRole = await RoleRespository.Instance().getBy({
+                    Name: param.Role
+                })
+                if (!checkRole) {
+                    const createRole = await RoleRespository.Instance().create({
+                        Name: param.Role
+                    })
+                    param.Role_Id = createRole.ID
+                    param.Role = undefined
+                } else {
+                    param.Role_Id = checkRole.ID
+                    param.Role = undefined
+                }
+            }
+            
+            param.Gender = JSON.parse(param.Gender)
+            const checkEmail = await this.respository.getBy({
+                Email: param.Email
+            })
+            if (checkEmail) {
+                throw 'error.EmailAlreadyRegister'
+
+            }
+            const Slug = getSlug(param.Name + ' ' + Date.now(), {
+                replacement: '.',
+                lower: true
+            })
+            param.Slug = Slug
+            param.Password = bcrypt.hashSync(param.Password, 10)
+           
 
             await this.respository.create(param);
             return response(201, 'Success !!!')

@@ -2,7 +2,7 @@
     "User": {
         "type": "object",
         "properties": {
-            "id": {
+            "ID": {
                 "type": "integer"
             },
             "Email": {
@@ -23,6 +23,9 @@
             },
             "Avatar": {
                 "type": "string"
+            },
+            "Role": {
+                "$ref": "./role.json#/Role"
             }
         },
         "xml": {

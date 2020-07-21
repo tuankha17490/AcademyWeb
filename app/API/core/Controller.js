@@ -23,7 +23,7 @@ export default class BaseConTroller {
     deleteById(id){
         return this.service.deleteById(id);
     }
-    search(data) {
-        return this.service.search(data)
+    search(data, limit) {
+        return this.service.search(data, limit)
     }
 }
