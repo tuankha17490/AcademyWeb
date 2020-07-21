@@ -7,9 +7,7 @@ import multer from "../../../Config/multer"
 import UserPermission from "../../../Middleware/Permission"
 const controller = new UserController()
 const validator = new UserValidator()
-const permission = new UserPermission('Users')
-
-router.get('/',authorization,permission.Read,(req, res) => {
+router.get('/',authorization,(req, res) => {
     try {
         controller.getList().then(result => {return res.json(result)})
     } catch (error) {
@@ -28,7 +26,7 @@ router.get('/me',authorization,(req, res) => {
     }
 })
 
-router.get('/:page&:limit',authorization, (req, res) => {
+router.get('/:page&:limit',authorization,UserPermission.Instance('GetList', 'Users').Excute, (req, res) => {
     try {
         controller.getListOffSet(req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -37,7 +35,7 @@ router.get('/:page&:limit',authorization, (req, res) => {
     }
 })
 
-router.get('/search',authorization, (req, res) => {
+router.get('/search',authorization,UserPermission.Instance('Search', 'Users').Excute, (req, res) => {
     try {
         controller.search(req.query.data).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -46,7 +44,7 @@ router.get('/search',authorization, (req, res) => {
     }
 })
 
-router.get('/:id',authorization, (req, res) => {
+router.get('/:id',authorization,UserPermission.Instance('Read', 'Users').Excute, (req, res) => {
     try {
         controller.getInforById(req.params.id).then(result =>{return res.status(200).json(result)})
     } catch (error) {
@@ -63,7 +61,7 @@ router.post('/check-password', authorization, (req, res) => {
     }
 })
 
-router.put('/upload-avatar',authorization,permission.Update,multer.single('avatar'),validator.uploadImage, (req, res) => {
+router.put('/upload-avatar',authorization,UserPermission.Instance('Update', 'Users').Excute,multer.single('avatar'),validator.uploadImage, (req, res) => {
     try {
         controller.uploadAvatar(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -72,8 +70,18 @@ router.put('/upload-avatar',authorization,permission.Update,multer.single('avata
     }
 })
 
+router.put('/update-information',authorization,UserPermission.Instance('UpdateMyUser', 'Users').Excute,validator.updateTask, (req, res) => {
+    try {
+        controller.updateUserById(req).then(result => {return res.status(200).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_UPDATE_USER')
+        return res.status(200).json(error)
+    }
+   
+})
 
-router.put('/:id',authorization,validator.updateTask,  (req, res) => {
+
+router.put('/:id',authorization,UserPermission.Instance('Update', 'Users').Excute,validator.updateTask, (req, res) => {
     try {
         controller.updateUserById(req, req.params.id).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -84,7 +92,7 @@ router.put('/:id',authorization,validator.updateTask,  (req, res) => {
 })
 
 
-router.delete('/:id',authorization,permission.Delete, (req, res) => {
+router.delete('/:id',authorization,UserPermission.Instance('Delete', 'Users').Excute, (req, res) => {
     try {
         controller.deleteById(req.params.id).then(result => {return res.status(200).json(result)})
     } catch (error) {

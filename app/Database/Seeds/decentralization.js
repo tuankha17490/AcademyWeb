@@ -14,6 +14,26 @@ const methods = [{
     ID: 4,
     Name: 'Delete'
   },
+  {
+    ID: 5,
+    Name: 'GetList'
+  },
+  {
+    ID: 6,
+    Name: 'Search'
+  },
+  {
+    ID: 7,
+    Name: 'AdminCreate'
+  },
+  {
+    ID: 8,
+    Name: 'JoinClass'
+  },
+  {
+    ID: 9,
+    Name: 'UpdateMyUser'
+  }
 ]
 
 const modules = [{
@@ -59,7 +79,7 @@ const student_role_permission = []
 modules.forEach(module => {
   methods.forEach(method => {
     if(module.Name == 'Users') {
-      if(method.Name == 'Read' || method.Name == 'Update') {
+      if(method.Name == 'Read' || method.Name == 'UpdateMyUser') {
         permissions.forEach(permission => {
           if(permission.Method_Id == method.ID && permission.Module_Id == module.ID) {
             student_role_permission.push({

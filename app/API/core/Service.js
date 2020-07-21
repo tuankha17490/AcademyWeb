@@ -32,7 +32,7 @@ export default class BaseServices {
     async search(query,searchBy = [], column = ['*']) {
         try {
             for(let i = 0; i < searchBy.length; i ++) {
-                const data = await this.respository.listBy(column).where(searchBy[i], 'like', `%${query}%`)
+                const data = await this.respository.listBy(column).where(searchBy[i], 'like', `%${query}%`).withGraphFetched('roles')
                 if(data.length != 0) {
                     return response(200,'Success !!!',data)
                 }
@@ -53,7 +53,7 @@ export default class BaseServices {
     async getInforById(id) {
         try {
             const data = await this.respository.findAt(id);
-            return data;
+            return response(200, 'Success !!!', data);
         } catch (error) {
             return response(400, error.toString())
         }
@@ -61,7 +61,7 @@ export default class BaseServices {
     async getInformation(condition) {
         try {
             const data = await this.respository.getBy(condition);
-            return data;
+            return response(200, 'Success !!!', data);
         } catch (error) {
             return response(400, error.toString())
         }
@@ -69,7 +69,7 @@ export default class BaseServices {
     async updateById(data, id) {
         try {
             const result = await this.respository.updateById(data, id)
-            return result
+            return response(200, 'Success !!!', result);
         } catch (error) {
             return response(400, error.toString())
         }
@@ -77,7 +77,7 @@ export default class BaseServices {
     async deleteById(id) {
         try {
             const result = await this.respository.deleteById(id);
-            return result;
+            return response(200, 'Success !!!', result);
         } catch (error) {
             return response(400, error.toString())
         }

@@ -28,4 +28,7 @@ export default class UserController extends BaseController {
     search(data) {
         return this.service.search(data, ['Name', 'Email'],['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
     }
+    updateInformation(req) {
+        return this.service.updateInformation(req)
+    }
 }

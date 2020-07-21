@@ -98,6 +98,31 @@ export default class UserService extends BaseServices {
         }
     }
 
+    async updateInformation(req) {
+        try {
+            const id = req.userData.ID
+            const data = req.body
+            const checkEmail = await this.respository.getBy({
+                Email: data.Email
+            })
+            if (checkEmail && id != checkEmail.ID) {
+                throw 'error.EmailAlreadyRegister'
+            }
+            data.Password = bcrypt.hashSync(data.Password, 10)
+            const dataFetch = await this.respository.updateAndFetchById(data, id)
+            const result = {
+                Name: dataFetch.Name,
+                Email: dataFetch.Email,
+                ID: dataFetch.ID,
+                Slug: dataFetch.Slug,
+                Gender: dataFetch.Gender
+            }
+            return response(200, 'User uploaded successfully', result)
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+
     async updateUserById(req, id) {
         try {
             const data = req.body
