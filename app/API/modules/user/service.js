@@ -62,20 +62,20 @@ export default class UserService extends BaseServices {
     async create(req) {
         try {
             const param = req.body
-            if(req.userData.Role == 'Moderator' && req.body.Role != undefined) {
+            if (req.userData.Role == 'Moderator' && req.body.Role != undefined) {
                 return response(403, 'error.isNotPermittedToAccess')
             }
-            if(req.userData.Role == 'Moderator') {
+            if (req.userData.Role == 'Moderator') {
                 param.Role = 'Student'
             }
-            if(req.userData.Role == 'Admin') {
-                if(param.Role == undefined || param.Role == '') {
+            if (req.userData.Role == 'Admin') {
+                if (param.Role == undefined || param.Role == '') {
                     return response(400, 'error.RoleUndefined')
                 }
-                if(param.Role == 'Admin') {
+                if (param.Role == 'Admin') {
                     return response(403, 'error.isNotPermittedToAccess')
                 }
-               
+
             }
             const checkRole = await RoleRespository.Instance().getBy({
                 Name: param.Role
@@ -90,7 +90,7 @@ export default class UserService extends BaseServices {
                 param.Role_Id = checkRole.ID
                 param.Role = undefined
             }
-            
+
             const checkEmail = await this.respository.getBy({
                 Email: param.Email
             })
@@ -104,7 +104,7 @@ export default class UserService extends BaseServices {
             })
             param.Slug = Slug
             param.Password = bcrypt.hashSync(param.Password, 10)
-           
+
 
             await this.respository.create(param);
             return response(201, 'Success !!!')
@@ -152,24 +152,27 @@ export default class UserService extends BaseServices {
 
     async updateInformation(req) {
         try {
-            const id = req.userData.ID
             const data = req.body
+            if (data.Password != undefined) {
+                data.Password = bcrypt.hashSync(data.Password, 10)
+            }
+            const id = req.userData.ID
             const checkEmail = await this.respository.getBy({
                 Email: data.Email
             })
             if (checkEmail && id != checkEmail.ID) {
                 throw 'error.EmailAlreadyRegister'
             }
-            // data.Password = bcrypt.hashSync(data.Password, 10)
             const dataFetch = await this.respository.updateAndFetchById(data, id)
             const result = {
                 Name: dataFetch.Name,
                 Email: dataFetch.Email,
                 ID: dataFetch.ID,
                 Slug: dataFetch.Slug,
-                Gender: dataFetch.Gender
+                Gender: dataFetch.Gender,
+                Role: req.userData.Role
             }
-            return response(200, 'User uploaded successfully', result)
+            return response(200, 'Success !!!', result)
         } catch (error) {
             return response(400, error.toString())
         }
@@ -178,23 +181,34 @@ export default class UserService extends BaseServices {
     async updateUserById(req, id) {
         try {
             const data = req.body
-            console.log(data.Gender);
+            if (data.Password != undefined) {
+                data.Password = bcrypt.hashSync(data.Password, 10)
+            }
             const checkEmail = await this.respository.getBy({
                 Email: data.Email
             })
             if (checkEmail && id != checkEmail.ID) {
                 throw 'error.EmailAlreadyRegister'
             }
-            // data.Password = bcrypt.hashSync(data.Password, 10)
-            const dataFetch = await this.respository.updateAndFetchById(data, id)
-            const result = {
-                Name: dataFetch.Name,
-                Email: dataFetch.Email,
-                ID: dataFetch.ID,
-                Slug: dataFetch.Slug,
-                Gender: dataFetch.Gender
+            if(data.Role == 'Admin') {
+                throw 'error.DontAllowUpgradeAdmin'
             }
-            return response(200, 'User uploaded successfully', result)
+            const checkRole = await RoleRespository.Instance().getBy({
+                Name: data.Role
+            })
+            console.log(checkRole);
+            data.Role_Id = checkRole.ID
+            const result = {}
+            result.Role = data.Role
+            data.Role = undefined
+
+            const dataFetch = await this.respository.updateAndFetchById(data, id)
+            result.ID = dataFetch.ID
+            result.Name = dataFetch.Name
+            result.Email = dataFetch.Email
+            result.Slug = dataFetch.Slug
+            result.Gender = dataFetch.Gender
+            return response(200, 'Success !!!', result)
         } catch (error) {
             return response(400, error.toString())
         }
@@ -235,6 +249,18 @@ export default class UserService extends BaseServices {
                 .findAt(decode.ID, ['ID', 'Name', 'Email', 'Avatar', 'Gender', 'Slug'])
                 .withGraphFetched('roles')
             return response(200, 'Success !!!', data)
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async deleteById(req) {
+        try {
+            const id = req.params.id
+            if (id == req.userData.ID) {
+                return response(200, 'error.cantDeleteYourself');
+            }
+            const result = await this.respository.deleteById(id);
+            return response(200, 'Success !!!', result);
         } catch (error) {
             return response(400, error.toString())
         }

@@ -40,13 +40,16 @@ export default class BaseValidator {
     }
     passwordValidate(req, res) {
         try {
-            if (!validator.isLength(req.body.Password, {
-                    min: 6
-                }) || !validator.isAlphanumeric(req.body.Password)) {
+            if(req.body.Password < 6) {
                 return res.status(200).json({
                     status: 400,
-                    error: 'Paswword is invalid',
-                    message: 'Password is greater than 6 character and only number,alphabet'
+                    message: 'error.mustGreaterThan6'
+                })
+            }
+            if (!validator.isAlphanumeric(req.body.Password)) {
+                return res.status(200).json({
+                    status: 400,
+                    message: 'error.onlyAlphaAndNumber'
                 })
             }
             return true
@@ -80,13 +83,10 @@ export default class BaseValidator {
     avatarValidate(req, res) {
         try {
             if (req.file == undefined) {
-                // if (!validator.isURL(req.file)) {
                 return res.status(200).json({
                     status: 400,
                     error: 'Avatar is invalid'
                 })
-
-                // }
             }
             return true
         } catch (error) {

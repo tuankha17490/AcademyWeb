@@ -29,15 +29,29 @@ export default class BaseServices {
             return response(400, error.toString())
         }
     }
-    async search(query, limit, searchBy = [], column = ['*']) {
+    async search(query,page, limit, searchBy = [], column = ['*']) {
         try {
+            const count = await this.respository.count();
+            const offset = (page - 1) * limit
+            if (offset > count) {
+                throw 'Offset can not be greater than the number of data'
+            }
             for(let i = 0; i < searchBy.length; i ++) {
-                const data = await this.respository.graphFetched(0,limit,'roles',column).where(searchBy[i], 'like', `%${query}%`)
+                const data = await this.respository.graphFetched(page,limit,'roles',column).where(searchBy[i], 'like', `%${query}%`)
                 if(data.length != 0) {
-                    return response(200,'Success !!!',data)
+                    return {
+                        status: 200,
+                        message: 'Success !!!',
+                        totalRow: count[0].CNT,
+                        data
+                    }
                 }
             }
-            return response(200,'Success !!!')
+            return {
+                status: 200,
+                message: 'Success !!!',
+                totalRow: count[0].CNT,
+            }
         } catch (error) {
             return response(400, error.toString())
         }
@@ -52,7 +66,7 @@ export default class BaseServices {
     }
     async getInforById(id) {
         try {
-            const data = await this.respository.findAt(id);
+            const data = await this.respository.findAt(id).withGraphFetched('roles');
             return response(200, 'Success !!!', data);
         } catch (error) {
             return response(400, error.toString())

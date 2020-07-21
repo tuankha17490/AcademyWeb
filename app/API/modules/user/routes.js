@@ -42,9 +42,9 @@ router.get('/:page&:limit',authorization,UserPermission.Instance('GetList', 'Use
     }
 })
 
-router.get('/search/:limit',authorization,UserPermission.Instance('Search', 'Users').Excute, (req, res) => {
+router.get('/search/:page&:limit',authorization,UserPermission.Instance('Search', 'Users').Excute, (req, res) => {
     try {
-        controller.search(req.query.data,req.params.limit).then(result => {return res.status(200).json(result)})
+        controller.search(req.query.data,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
         console.log('CONTROLLER_SEARCH_USER');
         return res.status(200).json(error)
@@ -101,7 +101,7 @@ router.put('/:id',authorization,UserPermission.Instance('Update', 'Users').Excut
 
 router.delete('/:id',authorization,UserPermission.Instance('Delete', 'Users').Excute, (req, res) => {
     try {
-        controller.deleteById(req.params.id).then(result => {return res.status(200).json(result)})
+        controller.deleteById(req).then(result => {return res.status(200).json(result)})
     } catch (error) {
         console.log('CONTROLLER_DELETE_USER')
         return res.status(200).json(error)

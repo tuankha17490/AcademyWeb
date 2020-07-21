@@ -27,8 +27,10 @@ export default class UserValidator extends BaseValidator {
             if(checkEmail != true) return checkEmail;
             const checkName = super.nameValidate(req, res)
             if(checkName != true) return checkName;
-            // const checkPassword = super.passwordValidate(req, res)
-            // if(checkPassword != true) return checkPassword;
+            if(req.body.Password != undefined) {
+                const checkPassword = super.passwordValidate(req, res)
+                if(checkPassword != true) return checkPassword;
+            }
             const checkGender = super.genderValidate(req, res)
             if(checkGender != true) return checkGender
             next()
