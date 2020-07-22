@@ -40,7 +40,10 @@ export default class BaseValidator {
     }
     passwordValidate(req, res) {
         try {
-            if(req.body.Password < 6) {
+            console.log(req.body.Password);
+            if(!validator.isLength(req.body.Password, {
+                min: 6,
+            })) {
                 return res.status(200).json({
                     status: 400,
                     message: 'error.mustGreaterThan6'
