@@ -196,7 +196,6 @@ export default class UserService extends BaseServices {
             const checkRole = await RoleRespository.Instance().getBy({
                 Name: data.Role
             })
-            console.log(checkRole);
             data.Role_Id = checkRole.ID
             const result = {}
             result.Role = data.Role
@@ -257,7 +256,7 @@ export default class UserService extends BaseServices {
         try {
             const id = req.params.id
             if (id == req.userData.ID) {
-                return response(200, 'error.cantDeleteYourself');
+                return response(403, 'error.cantDeleteYourself');
             }
             const result = await this.respository.deleteById(id);
             return response(200, 'Success !!!', result);
