@@ -105,7 +105,6 @@ export default class UserService extends BaseServices {
             param.Slug = Slug
             param.Password = bcrypt.hashSync(param.Password, 10)
 
-
             await this.respository.create(param);
             return response(201, 'Success !!!')
         } catch (error) {
