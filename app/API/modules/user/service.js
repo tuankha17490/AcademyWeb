@@ -189,7 +189,7 @@ export default class UserService extends BaseServices {
             if (checkEmail && id != checkEmail.ID) {
                 throw 'error.EmailAlreadyRegister'
             }
-            if(data.Role == 'Admin') {
+            if (data.Role == 'Admin') {
                 throw 'error.DontAllowUpgradeAdmin'
             }
             const checkRole = await RoleRespository.Instance().getBy({
@@ -263,4 +263,5 @@ export default class UserService extends BaseServices {
             return response(400, error.toString())
         }
     }
+  
 }
