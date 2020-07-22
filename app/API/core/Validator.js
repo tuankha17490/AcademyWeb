@@ -40,19 +40,18 @@ export default class BaseValidator {
     }
     passwordValidate(req, res) {
         try {
-            console.log(req.body.Password);
             if(!validator.isLength(req.body.Password, {
                 min: 6,
             })) {
                 return res.status(200).json({
                     status: 400,
-                    message: 'error.mustGreaterThan6'
+                    message: 'validator.mustGreaterThan6'
                 })
             }
             if (!validator.isAlphanumeric(req.body.Password)) {
                 return res.status(200).json({
                     status: 400,
-                    message: 'error.onlyAlphaAndNumber'
+                    message: 'validator.onlyAlphaAndNumber'
                 })
             }
             return true
