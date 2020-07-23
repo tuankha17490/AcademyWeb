@@ -1,30 +1,20 @@
 {
-    "User": {
+    "Class": {
         "type": "object",
         "properties": {
             "ID": {
                 "type": "integer",
                 "readOnly": true
             },
-            "Email": {
-                "type": "string",
-                "format": "email"
-            },
-            "Password": {
-                "type": "string",
-                "minLength": 6,
-                "writeOnly": true
-            },
             "Name": {
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 255
             },
-            "Gender": {
-                "type": "boolean"
-            },
-            "Avatar": {
-                "type": "string"
+            "Detail": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255
             },
             "Subject": {
                 "type": "object",
@@ -40,12 +30,13 @@
                     }
                 }
             },
-            "Role": {
-                "type":"string"
+           
+            "StudentAmount": {
+                "type": "integer"
             }
         },
         "xml": {
-            "name": "User"
+            "name": "Class"
         }
     }
 }

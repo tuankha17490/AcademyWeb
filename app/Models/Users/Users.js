@@ -2,12 +2,13 @@ import Model from '../Schema'
 import Roles from './Roles'
 import Class from '../Class/Class'
 import Post from '../Class/Post'
+import Subject from '../Class/Subject'
 export default class Users extends Model {
     static get tableName() {
         return 'Users'
     }
     static get idColumn() {
-        return 'id'
+        return 'ID'
     }
     // Modifiers are reusable query snippets that can be used in various places.
     static get Modifier() {
@@ -23,7 +24,7 @@ export default class Users extends Model {
             type: 'object',
             required: ['Email', 'Password'],
             properties: {
-                id: {
+                ID: {
                     type: 'integer'
                 },
                 Email: {
@@ -77,6 +78,14 @@ export default class Users extends Model {
                 join: {
                     from: 'Users.ID',
                     to: 'Post.User_Id'
+                }
+            },
+            subject: {
+                relation: Model.HasOneRelation,
+                modelClass: Subject,
+                join: {
+                    from: 'Users.Subject_Id',
+                    to: 'Subject.ID'
                 }
             }
         }

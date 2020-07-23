@@ -29,12 +29,13 @@ export default class BaseServices {
             return response(400, error.toString())
         }
     }
-    async search(query, page, limit, searchBy = [], column = ['*']) {
+    async search(query, page, limit,table, searchBy = [], column = ['*']) {
         try {
             for (let i = 0; i < searchBy.length; i++) {
                 const count = await this.respository.count().where(searchBy[i], 'like', `%${query}%`)
+               
                 const offset = (page - 1) * limit
-                const data = await this.respository.graphFetched(offset, limit, 'roles', column).where(searchBy[i], 'like', `%${query}%`)
+                const data = await this.respository.graphFetched(offset, limit, table, column).where(searchBy[i], 'like', `%${query}%`)
                 if (data.length != 0) {
                     return {
                         status: 200,
@@ -61,9 +62,9 @@ export default class BaseServices {
             return response(400, error.toString())
         }
     }
-    async getInforById(id) {
+    async getInforById(id,table) {
         try {
-            const data = await this.respository.findAt(id)
+            const data = await this.respository.findAt(id).withGraphFetched(table)
             return response(200, 'Success !!!', data);
         } catch (error) {
             return response(400, error.toString())

@@ -168,9 +168,9 @@ exports.seed = async function (knex) {
   await TeacherRole('Subject', ['Read'])
   await TeacherRole('Post', ['Read', 'Create', 'Update', 'Delete'])
 
-  await ModeratorRole('Users', ['Create', 'Read', 'GetList','UpdateMyUser', 'Search'])
-  await ModeratorRole('Class', ['Read', 'JoinClass'])
-  await ModeratorRole('Subject', ['Read'])
+  await ModeratorRole('Users', ['Create', 'Read', 'GetList','UpdateMyUser', 'Search', 'Delete', 'Update'])
+  await ModeratorRole('Class', ['Read', 'JoinClass','GetList', 'Search'])
+  await ModeratorRole('Subject', ['Read', 'GetList', 'Search'])
   await ModeratorRole('Post', ['Read'])
 
   // Deletes ALL existing entries

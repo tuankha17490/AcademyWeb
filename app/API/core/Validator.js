@@ -19,6 +19,7 @@ export default class BaseValidator {
     }
     nameValidate(req, res) {
         try {
+            console.log('here');
             if (!validator.isLength(req.body.Name, {
                     min: 1,
                     max: 255
@@ -29,6 +30,7 @@ export default class BaseValidator {
                     message: 'Name is too long or null'
                 })
             }
+           
             return true
         } catch (error) {
             return res.status(200).json({
@@ -95,6 +97,28 @@ export default class BaseValidator {
             return res.status(200).json({
                 status: 400,
                 message: 'Avatar error',
+                error: error.toString()
+            })
+        }
+    }
+    studentAmountValidate(req, res) {
+        try {
+            if(Number.isInteger(req.body.StudentAmount) != true) {
+                if(validator.isNumeric(req.body.StudentAmount)) {
+                    req.body.StudentAmount = Number(req.body.StudentAmount)
+                }
+                else {
+                    return res.status(200).json({
+                        status: 400,
+                        error: 'validate.AmountMustBeNumberic'
+                    })
+                }
+            }
+            return true
+        } catch (error) {
+            return res.status(200).json({
+                status: 400,
+                message: 'student amount error',
                 error: error.toString()
             })
         }

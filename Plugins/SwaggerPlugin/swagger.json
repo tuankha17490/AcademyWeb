@@ -135,6 +135,23 @@
         },
         "/user/search/{page}&{limit}": {
             "$ref": "./paths/user.json#/search"
+        },
+        "/class/create": {
+            "$ref": "./paths/class.json#/create"
+        },
+
+        "/class/search/{page}&{limit}": {
+            "$ref": "./paths/class.json#/search"
+        },
+        "/class/{page}&{limit}": {
+            "$ref": "./paths/class.json#/pagination"
+        },
+        "/class/{subject}/{page}&{limit}": {
+            "$ref": "./paths/class.json#/paginationWithSubject"
+        },
+        "/class/{id}": {
+            "$ref": "./paths/class.json#/specifyClass/id"
         }
+
     }
 }

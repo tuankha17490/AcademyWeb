@@ -1,0 +1,36 @@
+{
+    "create": {
+        "post": {
+            "$ref": "../components/class.json#/create"
+        }
+       
+    },
+    "specifyClass": {
+        "id": {
+            "get": {
+                "$ref": "../components/class.json#/specifyClass/id/get"
+            },
+            "put": {
+                "$ref": "../components/class.json#/specifyClass/id/put"
+            },
+            "delete": {
+                "$ref": "../components/class.json#/specifyClass/id/delete"
+            }
+        }
+    },
+    "search": {
+        "get": {
+            "$ref":"../components/class.json#/search"
+        }
+    },
+    "pagination": {
+        "get": {
+            "$ref": "../components/class.json#/pagination"
+        }
+    },
+    "paginationWithSubject": {
+        "get": {
+            "$ref": "../components/class.json#/paginationWithSubject"
+        }
+    }
+}

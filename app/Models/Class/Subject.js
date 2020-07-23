@@ -1,11 +1,12 @@
 import Model from '../Schema'
 import Class from './Class'
+import Users from '../Users/Users'
 export default class Subject extends Model {
     static get tableName() {
         return 'Subject'
     }
     static get idColumn() {
-        return 'id'
+        return 'ID'
     }
     // Modifiers are reusable query snippets that can be used in various places.
     static get Modifier() {
@@ -21,7 +22,7 @@ export default class Subject extends Model {
             type: 'object',
             required: ['Name'],
             properties: {
-                id: {
+                ID: {
                     type: 'integer'
                 },
                 Name: {
@@ -42,6 +43,14 @@ export default class Subject extends Model {
                 join: {
                     from: 'Subject.ID',
                     to: 'Class.Subject_Id'
+                }
+            },
+            users: {
+                relation: Model.HasManyRelation,
+                modelClass: Users,
+                join: {
+                    from: 'Subject.ID',
+                    to: 'Users.Subject_Id'
                 }
             }
         }

@@ -26,12 +26,15 @@ export default class UserController extends BaseController {
         return this.service.getMe(decode)
     }
     search(data,page, limit) {
-        return this.service.search(data,page, limit, ['Name', 'Email'],['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
+        return this.service.search(data,page, limit,'roles', ['Name', 'Email'],['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
     }
     updateInformation(req) {
         return this.service.updateInformation(req)
     }
     register(req) {
         return this.service.register(req)
+    }
+    getInforById(id) {
+        return this.service.getInforById(id, 'roles');
     }
 }

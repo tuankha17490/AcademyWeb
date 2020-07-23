@@ -1,6 +1,6 @@
 import BaseRespository from '../../core/Repository'
-import Users from "../../../Models/Users/Users"
-export default class UserRespository extends BaseRespository {
+import Subject from "../../../Models/Class/Subject"
+export default class SubjectRespository extends BaseRespository {
     static _Instance;
     static Instance() {
         if (!this._Instance) {
@@ -12,7 +12,8 @@ export default class UserRespository extends BaseRespository {
         super()
     }
     getTable() {
-        return Users;
+        return Subject;
     }
+   
     
 }

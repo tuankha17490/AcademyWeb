@@ -1,0 +1,408 @@
+{
+    "create": {
+        "tags": [
+            "class"
+        ],
+        "summary": "Create class",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createClass",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "requestBody": {
+            "description": "Create",
+            "required": true,
+            "content": {
+                "application/x-www-form-urlencoded": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "Name": {
+                                "type": "string"
+                            },
+                            "Detail": {
+                                "type": "string"
+                            },
+                            "StudentAmount": {
+                                "type": "integer"
+                            },
+                            "Subject": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "default": {
+                "description": "successful operation",
+                "content": {}
+            }
+        },
+        "x-codegen-request-body-name": "body"
+    },
+    "specifyClass": {
+        "id": {
+            "get": {
+                "tags": [
+                    "class"
+                ],
+                "summary": "Get class by id",
+                "operationId": "getClassById",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id that needs to be fetched",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "../schemas/class.json#/Class"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../schemas/class.json#/Class"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid class supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Class not found",
+                        "content": {}
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "class"
+                ],
+                "summary": "Updated class",
+                "description": "Update information of class by id.",
+                "operationId": "updateClassById",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "the id that need to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated class object",
+                    "content": {
+                        "application/xml": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "Name": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 255
+                                    },
+                                    "Detail": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 255
+                                    },
+                                    "Subject": {
+                                        "type": "string"
+                                    },
+                                    "StudentAmount": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "Name": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 255
+                                        },
+                                        "Detail": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 255
+                                        },
+                                        "Subject": {
+                                            "type": "string"
+                                        },
+                                        "StudentAmount": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Invalid class supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "class not found",
+                        "content": {}
+                    }
+                },
+                "x-codegen-request-body-name": "body"
+            },
+            "delete": {
+                "tags": [
+                    "class"
+                ],
+                "summary": "Delete class",
+                "description": "Delete specify class by id.",
+                "operationId": "deleleClassById",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id that needs to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid class supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Class not found",
+                        "content": {}
+                    }
+                }
+            }
+        }
+    },
+    "search": {
+        "tags": [
+            "class"
+        ],
+        "summary": "Search class",
+        "description": "Search class follow name of class.",
+        "operationId": "searchClass",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The page of data want to fetched",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "data",
+                "in": "query",
+                "description": "The data that needs to be searched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/class.json#/Class"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/class.json#/Class"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Class not found",
+                "content": {}
+            }
+        }
+    },
+    "pagination": {
+        "tags": [
+            "class"
+        ],
+        "summary": "Get list class",
+        "description": "Get information with offset and limit to paginate.",
+        "operationId": "PaginationClass",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The offset that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/class.json#/Class"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/class.json#/Class"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Invalid username supplied",
+                "content": {}
+            },
+            "404": {
+                "description": "User not found",
+                "content": {}
+            }
+        }
+    },
+    "paginationWithSubject": {
+        "tags": [
+            "class"
+        ],
+        "summary": "Get list class with subject",
+        "description": "Get information with offset and limit to paginate.",
+        "operationId": "PaginationClassWithSubject",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The offset that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "Subject",
+                "in": "path",
+                "description": "The subject that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/class.json#/Class"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/class.json#/Class"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Invalid username supplied",
+                "content": {}
+            },
+            "404": {
+                "description": "User not found",
+                "content": {}
+            }
+        }
+    }
+}

@@ -52,6 +52,7 @@ router.get('/search/:page&:limit',authorization,permission.Search, (req, res) =>
     }
 })
 
+
 router.get('/:id',authorization,permission.Read, (req, res) => {
     try {
         controller.getInforById(req.params.id).then(result =>{return res.status(200).json(result)})

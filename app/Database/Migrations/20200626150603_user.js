@@ -6,6 +6,8 @@ export function up(knex) {
         t.string('Password').notNull()
         t.string('Avatar').nullable()
         t.bool('Gender').nullable()
+        t.integer('Subject_Id').unsigned()
+        t.foreign('Subject_Id').references('Subject.ID').onDelete('CASCADE').onUpdate('CASCADE')
         t.string('Slug')
         t.timestamps()
         t.integer('Role_Id').unsigned()

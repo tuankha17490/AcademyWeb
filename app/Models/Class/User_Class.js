@@ -1,51 +1,37 @@
 import Model from '../Schema'
-import Class from './Class'
+import Class from '../Class/Class'
 import Users from '../Users/Users'
-export default class Post extends Model {
+export default class User_Class extends Model {
     static get tableName() {
-        return 'Post'
+        return 'User_Class'
     }
     static get idColumn() {
         return 'ID'
-    }
-    // Modifiers are reusable query snippets that can be used in various places.
-    static get Modifier() {
-        return {
-            searchByName(query, name) {
-                // ......
-            }
-        }
     }
     // To do validate 
     static get jsonSchema() {
         return {
             type: 'object',
-            required: ['Name', 'Detail'],
             properties: {
                 ID: {
                     type: 'integer'
                 },
-                Title: {
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 50
+                User_Id: {
+                    type: 'integer'
                 },
-                Content: {
-                    type: "string",
-                    minLength: 1,
-                    maxLength: 255
-                },
+                Class_Id: {
+                    type: 'integer'
+                }
             },
         }
     }
     static get relationMappings() {
-
         return {
             users: {
                 relation: Model.HasOneRelation,
                 modelClass: Users,
                 join: {
-                    from: 'Post.User_Id',
+                    from: 'User_Class.User_Id',
                     to: 'Users.ID'
                 }
             },
@@ -53,10 +39,11 @@ export default class Post extends Model {
                 relation: Model.HasOneRelation,
                 modelClass: Class,
                 join: {
-                    from: 'Post.Class_Id',
+                    from: 'User_Class.Class_Id',
                     to: 'Class.ID'
                 }
             }
+          
         }
     }
 }
