@@ -45,7 +45,7 @@ export default class ClassService extends BaseServices {
         try {
             const page = req.params.page
             const limit = req.params.limit
-            const count = await this.respository.count();
+            const count = await this.respository.count().joinRelated(table).where('subject.Name', req.params.subject);
             const offset = (page - 1) * limit
             if (offset > count) {
                 throw 'Offset can not be greater than the number of data'
@@ -56,6 +56,28 @@ export default class ClassService extends BaseServices {
                 message: 'Success !!!',
                 totalRow: count[0].CNT,
                 data
+            }
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async searchWithSubject(query, page, limit, subject, column) {
+        try {
+                const count = await this.respository.count().where('Name', 'like', `%${query}%`)
+                const offset = (page - 1) * limit
+                const data = await this.respository.listOffSet(offset, limit, column).joinRelated('subject').where('subject.Name',subject).where('Name', 'like', `%${query}%`)
+                if (data.length != 0) {
+                    return {
+                        status: 200,
+                        message: 'Success !!!',
+                        totalRow: count[0].CNT,
+                        data
+                    }
+                }
+            return {
+                status: 200,
+                message: 'Success !!!',
+                totalRow: 0,
             }
         } catch (error) {
             return response(400, error.toString())

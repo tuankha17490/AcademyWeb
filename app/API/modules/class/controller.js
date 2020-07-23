@@ -19,4 +19,7 @@ export default class ClassController extends BaseController {
     getList(req) {
         return this.service.getList(req, 'subject', ['Class.ID', 'Class.Name', 'Class.Detail', 'Class.StudentAmount', 'Class.Slug'])
     }
+    searchWithSubject(data, page, limit, subject) {
+        return this.service.searchWithSubject(data, page, limit,subject,'subject',['Class.ID', 'Class.Name', 'Class.Detail', 'Class.StudentAmount', 'Class.Slug'])
+    }
 }
