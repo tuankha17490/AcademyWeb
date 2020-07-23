@@ -32,16 +32,38 @@
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
         "operationId": "createUser",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
         "requestBody": {
-            "description": "Created user object",
+            "description": "Create",
+            "required": true,
             "content": {
-                "*/*": {
+                "application/x-www-form-urlencoded": {
                     "schema": {
-                        "$ref": "../schemas/user.json#/User"
+                        "type": "object",
+                        "properties": {
+                            "Email": {
+                                "type": "string"
+                            },
+                            "Password": {
+                                "type": "string"
+                            },
+                            "Gender": {
+                                "type": "boolean"
+                            },
+                            "Name": {
+                                "type": "string"
+                            },
+                            "Role": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
-            },
-            "required": true
+            }
         },
         "responses": {
             "default": {
@@ -65,9 +87,9 @@
         ],
         "parameters": [
             {
-                "name": "search field",
-                "in": "query",
-                "description": "Filter name and email",
+                "name": "page",
+                "in": "path",
+                "description": "The page of data want to fetched",
                 "required": true,
                 "schema": {
                     "type": "string"

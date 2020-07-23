@@ -1,10 +1,10 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "API OF CUDIDI",
-    "description": "This is the documentation API of Cudidi browser",
+    "title": "API OF ACEDEMY",
+    "description": "This is the documentation API of Academy browser",
     "contact": {
-      "email": "Cudidi@gmail.com"
+      "email": "Academy@gmail.com"
     },
     "license": {
       "name": "Apache 2.0",
@@ -83,20 +83,7 @@
                       "type": "string"
                     },
                     "Role": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer"
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      },
-                      "xml": {
-                        "name": "User"
-                      }
+                      "type": "string"
                     }
                   },
                   "xml": {
@@ -131,20 +118,7 @@
                       "type": "string"
                     },
                     "Role": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer"
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      },
-                      "xml": {
-                        "name": "User"
-                      }
+                      "type": "string"
                     }
                   },
                   "xml": {
@@ -229,20 +203,7 @@
                       "type": "string"
                     },
                     "Role": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer"
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      },
-                      "xml": {
-                        "name": "User"
-                      }
+                      "type": "string"
                     }
                   },
                   "xml": {
@@ -277,20 +238,7 @@
                       "type": "string"
                     },
                     "Role": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer"
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      },
-                      "xml": {
-                        "name": "User"
-                      }
+                      "type": "string"
                     }
                   },
                   "xml": {
@@ -349,20 +297,7 @@
                     "type": "string"
                   },
                   "Role": {
-                    "type": "object",
-                    "properties": {
-                      "ID": {
-                        "type": "integer"
-                      },
-                      "Name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 255
-                      }
-                    },
-                    "xml": {
-                      "name": "User"
-                    }
+                    "type": "string"
                   }
                 },
                 "xml": {
@@ -389,26 +324,25 @@
         ],
         "summary": "Logs user into the system",
         "operationId": "loginUser",
-        "parameters": [
-          {
-            "name": "Email",
-            "in": "query",
-            "description": "The user name for login",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": true,
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "description": "Login",
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Email": {
+                    "type": "string"
+                  },
+                  "Password": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "successful operation",
@@ -485,59 +419,38 @@
         "summary": "Create user",
         "description": "This can only be done by the logged in user.",
         "operationId": "createUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
-          "description": "Created user object",
+          "description": "Create",
+          "required": true,
           "content": {
-            "*/*": {
+            "application/x-www-form-urlencoded": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "ID": {
-                    "type": "integer"
-                  },
                   "Email": {
-                    "type": "string",
-                    "format": "email"
+                    "type": "string"
                   },
                   "Password": {
-                    "type": "string",
-                    "minLength": 6
-                  },
-                  "Name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "type": "string"
                   },
                   "Gender": {
                     "type": "boolean"
                   },
-                  "Avatar": {
+                  "Name": {
                     "type": "string"
                   },
                   "Role": {
-                    "type": "object",
-                    "properties": {
-                      "ID": {
-                        "type": "integer"
-                      },
-                      "Name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 255
-                      }
-                    },
-                    "xml": {
-                      "name": "User"
-                    }
+                    "type": "string"
                   }
-                },
-                "xml": {
-                  "name": "User"
                 }
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "default": {
@@ -602,20 +515,7 @@
                       "type": "string"
                     },
                     "Role": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer"
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      },
-                      "xml": {
-                        "name": "User"
-                      }
+                      "type": "string"
                     }
                   },
                   "xml": {
@@ -650,20 +550,7 @@
                       "type": "string"
                     },
                     "Role": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer"
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      },
-                      "xml": {
-                        "name": "User"
-                      }
+                      "type": "string"
                     }
                   },
                   "xml": {
@@ -736,20 +623,7 @@
                     "type": "string"
                   },
                   "Role": {
-                    "type": "object",
-                    "properties": {
-                      "ID": {
-                        "type": "integer"
-                      },
-                      "Name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 255
-                      }
-                    },
-                    "xml": {
-                      "name": "User"
-                    }
+                    "type": "string"
                   }
                 },
                 "xml": {
@@ -895,20 +769,7 @@
                     "type": "string"
                   },
                   "Role": {
-                    "type": "object",
-                    "properties": {
-                      "ID": {
-                        "type": "integer"
-                      },
-                      "Name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 255
-                      }
-                    },
-                    "xml": {
-                      "name": "User"
-                    }
+                    "type": "string"
                   }
                 },
                 "xml": {
@@ -932,7 +793,7 @@
         "x-codegen-request-body-name": "body"
       }
     },
-    "/user/search/{limit}?data={}": {
+    "/user/search/{page}&{limit}": {
       "get": {
         "tags": [
           "user"
@@ -947,9 +808,9 @@
         ],
         "parameters": [
           {
-            "name": "search field",
-            "in": "query",
-            "description": "Filter name and email",
+            "name": "page",
+            "in": "path",
+            "description": "The page of data want to fetched",
             "required": true,
             "schema": {
               "type": "string"
@@ -1005,20 +866,7 @@
                       "type": "string"
                     },
                     "Role": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer"
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      },
-                      "xml": {
-                        "name": "User"
-                      }
+                      "type": "string"
                     }
                   },
                   "xml": {
@@ -1053,20 +901,7 @@
                       "type": "string"
                     },
                     "Role": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer"
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      },
-                      "xml": {
-                        "name": "User"
-                      }
+                      "type": "string"
                     }
                   },
                   "xml": {

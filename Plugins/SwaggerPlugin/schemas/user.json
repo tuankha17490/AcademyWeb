@@ -25,7 +25,7 @@
                 "type": "string"
             },
             "Role": {
-                "$ref": "./role.json#/Role"
+                "type":"string"
             }
         },
         "xml": {

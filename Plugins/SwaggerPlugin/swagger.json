@@ -1,10 +1,10 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "title": "API OF CUDIDI",
-        "description": "This is the documentation API of Cudidi browser",
+        "title": "API OF ACEDEMY",
+        "description": "This is the documentation API of Academy browser",
         "contact": {
-            "email": "Cudidi@gmail.com"
+            "email": "Academy@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -25,33 +25,34 @@
             }
         }
     },
-    "servers": [{
-        "url": "http://localhost:3000"
-    },
-    {
-        "url": "https://localhost:3000"
-    }
+    "servers": [
+        {
+            "url": "http://localhost:3000"
+        },
+        {
+            "url": "https://localhost:3000"
+        }
     ],
-    "tags": [{
-        "name": "class",
-        "description": "Everything about your Articles"
-    },
-    {
-        "name": "user",
-        "description": "Operations about user"
-    }
+    "tags": [
+        {
+            "name": "class",
+            "description": "Everything about your Articles"
+        },
+        {
+            "name": "user",
+            "description": "Operations about user"
+        }
     ],
     "paths": {
         "/user": {
-           "$ref":"./paths/user.json#/getInformation"
+            "$ref": "./paths/user.json#/getInformation"
         },
         "/user/{page}&{limit}": {
-            "$ref":"./paths/user.json#/pagination"
+            "$ref": "./paths/user.json#/pagination"
         },
         "/register": {
-            "$ref":"./paths/user.json#/register"
-         },
-      
+            "$ref": "./paths/user.json#/register"
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -59,25 +60,25 @@
                 ],
                 "summary": "Logs user into the system",
                 "operationId": "loginUser",
-                "parameters": [{
-                    "name": "Email",
-                    "in": "query",
-                    "description": "The user name for login",
+                "requestBody": {
+                    "description": "Login",
                     "required": true,
-                    "schema": {
-                        "type": "string"
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "Email": {
+                                        "type": "string"
+                                    },
+                                    "Password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
-                {
-                    "name": "Password",
-                    "in": "query",
-                    "description": "The password for login in clear text",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    }
-                }
-                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -117,13 +118,12 @@
                 }
             }
         },
-        
-        "/user/me" : {
-            "$ref":"./paths/user.json#/getMe"
+        "/user/me": {
+            "$ref": "./paths/user.json#/getMe"
         },
         "/user/create": {
-            "$ref":"./paths/user.json#/create"
-         },
+            "$ref": "./paths/user.json#/create"
+        },
         "/user/{id}": {
             "$ref": "./paths/user.json#/specifyUser/id"
         },
@@ -133,7 +133,7 @@
         "/user/update-information": {
             "$ref": "./paths/user.json#/updateInformation"
         },
-        "/user/search/{limit}?data={}": {
+        "/user/search/{page}&{limit}": {
             "$ref": "./paths/user.json#/search"
         }
     }
