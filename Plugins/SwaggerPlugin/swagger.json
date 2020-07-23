@@ -149,6 +149,9 @@
         "/class/{subject}/{page}&{limit}": {
             "$ref": "./paths/class.json#/paginationWithSubject"
         },
+        "/class/search/{subject}/{page}&{limit}": {
+            "$ref": "./paths/class.json#/searchWithSubject"
+        },
         "/class/{id}": {
             "$ref": "./paths/class.json#/specifyClass/id"
         }

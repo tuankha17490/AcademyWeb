@@ -141,27 +141,27 @@
                                         "type": "integer"
                                     }
                                 }
-                            },
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Name": {
-                                            "type": "string",
-                                            "minLength": 1,
-                                            "maxLength": 255
-                                        },
-                                        "Detail": {
-                                            "type": "string",
-                                            "minLength": 1,
-                                            "maxLength": 255
-                                        },
-                                        "Subject": {
-                                            "type": "string"
-                                        },
-                                        "StudentAmount": {
-                                            "type": "integer"
-                                        }
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "Name": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 255
+                                    },
+                                    "Detail": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 255
+                                    },
+                                    "Subject": {
+                                        "type": "string"
+                                    },
+                                    "StudentAmount": {
+                                        "type": "integer"
                                     }
                                 }
                             }
@@ -241,6 +241,78 @@
             },
             {
                 "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "data",
+                "in": "query",
+                "description": "The data that needs to be searched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/class.json#/Class"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/class.json#/Class"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Class not found",
+                "content": {}
+            }
+        }
+    },
+    "searchWithSubject": {
+        "tags": [
+            "class"
+        ],
+        "summary": "Search class",
+        "description": "Search class follow name of class.",
+        "operationId": "searchClassWithSubject",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The page of data want to fetched",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "subject",
                 "in": "path",
                 "description": "The limit that needs to be fetched.",
                 "required": true,
@@ -370,7 +442,7 @@
                 }
             },
             {
-                "name": "Subject",
+                "name": "subject",
                 "in": "path",
                 "description": "The subject that needs to be fetched.",
                 "required": true,

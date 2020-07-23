@@ -81,7 +81,7 @@ router.put('/upload-avatar',authorization,permission.UpdateMyUser,multer.single(
 
 router.put('/update-information',authorization,permission.UpdateMyUser,validator.updateTask, (req, res) => {
     try {
-        controller.updateUserById(req).then(result => {return res.status(200).json(result)})
+        controller.updateInformation(req).then(result => {return res.status(200).json(result)})
     } catch (error) {
         console.log('CONTROLLER_UPDATE_USER')
         return res.status(200).json(error)

@@ -1551,6 +1551,152 @@
         }
       }
     },
+    "/class/search/{subject}/{page}&{limit}": {
+      "get": {
+        "tags": [
+          "class"
+        ],
+        "summary": "Search class",
+        "description": "Search class follow name of class.",
+        "operationId": "searchClassWithSubject",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "The page of data want to fetched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "The limit that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subject",
+            "in": "path",
+            "description": "The limit that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "The data that needs to be searched.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ID": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "Name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Detail": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Subject": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      }
+                    },
+                    "StudentAmount": {
+                      "type": "integer"
+                    }
+                  },
+                  "xml": {
+                    "name": "Class"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ID": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "Name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Detail": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Subject": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      }
+                    },
+                    "StudentAmount": {
+                      "type": "integer"
+                    }
+                  },
+                  "xml": {
+                    "name": "Class"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Class not found",
+            "content": {}
+          }
+        }
+      }
+    },
     "/class/{id}": {
       "get": {
         "tags": [
@@ -1698,14 +1844,10 @@
         "requestBody": {
           "description": "Updated class object",
           "content": {
-            "*/*": {
+            "application/xml": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "ID": {
-                    "type": "integer",
-                    "readOnly": true
-                  },
                   "Name": {
                     "type": "string",
                     "minLength": 1,
@@ -1717,25 +1859,34 @@
                     "maxLength": 255
                   },
                   "Subject": {
-                    "type": "object",
-                    "properties": {
-                      "ID": {
-                        "type": "integer",
-                        "readOnly": true
-                      },
-                      "Name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 255
-                      }
-                    }
+                    "type": "string"
                   },
                   "StudentAmount": {
                     "type": "integer"
                   }
-                },
-                "xml": {
-                  "name": "Class"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "Detail": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "Subject": {
+                    "type": "string"
+                  },
+                  "StudentAmount": {
+                    "type": "integer"
+                  }
                 }
               }
             }

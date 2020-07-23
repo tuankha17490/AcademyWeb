@@ -32,5 +32,10 @@
         "get": {
             "$ref": "../components/class.json#/paginationWithSubject"
         }
+    },
+    "searchWithSubject": {
+        "get": {
+            "$ref": "../components/class.json#/searchWithSubject"
+        }
     }
 }
