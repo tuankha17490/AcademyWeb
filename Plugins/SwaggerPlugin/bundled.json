@@ -708,43 +708,41 @@
         "requestBody": {
           "description": "Updated user object",
           "content": {
-            "*/*": {
+            "application/x-www-form-urlencoded": {
               "schema": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ID": {
-                      "type": "integer",
-                      "readOnly": true
-                    },
-                    "Email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "Password": {
-                      "type": "string",
-                      "minLength": 6,
-                      "writeOnly": true
-                    },
-                    "Name": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 255
-                    },
-                    "Gender": {
-                      "type": "boolean"
-                    },
-                    "Avatar": {
-                      "type": "string"
-                    },
-                    "Subject": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 255
-                    },
-                    "Role": {
-                      "type": "string"
-                    }
+                "type": "object",
+                "properties": {
+                  "ID": {
+                    "type": "integer",
+                    "readOnly": true
+                  },
+                  "Email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "Password": {
+                    "type": "string",
+                    "minLength": 6,
+                    "writeOnly": true
+                  },
+                  "Name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "Gender": {
+                    "type": "boolean"
+                  },
+                  "Avatar": {
+                    "type": "string"
+                  },
+                  "Subject": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
+                  },
+                  "Role": {
+                    "type": "string"
                   }
                 }
               }
@@ -860,7 +858,7 @@
         "requestBody": {
           "description": "Updated user object",
           "content": {
-            "*/*": {
+            "application/x-www-form-urlencoded": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -1064,6 +1062,144 @@
           },
           "404": {
             "description": "User not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/teacher/{subject}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get list teacher of subject",
+        "description": "Get information of teacher.",
+        "operationId": "getListTeacher",
+        "parameters": [
+          {
+            "name": "subject",
+            "in": "path",
+            "description": "The subject that needs to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ID": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "Password": {
+                      "type": "string",
+                      "minLength": 6,
+                      "writeOnly": true
+                    },
+                    "Name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Gender": {
+                      "type": "boolean"
+                    },
+                    "Avatar": {
+                      "type": "string"
+                    },
+                    "Subject": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      }
+                    },
+                    "Role": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "User"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ID": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "Password": {
+                      "type": "string",
+                      "minLength": 6,
+                      "writeOnly": true
+                    },
+                    "Name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Gender": {
+                      "type": "boolean"
+                    },
+                    "Avatar": {
+                      "type": "string"
+                    },
+                    "Subject": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      }
+                    },
+                    "Role": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "User"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid subject supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Teacher not found",
             "content": {}
           }
         }
