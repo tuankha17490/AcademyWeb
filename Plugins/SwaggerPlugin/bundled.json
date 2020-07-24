@@ -710,52 +710,42 @@
           "content": {
             "*/*": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "ID": {
-                    "type": "integer",
-                    "readOnly": true
-                  },
-                  "Email": {
-                    "type": "string",
-                    "format": "email"
-                  },
-                  "Password": {
-                    "type": "string",
-                    "minLength": 6,
-                    "writeOnly": true
-                  },
-                  "Name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 255
-                  },
-                  "Gender": {
-                    "type": "boolean"
-                  },
-                  "Avatar": {
-                    "type": "string"
-                  },
-                  "Subject": {
-                    "type": "object",
-                    "properties": {
-                      "ID": {
-                        "type": "integer",
-                        "readOnly": true
-                      },
-                      "Name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 255
-                      }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ID": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "Password": {
+                      "type": "string",
+                      "minLength": 6,
+                      "writeOnly": true
+                    },
+                    "Name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Gender": {
+                      "type": "boolean"
+                    },
+                    "Avatar": {
+                      "type": "string"
+                    },
+                    "Subject": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Role": {
+                      "type": "string"
                     }
-                  },
-                  "Role": {
-                    "type": "string"
                   }
-                },
-                "xml": {
-                  "name": "User"
                 }
               }
             }
@@ -899,25 +889,10 @@
                     "type": "string"
                   },
                   "Subject": {
-                    "type": "object",
-                    "properties": {
-                      "ID": {
-                        "type": "integer",
-                        "readOnly": true
-                      },
-                      "Name": {
-                        "type": "string",
-                        "minLength": 1,
-                        "maxLength": 255
-                      }
-                    }
-                  },
-                  "Role": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255
                   }
-                },
-                "xml": {
-                  "name": "User"
                 }
               }
             }

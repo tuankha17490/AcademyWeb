@@ -27,6 +27,11 @@
             "$ref": "../components/user.json#/pagination"
         }
     },
+    "getTeacher": {
+        "get": {
+            "$ref": "../components/user.json#/getTeacher"
+        }
+    },
     "check_password": {
         "post": {
             "$ref": "../components/user.json#/checkPassword"

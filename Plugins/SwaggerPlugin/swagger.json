@@ -136,10 +136,12 @@
         "/user/search/{page}&{limit}": {
             "$ref": "./paths/user.json#/search"
         },
+        "/user/teacher/{subject}": {
+            "$ref": "./paths/user.json#/getTeacher"
+        },
         "/class/create": {
             "$ref": "./paths/class.json#/create"
         },
-
         "/class/search/{page}&{limit}": {
             "$ref": "./paths/class.json#/search"
         },
