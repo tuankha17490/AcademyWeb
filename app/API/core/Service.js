@@ -88,8 +88,8 @@ export default class BaseServices {
     }
     async deleteById(id) {
         try {
-            const result = await this.respository.deleteById(id);
-            return response(200, 'Success !!!', result);
+            await this.respository.deleteById(id);
+            return response(200, 'Success !!!');
         } catch (error) {
             return response(400, error.toString())
         }

@@ -9,9 +9,9 @@ export function up(knex) {
         t.integer('Subject_Id').unsigned()
         t.foreign('Subject_Id').references('Subject.ID').onDelete('CASCADE').onUpdate('CASCADE')
         t.string('Slug')
-        t.timestamps()
         t.integer('Role_Id').unsigned()
         t.foreign('Role_Id').references('Roles.ID').onDelete('CASCADE').onUpdate('CASCADE')
+        t.timestamps()
     })
 }
 
