@@ -276,7 +276,6 @@ export default class UserService extends BaseServices {
         try {
             const result = await this.respository.relatedJoin('[roles, subject]').select(column)
             .where('roles.Name','Teacher').where('subject.Name', req.params.subject).withGraphFetched('[roles,subject]')
-            console.log(result);
             return response(200, 'Success !!!', result);
         } catch (error) {
             return response(400, error.toString())

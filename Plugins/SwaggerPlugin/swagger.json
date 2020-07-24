@@ -14,7 +14,7 @@
     },
     "externalDocs": {
         "description": "Find out more about Cudidi",
-        "url": "http://localhost:3000"
+        "url": "https://academy-web.herokuapp.com/"
     },
     "components": {
         "securitySchemes": {
@@ -27,10 +27,10 @@
     },
     "servers": [
         {
-            "url": "http://localhost:3000"
+            "url": "https://academy-web.herokuapp.com/"
         },
         {
-            "url": "https://localhost:3000"
+            "url": "http://academy-web.herokuapp.com/"
         }
     ],
     "tags": [

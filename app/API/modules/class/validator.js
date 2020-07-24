@@ -9,7 +9,6 @@ export default class UserValidator extends BaseValidator {
             if (checkAmount != true) return checkAmount
             const checkName = super.nameValidate(req, res)
             if(checkName != true) return checkName
-            console.log(checkName);
             next()
         } catch (error) {
             return res.status(200).json({
