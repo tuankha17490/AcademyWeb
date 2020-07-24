@@ -6,7 +6,7 @@ const controller = new UserController()
 const validator = new UserValidator()
 
 
-router.post('/login',(req, res) => {
+router.post('/login',validator.loginTask, (req, res) => {
     try {
         controller.login(req.body).then(result => {return res.status(200).json(result)})
     } catch (error) {

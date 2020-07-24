@@ -3,6 +3,20 @@ export default class UserValidator extends BaseValidator {
     constructor() {
         super()
     }
+    loginTask(req, res, next) {
+        try { 
+            const checkEmail = super.emailValidate(req, res)
+            if(checkEmail != true) return checkEmail;
+            const checkPassword = super.passwordValidate(req, res)
+            if(checkPassword != true) return checkPassword;
+            next()
+        } catch (error) {
+            return res.status(200).json({
+                status: 400,
+                error: error.toString()
+            })
+        }
+    }
     registerTask(req, res, next) {
         try { 
             const checkEmail = super.emailValidate(req, res)
