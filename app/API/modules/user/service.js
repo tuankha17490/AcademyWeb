@@ -1,6 +1,7 @@
 import UserRespository from "./respository"
 import BaseServices from '../../core/Service';
 import RoleRespository from "../roles/respository"
+import SubjectRespository from "../subject/respository"
 import getSlug from "slugify"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
@@ -77,6 +78,14 @@ export default class UserService extends BaseServices {
                 }
 
             }
+            if(param.Role == 'Teacher') {
+                if(param.Subject == undefined) {
+                    throw 'error.NeedSubjectOfTeacher'
+                }
+                const subject = await SubjectRespository.Instance().getBy({Name: param.Subject})
+                param.Subject_Id = subject.ID
+            }
+            param.Subject = undefined
             const checkRole = await RoleRespository.Instance().getBy({
                 Name: param.Role
             })

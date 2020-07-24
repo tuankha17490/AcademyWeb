@@ -30,6 +30,9 @@
                             },
                             "Subject": {
                                 "type": "string"
+                            },
+                            "TeacherID": {
+                                "type": "integer"
                             }
                         }
                     }

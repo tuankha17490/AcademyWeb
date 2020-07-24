@@ -4,7 +4,7 @@ import UserClass from "../../../Models/Class/User_Class"
 import BaseServices from '../../core/Service';
 import getSlug from "slugify"
 import response from "../../../Util/Response"
-
+import validator from "validator"
 
 export default class ClassService extends BaseServices {
     static _Instance;
@@ -20,6 +20,12 @@ export default class ClassService extends BaseServices {
 
     async create(req) {
         try {
+            if(validator.isNumeric(req.body.TeacherID)) {
+                req.body.TeacherID = Number(req.body.TeacherID)
+            }
+            else {
+                throw 'TeacherID is numberic'
+            }
             const subject = await SubjectRespository.Instance().getBy({
                 Name: req.body.Subject
             })
@@ -27,6 +33,7 @@ export default class ClassService extends BaseServices {
                 replacement: '.',
                 lower: true
             })
+            
             const query = {
                     Name: req.body.Name,
                     Detail: req.body.Detail,
@@ -35,7 +42,7 @@ export default class ClassService extends BaseServices {
                     Slug
             }
             const dataFetched = await this.respository.create(query)
-            await UserClass.query().insert({User_Id: req.body.userID, Class_Id: dataFetched.ID})
+            await UserClass.query().insert({User_Id: req.body.TeacherID, Class_Id: dataFetched.ID})
             return response(200, 'Success !!!')
         } catch (error) {
             return response(400, error.toString())
