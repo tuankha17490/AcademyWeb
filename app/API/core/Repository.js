@@ -53,4 +53,7 @@ export default class BaseRespository {
     graphInsert(data) {
         return this.tableQuery().insertGraph(data)
     }
+    relatedJoin(relation, condition = {}) {
+        return this.tableQuery().joinRelated(relation).where(condition)
+    }
 }

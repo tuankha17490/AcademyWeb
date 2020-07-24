@@ -37,4 +37,7 @@ export default class UserController extends BaseController {
     getInforById(id) {
         return this.service.getInforById(id, 'roles');
     }
+    getTeacher(req) {
+        return this.service.getTeacher(req,['Users.ID', 'Users.Name', 'Users.Email', 'Users.Gender', 'Users.Avatar', 'Users.Slug', 'roles.Name'])
+    }
 }

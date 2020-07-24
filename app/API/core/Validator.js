@@ -104,15 +104,18 @@ export default class BaseValidator {
     studentAmountValidate(req, res) {
         try {
             if(Number.isInteger(req.body.StudentAmount) != true) {
-                if(validator.isNumeric(req.body.StudentAmount)) {
-                    req.body.StudentAmount = Number(req.body.StudentAmount)
+                if(!(Number(req.body.StudentAmount) === req.body.StudentAmount)) {
+                    if(validator.isNumeric(req.body.StudentAmount)) {
+                        req.body.StudentAmount = Number(req.body.StudentAmount)
+                    }
+                    else {
+                        return res.status(200).json({
+                            status: 400,
+                            error: 'validate.AmountMustBeNumberic'
+                        })
+                    }
                 }
-                else {
-                    return res.status(200).json({
-                        status: 400,
-                        error: 'validate.AmountMustBeNumberic'
-                    })
-                }
+                
             }
             return true
         } catch (error) {

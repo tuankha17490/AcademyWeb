@@ -9,7 +9,7 @@ const permission = new ClassPermission('Class')
 const controller = new ClassController()
 
 
-router.post('/create',authorization,permission.Create, validator.createTask,(req, res) => {
+router.post('/create', validator.createTask,(req, res) => {
     try {
         controller.create(req).then(result => {return res.status(201).json(result)})
     } catch (error) {

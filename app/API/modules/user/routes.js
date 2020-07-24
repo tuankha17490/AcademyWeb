@@ -33,6 +33,14 @@ router.get('/me',authorization,(req, res) => {
         return res.status(200).json(error)
     }
 })
+router.get('/teacher/:subject', (req, res) => {
+    try {
+        controller.getTeacher(req).then(result => {return res.status(200).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_GET_MY_USER');
+        return res.status(200).json(error)
+    }
+})
 
 router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
     try {
