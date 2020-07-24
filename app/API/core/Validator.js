@@ -19,7 +19,6 @@ export default class BaseValidator {
     }
     nameValidate(req, res) {
         try {
-            console.log('here');
             if (!validator.isLength(req.body.Name, {
                     min: 1,
                     max: 255
@@ -67,7 +66,6 @@ export default class BaseValidator {
     }
     genderValidate(req, res) {
         try {
-            console.log(req.body.Gender != true);
             if (req.body.Gender == true || req.body.Gender == false) {
                 return true
                

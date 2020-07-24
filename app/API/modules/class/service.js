@@ -20,7 +20,7 @@ export default class ClassService extends BaseServices {
 
     async create(req) {
         try {
-            if (!(Number(req.body.StudentAmount) === req.body.StudentAmount)) {
+            if (!(Number(req.body.TeacherID) === req.body.TeacherID)) {
                 if (validator.isNumeric(req.body.TeacherID)) {
                     req.body.TeacherID = Number(req.body.TeacherID)
                 } else {
