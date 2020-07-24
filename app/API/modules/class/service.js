@@ -110,7 +110,7 @@ export default class ClassService extends BaseServices {
             return response(400, error.toString())
         }
     }
-    async getListOffSet(page, limit, table, column = ['*']) {
+    async getListOffSet(page, limit, column = ['*']) {
         try {
             const count = await this.respository.count();
             const offset = (page - 1) * limit
@@ -137,14 +137,14 @@ export default class ClassService extends BaseServices {
             return response(400, error.toString())
         }
     }
-    async search(query, page, limit,table, searchBy = [], column = ['*']) {
+    async search(query, page, limit, searchBy = [], column = ['*']) {
         try {
             for (let i = 0; i < searchBy.length; i++) {
                 const count = await this.respository.count().where(searchBy[i], 'like', `%${query}%`)
                 const offset = (page - 1) * limit
                 const data = await this.respository.graphFetched(offset, limit, '[subject, users]', column).where(searchBy[i], 'like', `%${query}%`)
                 if (data.length != 0) {
-                    data.forEach(element => {
+                    data.forEach(async element => {
                         element.Subject = element.subject.Name
                         element.TeacherName = element.users[0].Name
                         element.users = undefined
@@ -163,6 +163,19 @@ export default class ClassService extends BaseServices {
                 message: 'Success !!!',
                 totalRow: 0,
             }
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async joinClass(req) {
+        try {
+            let count = await this.respository.relatedJoin('user_class').where('user_class.Class_Id',req.body.classID).count('Class.ID as CNT');
+            count = count[0].CNT -1
+            if(req.body.StudentAmount <= count) {
+                throw 'error.ClassIsFull'
+            }
+            await UserClass.query().insert({Class_Id: req.body.classID, User_Id: req.body.studentID})
+            return response(200, 'Success !!!')
         } catch (error) {
             return response(400, error.toString())
         }

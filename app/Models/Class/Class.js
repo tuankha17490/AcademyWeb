@@ -2,6 +2,7 @@ import Model from '../Schema'
 import Users from '../Users/Users'
 import Subject from './Subject'
 import Post from './Post'
+import User_Class from './User_Class'
 export default class Class extends Model {
     static get tableName() {
         return 'Class'
@@ -68,6 +69,14 @@ export default class Class extends Model {
                 join: {
                     from: 'Class.ID',
                     to: 'Post.Class_Id'
+                }
+            },
+            user_class: {
+                relation: Model.HasManyRelation,
+                modelClass: User_Class,
+                join: {
+                    from: 'Class.ID',
+                    to: 'User_Class.Class_Id'
                 }
             }
         }

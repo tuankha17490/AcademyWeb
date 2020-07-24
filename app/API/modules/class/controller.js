@@ -8,10 +8,10 @@ export default class ClassController extends BaseController {
         return ClassService.Instance();  
     }
     search(data,page, limit) {
-        return this.service.search(data,page, limit,'subject', ['Name'],['ID', 'Name', 'Detail', 'StudentAmount', 'Slug'])
+        return this.service.search(data,page, limit, ['Name'],['ID', 'Name', 'Detail', 'StudentAmount', 'Slug'])
     }
     getListOffSet(page, limit) {
-        return this.service.getListOffSet(page, limit,'subject',['ID', 'Name', 'Detail', 'StudentAmount', 'Slug'])
+        return this.service.getListOffSet(page, limit,['ID', 'Name', 'Detail', 'StudentAmount', 'Slug'])
     }
     getInforById(id) {
         return this.service.getInforById(id, 'subject');
@@ -21,5 +21,8 @@ export default class ClassController extends BaseController {
     }
     searchWithSubject(data, page, limit, subject) {
         return this.service.searchWithSubject(data, page, limit,subject,['Class.ID', 'Class.Name', 'Class.Detail', 'Class.StudentAmount', 'Class.Slug'])
+    }
+    joinClass(req) {
+        return this.service.joinClass(req);
     }
 }

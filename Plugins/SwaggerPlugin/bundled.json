@@ -2053,6 +2053,50 @@
           }
         }
       }
+    },
+    "/class/join": {
+      "post": {
+        "tags": [
+          "class"
+        ],
+        "summary": "Add student",
+        "description": "Add student to class.",
+        "operationId": "addStudentToClass",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Add student to class",
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "classID": {
+                    "type": "integer"
+                  },
+                  "studentID": {
+                    "type": "integer"
+                  },
+                  "StudentAmount": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
     }
   }
 }

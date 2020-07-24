@@ -37,5 +37,10 @@
         "get": {
             "$ref": "../components/class.json#/searchWithSubject"
         }
+    },
+    "joinClass": {
+        "post": {
+            "$ref": "../components/class.json#/joinClass"
+        }
     }
 }

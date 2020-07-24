@@ -18,6 +18,15 @@ router.post('/create',authorization,permission.Create, validator.createTask,(req
     }
 })
 
+router.post('/join',authorization, permission.JoinClass, (req, res) => {
+    try {
+        controller.joinClass(req).then(result => {return res.status(201).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_JOIN_CLASS')
+        return res.status(200).json(error)
+    }
+})
+
 router.get('/:page&:limit', authorization,permission.GetList,(req, res) => {
     try {
         controller.getListOffSet(req.params.page, req.params.limit).then(result => {return res.status(200).json(result)})

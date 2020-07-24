@@ -156,6 +156,9 @@
         },
         "/class/{id}": {
             "$ref": "./paths/class.json#/specifyClass/id"
+        },
+        "/class/join": {
+            "$ref": "./paths/class.json#/joinClass"
         }
 
     }
