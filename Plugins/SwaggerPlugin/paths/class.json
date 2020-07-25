@@ -28,6 +28,7 @@
             "$ref": "../components/class.json#/pagination"
         }
     },
+    
     "paginationWithSubject": {
         "get": {
             "$ref": "../components/class.json#/paginationWithSubject"

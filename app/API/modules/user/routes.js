@@ -60,6 +60,23 @@ router.get('/search/:page&:limit',authorization,permission.Search, (req, res) =>
     }
 })
 
+router.get('/student/:classID&:page&:limit', (req, res) => {
+    try {
+        controller.getListOffSetStudent(req.params.classID,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_GET_USER_LIST_PAGINATION');
+        return res.status(200).json(error)
+    }
+})
+
+router.get('/student/search/:classID&:page&:limit', (req, res) => {
+    try {
+        controller.searchStudent(req.params.classID,req.params.page,req.params.limit, req.query.data).then(result => {return res.status(200).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_SEARCH_USER');
+        return res.status(200).json(error)
+    }
+})
 
 router.get('/:id',authorization,permission.Read, (req, res) => {
     try {

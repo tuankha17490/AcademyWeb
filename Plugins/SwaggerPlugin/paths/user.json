@@ -61,9 +61,19 @@
             "$ref":"../components/user.json#/search"
         }
     },
+    "searchStudent": {
+        "get": {
+            "$ref":"../components/user.json#/searchStudent"
+        }
+    },
     "updateInformation": {
         "put": {
             "$ref": "../components/user.json#/updateInformation"
+        }
+    },
+    "paginationStudent": {
+        "get": {
+            "$ref": "../components/user.json#/paginationStudent"
         }
     }
 }

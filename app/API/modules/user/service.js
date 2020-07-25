@@ -78,11 +78,13 @@ export default class UserService extends BaseServices {
                 }
 
             }
-            if(param.Role == 'Teacher') {
-                if(param.Subject == undefined) {
+            if (param.Role == 'Teacher') {
+                if (param.Subject == undefined) {
                     throw 'error.NeedSubjectOfTeacher'
                 }
-                const subject = await SubjectRespository.Instance().getBy({Name: param.Subject})
+                const subject = await SubjectRespository.Instance().getBy({
+                    Name: param.Subject
+                })
                 param.Subject_Id = subject.ID
             }
             param.Subject = undefined
@@ -254,7 +256,14 @@ export default class UserService extends BaseServices {
         try {
             const data = await this.respository
                 .findAt(decode.ID, ['ID', 'Name', 'Email', 'Avatar', 'Gender', 'Slug'])
-                .withGraphFetched('roles')
+                .withGraphFetched('[roles, class.subject]')
+            data.class.forEach(element => {
+                element.Subject_Id = undefined
+                element.created_at = undefined
+                element.updated_at = undefined
+                element.Subject = element.subject.Name
+                element.subject = undefined
+            });
             return response(200, 'Success !!!', data)
         } catch (error) {
             return response(400, error.toString())
@@ -275,8 +284,49 @@ export default class UserService extends BaseServices {
     async getTeacher(req, column) {
         try {
             const result = await this.respository.relatedJoin('[roles, subject]').select(column)
-            .where('roles.Name','Teacher').where('subject.Name', req.params.subject).withGraphFetched('[roles,subject]')
+                .where('roles.Name', 'Teacher').where('subject.Name', req.params.subject).withGraphFetched('[roles,subject]')
             return response(200, 'Success !!!', result);
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async getListOffSetStudent(classID, page, limit, column) {
+        try {
+            const count = await this.respository.tableQuery().joinRelated('[class, roles]').where('class.ID', classID)
+            .where('roles.Name', 'Student')
+            const offset = (page - 1) * limit
+            if (offset > count) {
+                throw 'Offset can not be greater than the number of data'
+            }
+            const data = await this.respository.listOffSet(offset, limit, column).joinRelated('[class, roles]').where('class.ID', classID)
+            .where('roles.Name', 'Student')
+            return {
+                status: 200,
+                message: 'Success !!!',
+                totalRow: count.length,
+                data
+            }
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async searchStudent(classID, page, limit, query, column) {
+        try {
+            const count = await this.respository.tableQuery().joinRelated('[class, roles]').where('class.ID', classID)
+            .where('Users.Name', 'like', `%${query}%`).orWhere('Users.Email', 'like', `%${query}%`).where('roles.Name', 'Student')
+            console.log(count);
+            const offset = (page - 1) * limit
+            if (offset > count) {
+                throw 'Offset can not be greater than the number of data'
+            }
+            const data = await this.respository.listOffSet(offset, limit, column).joinRelated('[class, roles]').where('class.ID', classID)
+            .where('Users.Name', 'like', `%${query}%`).orWhere('Users.Email', 'like', `%${query}%`).where('roles.Name', 'Student')
+            return {
+                status: 200,
+                message: 'Success !!!',
+                totalRow: count.length,
+                data
+            }
         } catch (error) {
             return response(400, error.toString())
         }

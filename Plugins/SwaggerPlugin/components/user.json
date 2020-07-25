@@ -136,6 +136,69 @@
             }
         }
     },
+    "searchStudent": {
+        "tags": [
+            "user"
+        ],
+        "summary": "Search user",
+        "description": "Search user follow name and email.",
+        "operationId": "searchStudent",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The page of data want to fetched",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "data",
+                "in": "query",
+                "description": "The data that needs to be searched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/user.json#/User"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/user.json#/User"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "User not found",
+                "content": {}
+            }
+        }
+    },
     "get": {
         "tags": [
             "user"
@@ -602,6 +665,64 @@
             },
             "404": {
                 "description": "Teacher not found",
+                "content": {}
+            }
+        }
+    },
+    "paginationStudent": {
+        "tags": [
+            "user"
+        ],
+        "summary": "Get list user",
+        "description": "Get information with offset and limit to paginate.",
+        "operationId": "PaginationStudent",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The offset that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/user.json#/User"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/user.json#/User"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Invalid username supplied",
+                "content": {}
+            },
+            "404": {
+                "description": "User not found",
                 "content": {}
             }
         }

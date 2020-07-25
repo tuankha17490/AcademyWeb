@@ -44,6 +44,8 @@ router.get('/search/:page&:limit',authorization,permission.Search, (req, res) =>
         return res.status(200).json(error)
     }
 })
+
+
 router.get('/search/:subject/:page&:limit', (req, res) => {
     try {
         controller.searchWithSubject(req.query.data,req.params.page,req.params.limit, req.params.subject).then(result => {return res.status(200).json(result)})

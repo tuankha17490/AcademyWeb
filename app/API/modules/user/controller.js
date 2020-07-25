@@ -40,4 +40,10 @@ export default class UserController extends BaseController {
     getTeacher(req) {
         return this.service.getTeacher(req,['Users.ID', 'Users.Name', 'Users.Email', 'Users.Gender', 'Users.Avatar', 'Users.Slug'])
     }
+    getListOffSetStudent(classID, page, limit) {
+        return this.service.getListOffSetStudent(classID, page, limit,['Users.ID', 'Users.Name', 'Users.Email', 'Users.Gender', 'Users.Avatar', 'Users.Slug'])
+    }
+    searchStudent(classID, page, limit, query) {
+        return this.service.searchStudent(classID, page, limit, query,['Users.ID', 'Users.Name', 'Users.Email', 'Users.Gender', 'Users.Avatar', 'Users.Slug'])
+    }
 }
