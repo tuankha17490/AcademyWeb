@@ -38,9 +38,14 @@
             "$ref": "../components/class.json#/searchWithSubject"
         }
     },
-    "joinClass": {
+    "addStudent": {
         "post": {
-            "$ref": "../components/class.json#/joinClass"
+            "$ref": "../components/class.json#/addStudent"
+        }
+    },
+    "removeStudent": {
+        "delete": {
+            "$ref": "../components/class.json#/removeStudent"
         }
     }
 }

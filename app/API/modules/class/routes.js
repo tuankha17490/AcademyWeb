@@ -18,7 +18,7 @@ router.post('/create',authorization,permission.Create, validator.createTask,(req
     }
 })
 
-router.post('/join',authorization, permission.JoinClass, (req, res) => {
+router.post('/add-student',authorization, permission.JoinClass, (req, res) => {
     try {
         controller.joinClass(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -87,6 +87,15 @@ router.put('/:id',authorization,permission.Update, (req, res) => {
 router.delete('/:id',authorization,permission.Delete, (req, res) => {
     try {
         controller.deleteById(req.params.id).then(result => {return res.status(200).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_DELETE_CLASS')
+        return res.status(200).json(error)
+    }
+})
+
+router.delete('/remove-student/:classID&:studentID', (req, res) => {
+    try {
+        controller.removeStudent(req).then(result => {return res.status(200).json(result)})
     } catch (error) {
         console.log('CONTROLLER_DELETE_CLASS')
         return res.status(200).json(error)

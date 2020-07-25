@@ -157,8 +157,11 @@
         "/class/{id}": {
             "$ref": "./paths/class.json#/specifyClass/id"
         },
-        "/class/join": {
-            "$ref": "./paths/class.json#/joinClass"
+        "/class/add-student": {
+            "$ref": "./paths/class.json#/addStudent"
+        },
+        "/class/remove-student/{classID}&{studentID}": {
+            "$ref": "./paths/class.json#/removeStudent"
         }
 
     }

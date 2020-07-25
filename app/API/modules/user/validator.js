@@ -7,8 +7,6 @@ export default class UserValidator extends BaseValidator {
         try { 
             const checkEmail = super.emailValidate(req, res)
             if(checkEmail != true) return checkEmail;
-            const checkPassword = super.passwordValidate(req, res)
-            if(checkPassword != true) return checkPassword;
             next()
         } catch (error) {
             return res.status(200).json({

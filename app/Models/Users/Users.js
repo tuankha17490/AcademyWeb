@@ -3,6 +3,7 @@ import Roles from './Roles'
 import Class from '../Class/Class'
 import Post from '../Class/Post'
 import Subject from '../Class/Subject'
+import {raw} from 'objection'
 export default class Users extends Model {
     static get tableName() {
         return 'Users'
@@ -16,6 +17,20 @@ export default class Users extends Model {
             searchByName(query, name) {
                 // ......
             }
+        }
+    }
+    async $beforeInsert() {
+        this.created_at = new Date()
+        this.updated_at = new Date()
+    }
+
+    async $beforeUpdate() {
+        this.updated_at = new Date()
+    }
+
+    async $afterInsert() {
+        if(this.Role_Id == 3) {
+            await Subject.query().where({ID: this.Subject_Id}).patch({TeacherAmount: raw('TeacherAmount + 1')})
         }
     }
     // To do validate 
@@ -62,15 +77,15 @@ export default class Users extends Model {
             },
             class: {
                 relation: Model.ManyToManyRelation,
-                modelClass: Class,
-                join: {
-                    from: 'Users.ID',
-                    through: {
-                        from: 'User_Class.User_Id',
-                        to: 'User_Class.Class_Id'
-                    },
-                    to: 'Class.ID'
-                }
+                    modelClass: Class,
+                    join: {
+                        from: 'Users.ID',
+                        through: {
+                            from: 'User_Class.User_Id',
+                            to: 'User_Class.Class_Id'
+                        },
+                        to: 'Class.ID'
+                    }
             },
             post: {
                 relation: Model.HasManyRelation,

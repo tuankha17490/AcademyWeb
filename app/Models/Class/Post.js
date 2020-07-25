@@ -1,6 +1,7 @@
 import Model from '../Schema'
 import Class from './Class'
 import Users from '../Users/Users'
+import { raw } from 'objection'
 export default class Post extends Model {
     static get tableName() {
         return 'Post'
@@ -15,6 +16,17 @@ export default class Post extends Model {
                 // ......
             }
         }
+    }
+    async $beforeInsert() {
+        this.created_at = new Date()
+        this.updated_at = new Date()
+    }
+
+    async $beforeUpdate() {
+        this.updated_at = new Date()
+    }
+    async $afterInsert() {
+       await Class.query().where({ID: this.Class_Id}).patch({PostAmount: raw('PostAmount + 1')})
     }
     // To do validate 
     static get jsonSchema() {
@@ -51,11 +63,11 @@ export default class Post extends Model {
             },
             class: {
                 relation: Model.HasOneRelation,
-                modelClass: Class,
-                join: {
-                    from: 'Post.Class_Id',
-                    to: 'Class.ID'
-                }
+                    modelClass: Class,
+                    join: {
+                        from: 'Post.Class_Id',
+                        to: 'Class.ID'
+                    }
             }
         }
     }

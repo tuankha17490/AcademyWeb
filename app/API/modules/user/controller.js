@@ -20,13 +20,13 @@ export default class UserController extends BaseController {
         return this.service.passwordConfirm(req)
     }
     getListOffSet(offset, limit) {
-        return this.service.getListOffSet(offset, limit,'roles',['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
+        return this.service.getListOffSet(offset, limit,'[roles, subject]',['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
     }
     getMe(decode) {
         return this.service.getMe(decode)
     }
     search(data,page, limit) {
-        return this.service.search(data,page, limit,'roles', ['Name', 'Email'],['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
+        return this.service.search(data,page, limit,'[roles, subject]', ['Name', 'Email'],['ID', 'Name', 'Email', 'Gender', 'Avatar', 'Slug'])
     }
     updateInformation(req) {
         return this.service.updateInformation(req)
@@ -35,9 +35,9 @@ export default class UserController extends BaseController {
         return this.service.register(req)
     }
     getInforById(id) {
-        return this.service.getInforById(id, 'roles');
+        return this.service.getInforById(id, '[roles, subject]');
     }
     getTeacher(req) {
-        return this.service.getTeacher(req,['Users.ID', 'Users.Name', 'Users.Email', 'Users.Gender', 'Users.Avatar', 'Users.Slug', 'roles.Name'])
+        return this.service.getTeacher(req,['Users.ID', 'Users.Name', 'Users.Email', 'Users.Gender', 'Users.Avatar', 'Users.Slug'])
     }
 }

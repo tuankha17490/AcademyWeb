@@ -43,7 +43,6 @@ export default class User_Class extends Model {
                     to: 'Class.ID'
                 }
             }
-          
         }
     }
 }

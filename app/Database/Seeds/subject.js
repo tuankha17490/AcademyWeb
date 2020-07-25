@@ -5,12 +5,12 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('Subject').insert([
-        {id: 1, Name: 'Mathematics'},
-        {id: 2, Name: 'Physics'},
-        {id: 3, Name: 'Chemistry'},
-        {id: 4, Name: 'Literature'},
-        {id: 5, Name: 'English'},
-        {id: 6, Name: 'Biology'}
+        {id: 1, Name: 'Mathematics', TeacherAmount: 0, ClassAmount: 0},
+        {id: 2, Name: 'Physics', TeacherAmount: 0, ClassAmount: 0},
+        {id: 3, Name: 'Chemistry', TeacherAmount: 0, ClassAmount: 0},
+        {id: 4, Name: 'Literature', TeacherAmount: 0, ClassAmount: 0},
+        {id: 5, Name: 'English', TeacherAmount: 0, ClassAmount: 0},
+        {id: 6, Name: 'Biology', TeacherAmount: 0, ClassAmount: 0}
       ]);
     });
 };

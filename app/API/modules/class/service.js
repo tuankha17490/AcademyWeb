@@ -40,6 +40,8 @@ export default class ClassService extends BaseServices {
                 Detail: req.body.Detail,
                 Subject_Id: subject.ID,
                 StudentAmount: req.body.StudentAmount,
+                CurrenceAmount: 0,
+                PostAmount: 0,
                 Slug
             }
             const dataFetched = await this.respository.create(query)
@@ -56,16 +58,14 @@ export default class ClassService extends BaseServices {
         try {
             const page = req.params.page
             const limit = req.params.limit
-            const count = await this.respository.tableQuery().withGraphJoined(table).where('subject.Name', req.params.subject).count('subject.ID as CNT');
+            const count = await this.respository.tableQuery().joinRelated(table).where('subject.Name', req.params.subject).count('Class.ID as CNT');
             const offset = (page - 1) * limit
             if (offset > count) {
                 throw 'Offset can not be greater than the number of data'
             }
             const data = await this.respository.listOffSet(offset, limit, column).withGraphJoined('[subject, users]').where('subject.Name', req.params.subject)
             data.forEach(element => {
-                element.Subject = element.subject.Name
                 element.TeacherName = element.users[0].Name
-                element.subject = undefined
                 element.users = undefined
             });
             return {
@@ -86,12 +86,10 @@ export default class ClassService extends BaseServices {
             const offset = (page - 1) * limit
             const data = await this.respository.listOffSet(offset, limit, column).withGraphJoined('[subject, users]')
                 .where('subject.Name', subject).where('Class.Name', 'like', `%${query}%`)
-            
+
             if (data.length != 0) {
                 data.forEach(element => {
-                    element.Subject = element.subject.Name
                     element.TeacherName = element.users[0].Name
-                    element.subject = undefined
                     element.users = undefined
                 });
                 return {
@@ -169,12 +167,31 @@ export default class ClassService extends BaseServices {
     }
     async joinClass(req) {
         try {
-            let count = await this.respository.relatedJoin('user_class').where('user_class.Class_Id',req.body.classID).count('Class.ID as CNT');
-            count = count[0].CNT -1
-            if(req.body.StudentAmount <= count) {
+            const Class = await this.respository.findAt(req.body.classID)
+            if (Class.StudentAmount <= Class.CurrenceAmount) {
                 throw 'error.ClassIsFull'
             }
-            await UserClass.query().insert({Class_Id: req.body.classID, User_Id: req.body.studentID})
+            await UserClass.query().insert({
+                Class_Id: req.body.classID,
+                User_Id: req.body.studentID
+            })
+            await this.respository.updateById({
+                CurrenceAmount: Class.CurrenceAmount + 1
+            }, req.body.classID)
+            return response(200, 'Success !!!')
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async removeStudent(req) {
+        try {
+            const {
+                classID
+            } = req.params
+            const {
+                studentID
+            } = req.params
+            await UserClass.query().delete().where({Class_Id: classID}).whereIn('User_Id', studentID)
             return response(200, 'Success !!!')
         } catch (error) {
             return response(400, error.toString())

@@ -5,6 +5,8 @@ export function up(knex) {
         t.string('Detail')
         t.string('Slug')
         t.integer('StudentAmount')
+        t.integer('CurrenceAmount')
+        t.integer('PostAmount')
         t.integer('Subject_Id').unsigned()
         t.foreign('Subject_Id').references('Subject.ID').onDelete('CASCADE').onUpdate('CASCADE')
         t.timestamps()

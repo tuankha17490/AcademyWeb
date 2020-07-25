@@ -2054,7 +2054,7 @@
         }
       }
     },
-    "/class/join": {
+    "/class/add-student": {
       "post": {
         "tags": [
           "class"
@@ -2080,9 +2080,6 @@
                   },
                   "studentID": {
                     "type": "integer"
-                  },
-                  "StudentAmount": {
-                    "type": "integer"
                   }
                 }
               }
@@ -2096,6 +2093,51 @@
           }
         },
         "x-codegen-request-body-name": "body"
+      }
+    },
+    "/class/remove-student/{classID}&{studentID}": {
+      "delete": {
+        "tags": [
+          "class"
+        ],
+        "summary": "Remove student",
+        "description": "Remove student.",
+        "operationId": "removeStudent",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "classID",
+            "in": "path",
+            "description": "The id of class that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "studentID",
+            "in": "path",
+            "description": "The id of student that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid classID. studentID supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found student or class",
+            "content": {}
+          }
+        }
       }
     }
   }

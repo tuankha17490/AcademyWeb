@@ -3,6 +3,7 @@ import Users from '../Users/Users'
 import Subject from './Subject'
 import Post from './Post'
 import User_Class from './User_Class'
+import { raw } from 'objection'
 export default class Class extends Model {
     static get tableName() {
         return 'Class'
@@ -17,6 +18,17 @@ export default class Class extends Model {
                 // ......
             }
         }
+    }
+    async $beforeInsert() {
+        this.created_at = new Date()
+        this.updated_at = new Date()
+    }
+
+    async $beforeUpdate() {
+        this.updated_at = new Date()
+    }
+    async $afterInsert() {
+        await Subject.query().where({ID: this.Subject_Id}).patch({ClassAmount: raw('ClassAmount + 1')})
     }
     // To do validate 
     static get jsonSchema() {
