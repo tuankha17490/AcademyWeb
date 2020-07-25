@@ -150,6 +150,15 @@
         ],
         "parameters": [
             {
+                "name": "classID",
+                "in": "path",
+                "description": "The page of data want to fetched",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
                 "name": "page",
                 "in": "path",
                 "description": "The page of data want to fetched",
@@ -682,6 +691,15 @@
             }
         ],
         "parameters": [
+            {
+                "name": "classID",
+                "in": "path",
+                "description": "The offset that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
             {
                 "name": "page",
                 "in": "path",

@@ -49,6 +49,7 @@ export default class BaseServices {
                 status: 200,
                 message: 'Success !!!',
                 totalRow: 0,
+                data: []
             }
         } catch (error) {
             return response(400, error.toString())
@@ -64,6 +65,7 @@ export default class BaseServices {
     }
     async getInforById(id,table) {
         try {
+            console.log('asdasd');
             const data = await this.respository.findAt(id).withGraphFetched(table)
             return response(200, 'Success !!!', data);
         } catch (error) {

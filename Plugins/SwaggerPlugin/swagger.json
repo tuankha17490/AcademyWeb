@@ -50,9 +50,7 @@
         "/user/{page}&{limit}": {
             "$ref": "./paths/user.json#/pagination"
         },
-        "/user/student/{page}&{limit}": {
-            "$ref": "./paths/user.json#/paginationStudent"
-        },
+        
         "/register": {
             "$ref": "./paths/user.json#/register"
         },
@@ -139,7 +137,10 @@
         "/user/search/{page}&{limit}": {
             "$ref": "./paths/user.json#/search"
         },
-        "/user/student/search/{page}&{limit}": {
+        "/user/student/{classID}&{page}&{limit}": {
+            "$ref": "./paths/user.json#/paginationStudent"
+        },
+        "/user/student/search/{classID}&{page}&{limit}": {
             "$ref": "./paths/user.json#/searchStudent"
         },
         "/user/teacher/{subject}": {

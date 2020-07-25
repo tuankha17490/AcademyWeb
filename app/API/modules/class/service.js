@@ -49,7 +49,7 @@ export default class ClassService extends BaseServices {
                 User_Id: req.body.TeacherID,
                 Class_Id: dataFetched.ID
             })
-            return response(200, 'Success !!!')
+            return response(201, 'Success !!!')
         } catch (error) {
             return response(400, error.toString())
         }
@@ -103,6 +103,7 @@ export default class ClassService extends BaseServices {
                 status: 200,
                 message: 'Success !!!',
                 totalRow: 0,
+                data: []
             }
         } catch (error) {
             return response(400, error.toString())
@@ -160,6 +161,7 @@ export default class ClassService extends BaseServices {
                 status: 200,
                 message: 'Success !!!',
                 totalRow: 0,
+                data: []
             }
         } catch (error) {
             return response(400, error.toString())
@@ -170,6 +172,13 @@ export default class ClassService extends BaseServices {
             const Class = await this.respository.findAt(req.body.classID)
             if (Class.StudentAmount <= Class.CurrenceAmount) {
                 throw 'error.ClassIsFull'
+            }
+            const checkUserClass = await UserClass.query().where({
+                Class_Id: req.body.classID,
+                User_Id: req.body.studentID
+            })
+            if (checkUserClass) {
+                throw 'error.AlreadyInClass'
             }
             await UserClass.query().insert({
                 Class_Id: req.body.classID,
@@ -191,8 +200,34 @@ export default class ClassService extends BaseServices {
             const {
                 studentID
             } = req.params
-            await UserClass.query().delete().where({Class_Id: classID}).whereIn('User_Id', studentID)
+            await UserClass.query().delete().where({
+                Class_Id: classID
+            }).whereIn('User_Id', studentID)
             return response(200, 'Success !!!')
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async updateById(req, id) {
+        try {
+            const data = req.body
+            const joinQuery = await this.respository.findAt(id, ['Class.ID', 'Class.Name'])
+            .withGraphJoined('users.roles').where('roles.Name', 'asdasd')
+            console.log(joinQuery);
+
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+
+    async getInforById(id,table) {
+        try {
+            const data = await this.respository.findAt(id, ['ID', 'Name', 'Detail', 'Slug', 'StudentAmount', 'CurrenceAmount', 'PostAmount']).withGraphFetched(table)
+            data.users = {}
+            data.users.ID = data.subject.users[0].ID
+            data.users.Name = data.subject.users[0].Name
+            data.subject.users = undefined
+            return response(200, 'Success !!!', data);
         } catch (error) {
             return response(400, error.toString())
         }
