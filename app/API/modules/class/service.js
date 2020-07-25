@@ -121,10 +121,10 @@ export default class ClassService extends BaseServices {
                 users: true
             }, column)
             data.forEach(element => {
-                element.Subject = element.subject.Name
+                // element.Subject = element.subject.Name
                 element.TeacherName = element.users[0].Name
                 element.users = undefined
-                element.subject = undefined
+                // element.subject = undefined
             });
             return {
                 status: 200,
@@ -144,10 +144,8 @@ export default class ClassService extends BaseServices {
                 const data = await this.respository.graphFetched(offset, limit, '[subject, users]', column).where(searchBy[i], 'like', `%${query}%`)
                 if (data.length != 0) {
                     data.forEach(async element => {
-                        element.Subject = element.subject.Name
                         element.TeacherName = element.users[0].Name
                         element.users = undefined
-                        element.subject = undefined
                     });
                     return {
                         status: 200,
@@ -211,10 +209,22 @@ export default class ClassService extends BaseServices {
     async updateById(req, id) {
         try {
             const data = req.body
-            const joinQuery = await this.respository.findAt(id, ['Class.ID', 'Class.Name'])
-            .withGraphJoined('users.roles').where('roles.Name', 'asdasd')
-            console.log(joinQuery);
-
+            
+            if(data.TeacherID != undefined) {
+                if (!(Number(data.TeacherID) === data.TeacherID)) {
+                    if (validator.isNumeric(data.TeacherID)) {
+                        data.TeacherID = Number(data.TeacherID)
+                    } else {
+                        throw 'TeacherID must be numberic'
+                    }
+                }
+                const joinQuery = await this.respository.findAt(id, ['Class.ID', 'Class.Name'])
+                .withGraphJoined('users.roles').where('users:roles.Name', 'Teacher')
+                await UserClass.query().where({Class_Id: id, User_Id: joinQuery.users[0].ID}).patch({User_Id: data.TeacherID})
+                data.TeacherID = undefined
+            }
+            await this.respository.updateById(data, id)
+            return response(201, 'Success !!!')
         } catch (error) {
             return response(400, error.toString())
         }

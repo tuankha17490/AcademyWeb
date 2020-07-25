@@ -75,9 +75,9 @@ router.get('/:id',authorization,permission.Read, (req, res) => {
 })
 
 
-router.put('/:id', (req, res) => {
+router.put('/:id',authorization,permission.Update,validator.updateTask, (req, res) => {
     try {
-        controller.updateById(req, req.params.id).then(result => {return res.status(200).json(result)})
+        controller.updateById(req, req.params.id).then(result => {return res.status(201).json(result)})
     } catch (error) {
         console.log('CONTROLLER_UPDATE_CLASS')
         return res.status(200).json(error)

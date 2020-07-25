@@ -30,7 +30,7 @@
       "url": "https://academy-web.herokuapp.com/"
     },
     {
-      "url": "http://academy-web.herokuapp.com/"
+      "url": "http://localhost:3000"
     }
   ],
   "tags": [
@@ -201,158 +201,6 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ID": {
-                      "type": "integer",
-                      "readOnly": true
-                    },
-                    "Email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "Password": {
-                      "type": "string",
-                      "minLength": 6,
-                      "writeOnly": true
-                    },
-                    "Name": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 255
-                    },
-                    "Gender": {
-                      "type": "boolean"
-                    },
-                    "Avatar": {
-                      "type": "string"
-                    },
-                    "Subject": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer",
-                          "readOnly": true
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      }
-                    },
-                    "Role": {
-                      "type": "string"
-                    }
-                  },
-                  "xml": {
-                    "name": "User"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ID": {
-                      "type": "integer",
-                      "readOnly": true
-                    },
-                    "Email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "Password": {
-                      "type": "string",
-                      "minLength": 6,
-                      "writeOnly": true
-                    },
-                    "Name": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 255
-                    },
-                    "Gender": {
-                      "type": "boolean"
-                    },
-                    "Avatar": {
-                      "type": "string"
-                    },
-                    "Subject": {
-                      "type": "object",
-                      "properties": {
-                        "ID": {
-                          "type": "integer",
-                          "readOnly": true
-                        },
-                        "Name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 255
-                        }
-                      }
-                    },
-                    "Role": {
-                      "type": "string"
-                    }
-                  },
-                  "xml": {
-                    "name": "User"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid username supplied",
-            "content": {}
-          },
-          "404": {
-            "description": "User not found",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/user/student/{page}&{limit}": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Get list user",
-        "description": "Get information with offset and limit to paginate.",
-        "operationId": "PaginationStudent",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "page",
-            "in": "path",
-            "description": "The offset that needs to be fetched.",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "path",
-            "description": "The limit that needs to be fetched.",
-            "required": true,
-            "schema": {
-              "type": "integer"
             }
           }
         ],
@@ -1219,7 +1067,168 @@
         }
       }
     },
-    "/user/student/search/{page}&{limit}": {
+    "/user/student/{classID}&{page}&{limit}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get list user",
+        "description": "Get information with offset and limit to paginate.",
+        "operationId": "PaginationStudent",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "classID",
+            "in": "path",
+            "description": "The offset that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "path",
+            "description": "The offset that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "The limit that needs to be fetched.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ID": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "Password": {
+                      "type": "string",
+                      "minLength": 6,
+                      "writeOnly": true
+                    },
+                    "Name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Gender": {
+                      "type": "boolean"
+                    },
+                    "Avatar": {
+                      "type": "string"
+                    },
+                    "Subject": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      }
+                    },
+                    "Role": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "User"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ID": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "Email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "Password": {
+                      "type": "string",
+                      "minLength": 6,
+                      "writeOnly": true
+                    },
+                    "Name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255
+                    },
+                    "Gender": {
+                      "type": "boolean"
+                    },
+                    "Avatar": {
+                      "type": "string"
+                    },
+                    "Subject": {
+                      "type": "object",
+                      "properties": {
+                        "ID": {
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "Name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 255
+                        }
+                      }
+                    },
+                    "Role": {
+                      "type": "string"
+                    }
+                  },
+                  "xml": {
+                    "name": "User"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/student/search/{classID}&{page}&{limit}": {
       "get": {
         "tags": [
           "user"
@@ -1233,6 +1242,15 @@
           }
         ],
         "parameters": [
+          {
+            "name": "classID",
+            "in": "path",
+            "description": "The page of data want to fetched",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "page",
             "in": "path",
@@ -2265,56 +2283,29 @@
           }
         ],
         "requestBody": {
-          "description": "Updated class object",
+          "description": "Update class",
+          "required": true,
           "content": {
-            "application/xml": {
+            "application/x-www-form-urlencoded": {
               "schema": {
                 "type": "object",
                 "properties": {
                   "Name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 255
+                    "type": "string"
                   },
                   "Detail": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 255
-                  },
-                  "Subject": {
                     "type": "string"
                   },
                   "StudentAmount": {
                     "type": "integer"
-                  }
-                }
-              }
-            },
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "Name": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 255
                   },
-                  "Detail": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 255
-                  },
-                  "Subject": {
-                    "type": "string"
-                  },
-                  "StudentAmount": {
+                  "TeacherID": {
                     "type": "integer"
                   }
                 }
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "400": {

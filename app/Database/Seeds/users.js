@@ -28,6 +28,7 @@ const createTeacher = {
   Avatar: faker.internet.avatar(),
   Slug: 'teacher',
   Gender: true,
+  Subject_Id: 1,
   Role_Id: 3
 }
 const createModerator = {

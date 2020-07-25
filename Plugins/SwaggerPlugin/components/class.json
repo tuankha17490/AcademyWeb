@@ -121,56 +121,29 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Updated class object",
+                    "description": "Update class",
+                    "required": true,
                     "content": {
-                        "application/xml": {
+                        "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
                                     "Name": {
-                                        "type": "string",
-                                        "minLength": 1,
-                                        "maxLength": 255
+                                        "type": "string"
                                     },
                                     "Detail": {
-                                        "type": "string",
-                                        "minLength": 1,
-                                        "maxLength": 255
-                                    },
-                                    "Subject": {
                                         "type": "string"
                                     },
                                     "StudentAmount": {
                                         "type": "integer"
-                                    }
-                                }
-                            }
-                        },
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "Name": {
-                                        "type": "string",
-                                        "minLength": 1,
-                                        "maxLength": 255
                                     },
-                                    "Detail": {
-                                        "type": "string",
-                                        "minLength": 1,
-                                        "maxLength": 255
-                                    },
-                                    "Subject": {
-                                        "type": "string"
-                                    },
-                                    "StudentAmount": {
+                                    "TeacherID": {
                                         "type": "integer"
                                     }
                                 }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "400": {
