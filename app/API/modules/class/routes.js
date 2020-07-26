@@ -9,7 +9,7 @@ const permission = new ClassPermission('Class')
 const controller = new ClassController()
 
 
-router.post('/create',authorization,permission.Create, validator.createTask,(req, res) => {
+router.post('/create',authorization,permission.setModuleClass,permission.Create, validator.createTask,(req, res) => {
     try {
         controller.create(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -18,7 +18,7 @@ router.post('/create',authorization,permission.Create, validator.createTask,(req
     }
 })
 
-router.post('/add-student',authorization, permission.JoinClass, (req, res) => {
+router.post('/add-student',authorization,permission.setModuleClass, permission.JoinClass, (req, res) => {
     try {
         controller.joinClass(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -27,7 +27,7 @@ router.post('/add-student',authorization, permission.JoinClass, (req, res) => {
     }
 })
 
-router.get('/:page&:limit', authorization,permission.GetList,(req, res) => {
+router.get('/:page&:limit', authorization,permission.setModuleClass,permission.GetList,(req, res) => {
     try {
         controller.getListOffSet(req.params.page, req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -36,7 +36,7 @@ router.get('/:page&:limit', authorization,permission.GetList,(req, res) => {
     }
 })
 
-router.get('/search/:page&:limit',authorization,permission.Search, (req, res) => {
+router.get('/search/:page&:limit',authorization,permission.setModuleClass,permission.Search, (req, res) => {
     try {
         controller.search(req.query.data,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -65,7 +65,7 @@ router.get('/:subject/:page&:limit', (req, res) => {
 })
 
 
-router.get('/:id',authorization,permission.Read, (req, res) => {
+router.get('/:id',authorization,permission.setModuleClass,permission.Read, (req, res) => {
     try {
         controller.getInforById(req.params.id).then(result =>{return res.status(200).json(result)})
     } catch (error) {
@@ -76,7 +76,7 @@ router.get('/:id',authorization,permission.Read, (req, res) => {
 
 
 
-router.put('/:id',authorization,permission.Update,validator.updateTask, (req, res) => {
+router.put('/:id',authorization,permission.setModuleClass,permission.Update,validator.updateTask, (req, res) => {
     try {
         controller.updateById(req, req.params.id).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -87,7 +87,7 @@ router.put('/:id',authorization,permission.Update,validator.updateTask, (req, re
 })
 
 
-router.delete('/:id',authorization,permission.Delete, (req, res) => {
+router.delete('/:id',authorization,permission.setModuleClass,permission.Delete, (req, res) => {
     try {
         controller.deleteById(req.params.id).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -96,7 +96,7 @@ router.delete('/:id',authorization,permission.Delete, (req, res) => {
     }
 })
 
-router.delete('/remove-student/:classID&:studentID',authorization,permission.RemoveStudent, (req, res) => {
+router.delete('/remove-student/:classID&:studentID',authorization,permission.setModuleClass,permission.RemoveStudent, (req, res) => {
     try {
         controller.removeStudent(req).then(result => {return res.status(200).json(result)})
     } catch (error) {

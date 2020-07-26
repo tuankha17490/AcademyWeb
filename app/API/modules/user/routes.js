@@ -7,7 +7,7 @@ import multer from "../../../Config/multer"
 import UserPermission from "../../../Middleware/Permission"
 const controller = new UserController()
 const validator = new UserValidator()
-const permission = new UserPermission('Users')
+const permission = new UserPermission()
 router.get('/',authorization,(req, res) => {
     try {
         controller.getList().then(result => {return res.json(result)})
@@ -17,7 +17,7 @@ router.get('/',authorization,(req, res) => {
     }
 })
 
-router.post('/create',authorization,permission.Create,validator.registerTask,async (req, res) => {
+router.post('/create',authorization,permission.setModuleUsers,permission.Create,validator.registerTask,async (req, res) => {
     try {
         controller.create(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -44,7 +44,7 @@ router.get('/teacher/:subject', (req, res) => {
 
 
 
-router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
+router.get('/:page&:limit',authorization,permission.setModuleUsers,permission.GetList, (req, res) => {
     try {
         controller.getListOffSet(req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -53,7 +53,7 @@ router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
     }
 })
 
-router.get('/search/:page&:limit',authorization,permission.Search, (req, res) => {
+router.get('/search/:page&:limit',authorization,permission.setModuleUsers,permission.Search, (req, res) => {
     try {
         controller.search(req.query.data,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -80,7 +80,7 @@ router.get('/student/search/:classID&:page&:limit', (req, res) => {
     }
 })
 
-router.get('/:id',authorization,permission.Read, (req, res) => {
+router.get('/:id',authorization,permission.setModuleUsers,permission.Read, (req, res) => {
     try {
         controller.getInforById(req.params.id).then(result =>{return res.status(200).json(result)})
     } catch (error) {
@@ -97,7 +97,7 @@ router.post('/check-password', authorization, (req, res) => {
     }
 })
 
-router.put('/upload-avatar',authorization,permission.UpdateMyUser,multer.single('avatar'),validator.uploadImage, (req, res) => {
+router.put('/upload-avatar',authorization,permission.setModuleUsers,permission.UpdateMyUser,multer.single('avatar'),validator.uploadImage, (req, res) => {
     try {
         controller.uploadAvatar(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -106,7 +106,7 @@ router.put('/upload-avatar',authorization,permission.UpdateMyUser,multer.single(
     }
 })
 
-router.put('/update-information',authorization,permission.UpdateMyUser,validator.updateTask, (req, res) => {
+router.put('/update-information',authorization,permission.setModuleUsers,permission.UpdateMyUser,validator.updateTask, (req, res) => {
     try {
         controller.updateInformation(req).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -117,7 +117,7 @@ router.put('/update-information',authorization,permission.UpdateMyUser,validator
 })
 
 
-router.put('/:id',authorization,permission.Update,validator.updateTask, (req, res) => {
+router.put('/:id',authorization,permission.setModuleUsers,permission.Update,validator.updateTask, (req, res) => {
     try {
         controller.updateUserById(req, req.params.id).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -128,7 +128,7 @@ router.put('/:id',authorization,permission.Update,validator.updateTask, (req, re
 })
 
 
-router.delete('/:id',authorization,permission.Delete, (req, res) => {
+router.delete('/:id',authorization,permission.setModuleUsers,permission.Delete, (req, res) => {
     try {
         controller.deleteById(req).then(result => {return res.status(200).json(result)})
     } catch (error) {

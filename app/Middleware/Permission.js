@@ -21,14 +21,25 @@ const Excute = async (req, res, method) => {
     return true
 }
 export default class Permissions {
-    constructor(moduleName) {
-        module = moduleName
+    constructor() {
+        
+    }
+    setModuleUsers(req, res, next) {
+        module = 'Users'
+        next()
+    }
+    setModulePost(req, res, next) {
+        module = 'Post'
+        next()
+    }
+    setModuleClass(req, res, next) {
+        module = 'Class'
+        next()
     }
 
     async GetList(req, res, next) {
         const excute = await Excute(req, res, 'GetList')
         if(excute != true) return excute
-        console.log(this.a);
         next()
     }
 

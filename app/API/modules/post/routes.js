@@ -6,9 +6,9 @@ import PostValidator from "./validator"
 import UserPermission from "../../../Middleware/Permission"
 const controller = new PostController()
 const validator = new PostValidator()
-const permission = new UserPermission('Post')
+const permission = new UserPermission()
 
-router.post('/create',authorization,validator.createTask,async (req, res) => {
+router.post('/create',authorization,permission.setModulePost,permission.Create,validator.createTask,async (req, res) => {
     try {
         controller.create(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
@@ -17,7 +17,7 @@ router.post('/create',authorization,validator.createTask,async (req, res) => {
     }
 })
 
-router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
+router.get('/:page&:limit',authorization,permission.setModulePost,permission.GetList, (req, res) => {
     try {
         controller.getListOffSet(req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -26,7 +26,7 @@ router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
     }
 })
 
-router.get('/:classID/:writerID/:page&:limit',authorization,permission.GetList, (req, res) => {
+router.get('/:classID/:writerID/:page&:limit',authorization,permission.setModulePost,permission.GetList, (req, res) => {
     try {
         controller.getListOffSetClass(req.params.classID,req.params.writerID,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -36,7 +36,7 @@ router.get('/:classID/:writerID/:page&:limit',authorization,permission.GetList, 
 })
 
 
-router.get('/search/:page&:limit',authorization,permission.Search, (req, res) => {
+router.get('/search/:page&:limit',authorization,permission.setModulePost,permission.Search, (req, res) => {
     try {
         controller.search(req.query.data,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -53,7 +53,7 @@ router.get('/:id',authorization, (req, res) => {
     }
 })
 
-router.put('/:id',authorization,permission.Update,validator.updateTask, (req, res) => {
+router.put('/:id',authorization,permission.setModulePost,permission.Update,validator.updateTask, (req, res) => {
     try {
         controller.updateById(req.body, req.params.id).then(result => {return res.status(200).json(result)})
     } catch (error) {
@@ -63,7 +63,7 @@ router.put('/:id',authorization,permission.Update,validator.updateTask, (req, re
    
 })
 
-router.delete('/:id',authorization,permission.Delete, (req, res) => {
+router.delete('/:id',authorization,permission.setModulePost,permission.Delete, (req, res) => {
     try {
         controller.deleteById(req.params.id).then(result => {return res.status(200).json(result)})
     } catch (error) {
