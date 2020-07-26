@@ -21,16 +21,6 @@ const createAdmin = {
   Role_Id: 1
 }
 
-const createTeacher = {
-  Email: 'teacher@gmail.com',
-  Name: 'teacher',
-  Password: bcript.hashSync('teacher123',10),
-  Avatar: faker.internet.avatar(),
-  Slug: 'teacher',
-  Gender: true,
-  Subject_Id: 1,
-  Role_Id: 3
-}
 const createModerator = {
   Email: 'moderator@gmail.com',
   Name: 'moderator',
@@ -53,7 +43,6 @@ exports.seed = async function (knex) {
   const fakeUsers = [];
   fakeUsers.push(createAdmin)
   fakeUsers.push(createModerator)
-  fakeUsers.push(createTeacher)
   fakeUsers.push(createStudent)
   const fakeUserAmount = 30
   for (let i = 0; i < fakeUserAmount; i++) {

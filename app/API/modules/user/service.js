@@ -277,12 +277,14 @@ export default class UserService extends BaseServices {
             if (id == req.userData.ID) {
                 return response(403, 'error.cantDeleteYourself');
             }
-            const temp = await this.respository.findAt(id)
+            const temp = await this.respository.findAt(id).withGraphFetched('subject')
+            console.log(temp);
             if(temp.Role_Id == 3) {
                 const checkTeacher = await UserClass.query().where({User_Id: temp.ID})
                 if(checkTeacher.length > 0) {
                     throw 'error.AlreadyHasClass'
                 }
+                await SubjectRespository.Instance().updateById({TeacherAmount: temp.subject.TeacherAmount - 1},temp.Subject_Id)
             }
             const result = await this.respository.deleteById(id);
             return response(200, 'Success !!!', result);
