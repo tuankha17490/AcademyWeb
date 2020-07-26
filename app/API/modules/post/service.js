@@ -59,16 +59,23 @@ export default class PostService extends BaseServices {
             return response(400, error.toString())
         }
     }
-    async getListOffSetClass(classID,writerID, page, limit, column) {
+    async getListOffSetClass(req, column) {
         try {
+            if(req.userData.Role == 'Student') {
+                const checkUser = await UserClass.query().where({User_Id: req.userData.ID, Class_Id: req.params.classID})
+                if(!checkUser) {
+                    throw 'error.MustBeJoinedToAccess'
+                }
+            }
+            const classID = req.params.classID
+            const page = req.params.page
+            const limit = req.params.limit
             const count = await this.respository.tableQuery().joinRelated('[class, users]').where('class.ID', classID)
-            .where('users.ID', writerID)
             const offset = (page - 1) * limit
             if (offset > count) {
                 throw 'Offset can not be greater than the number of data'
             }
             const data = await this.respository.listOffSet(offset, limit, column).joinRelated('[class, users]').where('class.ID', classID)
-            .where('users.ID', writerID)
             return {
                 status: 200,
                 message: 'Success !!!',
@@ -115,13 +122,6 @@ export default class PostService extends BaseServices {
             const id = req.params.id
             const data = await this.respository
                 .findAt(id, ['ID', 'Title', 'Content', 'created_at', 'updated_at']).withGraphFetched('[users,class]')
-            console.log('asdadsadad', data);
-            if(req.userData.Role == 'Student' && data) {
-                const checkUser = await UserClass.query().where({User_Id: req.userData.ID, Class_Id: data.class.ID})
-                if(!checkUser) {
-                    throw 'error.MustBeJoinedToAccess'
-                }
-            }
             if (data) {
                 data.WriterName = data.users.Name
                 data.users = undefined

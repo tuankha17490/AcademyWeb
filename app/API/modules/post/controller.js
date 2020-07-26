@@ -13,7 +13,7 @@ export default class PostController extends BaseController {
     search(data,page, limit) {
         return this.service.search(data,page, limit, ['Title'],['ID', 'Title', 'Content', 'created_at', 'updated_at'])
     }
-    getListOffSetClass(classID, writerID, page, limit) {
-        return this.service.getListOffSetClass(classID, writerID, page, limit,['Post.ID', 'Post.Title', 'Post.Content', 'Post.created_at', 'Post.updated_at'])
+    getListOffSetClass(req) {
+        return this.service.getListOffSetClass(req,['Post.ID', 'Post.Title', 'Post.Content', 'Post.created_at', 'Post.updated_at'])
     }
 }
