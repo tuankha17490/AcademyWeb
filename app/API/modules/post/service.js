@@ -25,6 +25,10 @@ export default class PostService extends BaseServices {
                 }
             }
             data.User_Id = req.userData.ID
+            const checkUser = await UserClass.query().where({User_Id: req.userData.ID, Class_Id: data.Class_Id})
+            if(checkUser.length == 0) {
+                throw 'error.MustBeTeachingInClassToAccess'
+            }
             await this.respository.create(data)
             return response(201, 'Success !!!')
 
