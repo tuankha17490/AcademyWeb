@@ -220,7 +220,7 @@ export default class ClassService extends BaseServices {
             const {
                 studentID
             } = req.params
-            await UserClass.query().where({
+            const result = await UserClass.query().where({
                 Class_Id: classID,
                 User_Id: studentID
             }).delete()
@@ -229,7 +229,7 @@ export default class ClassService extends BaseServices {
             }).patch({
                 CurrenceAmount: raw('CurrenceAmount - 1')
             })
-            return response(200, 'Success !!!')
+            return response(200, 'Success !!!', result)
         } catch (error) {
             return response(400, error.toString())
         }

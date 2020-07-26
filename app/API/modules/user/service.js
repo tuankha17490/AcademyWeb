@@ -86,6 +86,7 @@ export default class UserService extends BaseServices {
                 const subject = await SubjectRespository.Instance().getBy({
                     Name: param.Subject
                 })
+                await SubjectRespository.Instance().updateById({TeacherAmount: subject.TeacherAmount + 1}, subject.ID)
                 param.Subject_Id = subject.ID
             }
             param.Subject = undefined
@@ -278,8 +279,8 @@ export default class UserService extends BaseServices {
             }
             const temp = await this.respository.findAt(id)
             if(temp.Role_Id == 3) {
-                const checkTeacher = await UserClass.query().where({User_Id: id})
-                if(checkTeacher) {
+                const checkTeacher = await UserClass.query().where({User_Id: temp.ID})
+                if(checkTeacher.length > 0) {
                     throw 'error.AlreadyHasClass'
                 }
             }
