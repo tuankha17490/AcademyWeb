@@ -86,7 +86,6 @@ export default class UserService extends BaseServices {
                 const subject = await SubjectRespository.Instance().getBy({
                     Name: param.Subject
                 })
-                await SubjectRespository.Instance().updateById({TeacherAmount: subject.TeacherAmount + 1}, subject.ID)
                 param.Subject_Id = subject.ID
             }
             param.Subject = undefined
