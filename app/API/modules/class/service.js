@@ -268,11 +268,11 @@ export default class ClassService extends BaseServices {
     async getInforById(id, table) {
         try {
             const data = await this.respository
-                .findAt(id, ['Class.*']).withGraphJoined(table)
+                .findAt(id, ['Class.*']).withGraphFetched(table)
             if (data) {
-                data.users = {}
-                data.users.ID = data.subject.users[0].ID
-                data.users.Name = data.subject.users[0].Name
+                data.users = data.subject.users[0] 
+                data.users.Password =undefined
+                data.users.Password = data.subject.users[0].Name
                 data.subject.users = undefined
             }
             return response(200, 'Success !!!', data);
