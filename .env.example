@@ -1,9 +1,9 @@
 PORT=3000
-HOST=localhost
-PASSWORD=kha17490
-DATABASE=AcademyWeb
+HOST=us-cdbr-east-02.cleardb.com
+PASSWORD=40d0580b
+DATABASE=heroku_7a2c74977132fc7
 ENVIRONMENT=development
-User=root
+User=bce01bbb4a94f5 
 CLIENT=mysql
 JWT_KEY=secret
 

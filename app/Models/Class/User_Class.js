@@ -9,6 +9,14 @@ export default class User_Class extends Model {
     static get idColumn() {
         return 'ID'
     }
+    async $beforeDelete() {
+        console.log('asdasdasdasdasd',this.Class_Id);
+        await Class.query().where({ID: this.Class_Id}).patch({CurrenceAmount: raw('CurrenceAmount - 1')})
+    }
+    async $afterDelete() {
+        console.log('asdasdasdasdasd',this.Class_Id);
+        await Class.query().where({ID: this.Class_Id}).patch({CurrenceAmount: raw('CurrenceAmount - 1')})
+    }
     // To do validate 
     static get jsonSchema() {
         return {
@@ -26,9 +34,7 @@ export default class User_Class extends Model {
             },
         }
     }
-    async $afterDelete() {
-        await Class.query().where({ID: this.Class_Id}).patch({CurrenceAmount: raw('CurrenceAmount - 1')})
-     }
+    
     static get relationMappings() {
         return {
             users: {

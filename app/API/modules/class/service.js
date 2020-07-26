@@ -3,6 +3,8 @@ import SubjectRespository from "../subject/respository"
 import UserClass from "../../../Models/Class/User_Class"
 import BaseServices from '../../core/Service';
 import getSlug from "slugify"
+import Class from "../../../Models/Class/Class"
+import {raw} from "objection"
 import response from "../../../Util/Response"
 import validator from "validator"
 
@@ -214,10 +216,11 @@ export default class ClassService extends BaseServices {
             const {
                 studentID
             } = req.params
-            await UserClass.query().delete().where({
+            await UserClass.query().where({
                 Class_Id: classID,
                 User_Id: studentID
-            })
+            }).delete()
+            await Class.query().where({ID: classID}).patch({CurrenceAmount: raw('CurrenceAmount - 1')})
             return response(200, 'Success !!!')
         } catch (error) {
             return response(400, error.toString())
