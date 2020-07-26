@@ -1,9 +1,6 @@
-import PostRespository from "./respository"
+import SubjectRespository from "./respository"
 import BaseServices from '../../core/Service';
-import response from "../../../Util/Response";
-import UserClass from "../../../Models/Class/User_Class"
-import validator from "validator";
-export default class PostService extends BaseServices {
+export default class SubjectService extends BaseServices {
     static _Instance;
     static Instance() {
         if (!this._Instance) {
@@ -12,7 +9,7 @@ export default class PostService extends BaseServices {
         return this._Instance;
     }
     getModule() {
-        return PostRespository.Instance();
+        return SubjectRespository.Instance();
     }
     
 }

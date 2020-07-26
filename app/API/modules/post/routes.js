@@ -3,7 +3,6 @@ const router = express.Router();
 import PostController from "./controller"
 import authorization from "../../../Middleware/Authorization"
 import PostValidator from "./validator"
-import multer from "../../../Config/multer"
 import UserPermission from "../../../Middleware/Permission"
 const controller = new PostController()
 const validator = new PostValidator()

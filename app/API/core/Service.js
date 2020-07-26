@@ -6,7 +6,7 @@ export default class BaseServices {
     async getList() {
         try {
             const data = await this.respository.listBy();
-            return data;
+            return response(200, 'Success !!!', data)
         } catch (error) {
             return response(400, error.toString())
         }
