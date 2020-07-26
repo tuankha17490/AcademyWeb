@@ -1,0 +1,24 @@
+{
+    "Post": {
+        "type": "object",
+        "properties": {
+            "ID": {
+                "type": "integer",
+                "readOnly": true
+            },
+            "Title": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255
+            },
+            "Content": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255
+            }
+        },
+        "xml": {
+            "name": "Post"
+        }
+    }
+}

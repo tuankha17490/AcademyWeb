@@ -29,7 +29,6 @@ router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
 
 router.get('/:classID/:writerID/:page&:limit',authorization,permission.GetList, (req, res) => {
     try {
-        console.log('asdasd');
         controller.getListOffSetClass(req.params.classID,req.params.writerID,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
     } catch (error) {
         console.log('CONTROLLER_GET_USER_LIST_PAGINATION');

@@ -1,0 +1,382 @@
+{
+    "specifyPost": {
+        "id": {
+            "get": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "Get post by id",
+                "operationId": "getPostById",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id that needs to be fetched",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "../schemas/post.json#/Post"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "../schemas/post.json#/Post"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid class supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Class not found",
+                        "content": {}
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "Updated post",
+                "description": "Update information of post by id.",
+                "operationId": "updatePostById",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "the id that need to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update post",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "Title": {
+                                        "type": "string"
+                                    },
+                                    "Content": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Invalid post supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "post not found",
+                        "content": {}
+                    }
+                },
+                "x-codegen-request-body-name": "body"
+            },
+            "delete": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "Delete post",
+                "description": "Delete specify post by id.",
+                "operationId": "delelePostById",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id that needs to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid Post supplied",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Post not found",
+                        "content": {}
+                    }
+                }
+            }
+        }
+    },
+
+    "create": {
+        "tags": [
+            "post"
+        ],
+        "summary": "Create post",
+        "description": "Teacher write the post.",
+        "operationId": "createPost",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "requestBody": {
+            "description": "Create",
+            "required": true,
+            "content": {
+                "application/x-www-form-urlencoded": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "Title": {
+                                "type": "string"
+                            },
+                            "Content": {
+                                "type": "string"
+                            },
+                            "Class_Id": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "default": {
+                "description": "successful operation",
+                "content": {}
+            }
+        },
+        "x-codegen-request-body-name": "body"
+    },
+    "search": {
+        "tags": [
+            "post"
+        ],
+        "summary": "Search post",
+        "description": "Search post follow name of class.",
+        "operationId": "searchPost",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The page of data want to fetched",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "data",
+                "in": "query",
+                "description": "The data that needs to be searched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/post.json#/Post"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/post.json#/Post"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Post not found",
+                "content": {}
+            }
+        }
+    },
+    "pagination": {
+        "tags": [
+            "post"
+        ],
+        "summary": "Get list post",
+        "description": "Get information with offset and limit to paginate.",
+        "operationId": "PaginationPost",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The offset that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/post.json#/Post"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/post.json#/Post"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Invalid title supplied",
+                "content": {}
+            },
+            "404": {
+                "description": "post not found",
+                "content": {}
+            }
+        }
+    },
+    "paginationClass": {
+        "tags": [
+            "post"
+        ],
+        "summary": "Get list post",
+        "description": "Get information with offset and limit to paginate.",
+        "operationId": "PaginationPostClass",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "parameters": [
+            {
+                "name": "classID",
+                "in": "path",
+                "description": "The id of class that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "writerID",
+                "in": "path",
+                "description": "The id of user that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "page",
+                "in": "path",
+                "description": "The offset that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+                "name": "limit",
+                "in": "path",
+                "description": "The limit that needs to be fetched.",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "successful operation",
+                "content": {
+                    "application/xml": {
+                        "schema": {
+                            "$ref": "../schemas/post.json#/Post"
+                        }
+                    },
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/post.json#/Post"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "Invalid title supplied",
+                "content": {}
+            },
+            "404": {
+                "description": "post not found",
+                "content": {}
+            }
+        }
+    }
+}

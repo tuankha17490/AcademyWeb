@@ -35,6 +35,10 @@
     ],
     "tags": [
         {
+            "name": "post",
+            "description": "Operations about post"
+        },
+        {
             "name": "class",
             "description": "Everything about your Articles"
         },
@@ -42,6 +46,7 @@
             "name": "user",
             "description": "Operations about user"
         }
+       
     ],
     "paths": {
         "/user": {
@@ -169,6 +174,21 @@
         },
         "/class/remove-student/{classID}&{studentID}": {
             "$ref": "./paths/class.json#/removeStudent"
+        },
+        "/post/{id}": {
+            "$ref": "./paths/post.json#/specifyPost/id"
+        },
+        "/post/create": {
+            "$ref": "./paths/post.json#/create"
+        },
+        "/post/search/{page}&{limit}": {
+            "$ref": "./paths/post.json#/search"
+        },
+        "/post/{page}&{limit}": {
+            "$ref": "./paths/post.json#/pagination"
+        },
+        "/post/{classID}/{writerID}/{page}&{limit}": {
+            "$ref": "./paths/post.json#/paginationClass"
         }
     }
 }

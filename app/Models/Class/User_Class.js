@@ -1,6 +1,7 @@
 import Model from '../Schema'
 import Class from '../Class/Class'
 import Users from '../Users/Users'
+import {raw} from "objection"
 export default class User_Class extends Model {
     static get tableName() {
         return 'User_Class'
@@ -25,6 +26,9 @@ export default class User_Class extends Model {
             },
         }
     }
+    async $afterDelete() {
+        await Class.query().where({ID: this.Class_Id}).patch({CurrenceAmount: raw('CurrenceAmount - 1')})
+     }
     static get relationMappings() {
         return {
             users: {

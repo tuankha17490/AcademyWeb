@@ -1,0 +1,37 @@
+{
+    "specifyPost": {
+        "id": {
+            "get": {
+                "$ref": "../components/post.json#/specifyPost/id/get"
+            },
+            "put": {
+                "$ref": "../components/post.json#/specifyPost/id/put"
+            },
+            "delete": {
+                "$ref": "../components/post.json#/specifyPost/id/delete"
+            }
+        }
+    },
+    "create": {
+        "post": {
+            "$ref": "../components/post.json#/create"
+        }
+       
+    },
+    "search": {
+        "get": {
+            "$ref":"../components/post.json#/search"
+        }
+    },
+    "pagination": {
+        "get": {
+            "$ref": "../components/post.json#/pagination"
+        }
+    },
+    "paginationClass": {
+        "get": {
+            "$ref": "../components/post.json#/paginationClass"
+        }
+    }
+    
+}
