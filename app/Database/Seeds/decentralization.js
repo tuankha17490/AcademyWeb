@@ -171,7 +171,7 @@ exports.seed = async function (knex) {
   await ModeratorRole('Users', ['Create', 'GetList','UpdateMyUser', 'Search', 'Update'])
   await ModeratorRole('Class', ['Read', 'JoinClass','GetList', 'Search'])
   await ModeratorRole('Subject', ['Read', 'GetList', 'Search'])
-  await ModeratorRole('Post', ['Read'])
+  await ModeratorRole('Post', ['Read', 'GetList', 'Search'])
 
   // Deletes ALL existing entries
   await knex('Role_Permission').del();

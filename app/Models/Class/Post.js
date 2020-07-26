@@ -32,7 +32,7 @@ export default class Post extends Model {
     static get jsonSchema() {
         return {
             type: 'object',
-            required: ['Name', 'Detail'],
+            required: ['Title', 'Content'],
             properties: {
                 ID: {
                     type: 'integer'

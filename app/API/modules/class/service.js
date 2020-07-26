@@ -209,7 +209,6 @@ export default class ClassService extends BaseServices {
     async updateById(req, id) {
         try {
             const data = req.body
-            
             if(data.TeacherID != undefined) {
                 if (!(Number(data.TeacherID) === data.TeacherID)) {
                     if (validator.isNumeric(data.TeacherID)) {
@@ -220,7 +219,7 @@ export default class ClassService extends BaseServices {
                 }
                 const joinQuery = await this.respository.findAt(id, ['Class.ID', 'Class.Name'])
                 .withGraphJoined('users.roles').where('users:roles.Name', 'Teacher')
-                await UserClass.query().where({Class_Id: id, User_Id: joinQuery.users[0].ID}).patch({User_Id: data.TeacherID})
+                await UserClass.query().where({Class_Id: id, User_Id: joinQuery.users[0].ID}).patch({User_Id: data.TeacherID}) 
                 data.TeacherID = undefined
             }
             await this.respository.updateById(data, id)
@@ -232,7 +231,8 @@ export default class ClassService extends BaseServices {
 
     async getInforById(id,table) {
         try {
-            const data = await this.respository.findAt(id, ['ID', 'Name', 'Detail', 'Slug', 'StudentAmount', 'CurrenceAmount', 'PostAmount']).withGraphFetched(table)
+            const data = await this.respository
+            .findAt(id, ['ID', 'Name', 'Detail', 'Slug', 'StudentAmount', 'CurrenceAmount', 'PostAmount']).withGraphFetched(table)
             data.users = {}
             data.users.ID = data.subject.users[0].ID
             data.users.Name = data.subject.users[0].Name

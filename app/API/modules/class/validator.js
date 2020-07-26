@@ -1,5 +1,5 @@
 import BaseValidator from "../../core/Validator"
-export default class UserValidator extends BaseValidator {
+export default class ClassValidator extends BaseValidator {
     constructor() {
         super()
     }

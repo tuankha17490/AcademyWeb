@@ -170,6 +170,5 @@
         "/class/remove-student/{classID}&{studentID}": {
             "$ref": "./paths/class.json#/removeStudent"
         }
-
     }
 }

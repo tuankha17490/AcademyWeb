@@ -39,6 +39,62 @@ export default class BaseValidator {
             })
         }
     }
+    titleValidate(req, res) {
+        try {
+            if(req.body.Title == undefined) {
+                return res.status(200).json({
+                    status: 400,
+                    message: 'content is required'
+                })
+            }
+            if (!validator.isLength(req.body.Title, {
+                    min: 1,
+                    max: 255
+                })) {
+                return res.status(200).json({
+                    status: 400,
+                    error: 'title is invalid',
+                    message: 'title is too long or null'
+                })
+            }
+           
+            return true
+        } catch (error) {
+            return res.status(200).json({
+                status: 400,
+                message: 'Title error',
+                error: error.toString()
+            })
+        }
+    }
+    contentValidate(req, res) {
+        try {
+            if(req.body.Content == undefined) {
+                return res.status(200).json({
+                    status: 400,
+                    message: 'content is required'
+                })
+            }
+            if (!validator.isLength(req.body.Content, {
+                    min: 1,
+                    max: 255
+                })) {
+                return res.status(200).json({
+                    status: 400,
+                    error: 'content is invalid',
+                    message: 'content is too long or null'
+                })
+            }
+           
+            return true
+        } catch (error) {
+            return res.status(200).json({
+                status: 400,
+                message: 'content error',
+                error: error.toString()
+            })
+        }
+    }
     passwordValidate(req, res) {
         try {
             if(!validator.isLength(req.body.Password, {
