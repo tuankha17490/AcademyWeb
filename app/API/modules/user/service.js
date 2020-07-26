@@ -2,6 +2,7 @@ import UserRespository from "./respository"
 import BaseServices from '../../core/Service';
 import RoleRespository from "../roles/respository"
 import SubjectRespository from "../subject/respository"
+import UserClass from "../../../Models/Class/User_Class"
 import getSlug from "slugify"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
@@ -274,6 +275,12 @@ export default class UserService extends BaseServices {
             const id = req.params.id
             if (id == req.userData.ID) {
                 return response(403, 'error.cantDeleteYourself');
+            }
+            if(req.userData.Role == 'Teacher') {
+                const checkTeacher = await UserClass.query().where({User_Id: id})
+                if(checkTeacher) {
+                    throw 'error.AlreadyHasClass'
+                }
             }
             const result = await this.respository.deleteById(id);
             return response(200, 'Success !!!', result);

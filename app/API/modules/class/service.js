@@ -120,12 +120,14 @@ export default class ClassService extends BaseServices {
                 subject: true,
                 users: true
             }, column)
-            data.forEach(element => {
-                // element.Subject = element.subject.Name
-                element.TeacherName = element.users[0].Name
-                element.users = undefined
-                // element.subject = undefined
-            });
+            if (data) {
+                data.forEach(element => {
+                    // element.Subject = element.subject.Name
+                    element.TeacherName = element.users[0].Name
+                    element.users = undefined
+                    // element.subject = undefined
+                });
+            }
             return {
                 status: 200,
                 message: 'Success !!!',
@@ -167,6 +169,20 @@ export default class ClassService extends BaseServices {
     }
     async joinClass(req) {
         try {
+            if (!(Number(req.body.classID) === req.body.classID)) {
+                if (validator.isNumeric(req.body.classID)) {
+                    req.body.classID = Number(req.body.classID)
+                } else {
+                    throw 'classID must be numberic'
+                }
+            }
+            if (!(Number(req.body.studentID) === req.body.studentID)) {
+                if (validator.isNumeric(req.body.studentID)) {
+                    req.body.studentID = Number(req.body.studentID)
+                } else {
+                    throw 'studentID must be numberic'
+                }
+            }
             const Class = await this.respository.findAt(req.body.classID)
             if (Class.StudentAmount <= Class.CurrenceAmount) {
                 throw 'error.ClassIsFull'
@@ -175,7 +191,7 @@ export default class ClassService extends BaseServices {
                 Class_Id: req.body.classID,
                 User_Id: req.body.studentID
             })
-            if (checkUserClass) {
+            if (checkUserClass.length > 0) {
                 throw 'error.AlreadyInClass'
             }
             await UserClass.query().insert({
@@ -209,7 +225,7 @@ export default class ClassService extends BaseServices {
     async updateById(req, id) {
         try {
             const data = req.body
-            if(data.TeacherID != undefined) {
+            if (data.TeacherID != undefined) {
                 if (!(Number(data.TeacherID) === data.TeacherID)) {
                     if (validator.isNumeric(data.TeacherID)) {
                         data.TeacherID = Number(data.TeacherID)
@@ -218,8 +234,13 @@ export default class ClassService extends BaseServices {
                     }
                 }
                 const joinQuery = await this.respository.findAt(id, ['Class.ID', 'Class.Name'])
-                .withGraphJoined('users.roles').where('users:roles.Name', 'Teacher')
-                await UserClass.query().where({Class_Id: id, User_Id: joinQuery.users[0].ID}).patch({User_Id: data.TeacherID}) 
+                    .withGraphJoined('users.roles').where('users:roles.Name', 'Teacher')
+                await UserClass.query().where({
+                    Class_Id: id,
+                    User_Id: joinQuery.users[0].ID
+                }).patch({
+                    User_Id: data.TeacherID
+                })
                 data.TeacherID = undefined
             }
             await this.respository.updateById(data, id)
@@ -229,14 +250,16 @@ export default class ClassService extends BaseServices {
         }
     }
 
-    async getInforById(id,table) {
+    async getInforById(id, table) {
         try {
             const data = await this.respository
-            .findAt(id, ['ID', 'Name', 'Detail', 'Slug', 'StudentAmount', 'CurrenceAmount', 'PostAmount']).withGraphFetched(table)
-            data.users = {}
-            data.users.ID = data.subject.users[0].ID
-            data.users.Name = data.subject.users[0].Name
-            data.subject.users = undefined
+                .findAt(id, ['ID', 'Name', 'Detail', 'Slug', 'StudentAmount', 'CurrenceAmount', 'PostAmount']).withGraphFetched(table)
+            if (data) {
+                data.users = {}
+                data.users.ID = data.subject.users[0].ID
+                data.users.Name = data.subject.users[0].Name
+                data.subject.users = undefined
+            }
             return response(200, 'Success !!!', data);
         } catch (error) {
             return response(400, error.toString())

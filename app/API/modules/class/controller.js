@@ -11,7 +11,7 @@ export default class ClassController extends BaseController {
         return this.service.search(data,page, limit, ['Name'],['ID', 'Name', 'Detail', 'StudentAmount', 'CurrenceAmount','PostAmount','Slug'])
     }
     getListOffSet(page, limit) {
-        return this.service.getListOffSet(page, limit,['ID', 'Name', 'Detail', 'StudentAmount','CurrenceAmount','PostAmount', 'Slug'])
+        return this.service.getListOffSet(page, limit,['Class.ID', 'Class.Name', 'Class.Detail', 'Class.StudentAmount','Class.CurrenceAmount','Class.PostAmount', 'Class.Slug'])
     }
     getInforById(id) {
         return this.service.getInforById(id, 'subject.users');
