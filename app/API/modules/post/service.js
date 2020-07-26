@@ -79,7 +79,14 @@ export default class PostService extends BaseServices {
             if (offset > count) {
                 throw 'Offset can not be greater than the number of data'
             }
-            const data = await this.respository.listOffSet(offset, limit, column).joinRelated('[class, users]').where('class.ID', classID)
+            const data = await this.respository.listOffSet(offset, limit, column).withGraphJoined('[class, users]').where('class.ID', classID)
+            if(data.length > 0) {
+                data.forEach(element => {
+                    element.users.Password = undefined
+                    element.ClassName = element.class.Name
+                    element.class = undefined
+                });
+            }
             return {
                 status: 200,
                 message: 'Success !!!',
