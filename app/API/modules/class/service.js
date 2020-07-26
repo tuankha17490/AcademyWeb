@@ -261,12 +261,12 @@ export default class ClassService extends BaseServices {
         try {
             const data = await this.respository
                 .findAt(id, ['Class.*']).withGraphJoined(table)
-            // if (data) {
-            //     data.users = {}
-            //     data.users.ID = data.subject.users[0].ID
-            //     data.users.Name = data.subject.users[0].Name
-            //     data.subject.users = undefined
-            // }
+            if (data) {
+                data.users = {}
+                data.users.ID = data.subject.users[0].ID
+                data.users.Name = data.subject.users[0].Name
+                data.subject.users = undefined
+            }
             return response(200, 'Success !!!', data);
         } catch (error) {
             return response(400, error.toString())
