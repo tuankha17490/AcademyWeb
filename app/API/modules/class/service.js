@@ -214,9 +214,13 @@ export default class ClassService extends BaseServices {
             const {
                 studentID
             } = req.params
-            await UserClass.query().delete().where({
-                Class_Id: classID
-            }).whereIn('User_Id', studentID)
+            console.log('assadasdasdasdasdsa',studentID[0]);
+            for (let i = 0; i < studentID.length; i++) {
+                await UserClass.query().delete().where({
+                    Class_Id: classID,
+                    User_Id: studentID[i]
+                })
+            }
             return response(200, 'Success !!!')
         } catch (error) {
             return response(400, error.toString())
@@ -256,16 +260,18 @@ export default class ClassService extends BaseServices {
     async getInforById(id, table) {
         try {
             const data = await this.respository
-                .findAt(id, ['ID', 'Name', 'Detail', 'Slug', 'StudentAmount', 'CurrenceAmount', 'PostAmount']).withGraphFetched(table)
-            if (data) {
-                data.users = {}
-                data.users.ID = data.subject.users[0].ID
-                data.users.Name = data.subject.users[0].Name
-                data.subject.users = undefined
-            }
+                .findAt(id, ['Class.*']).withGraphJoined(table)
+            // if (data) {
+            //     data.users = {}
+            //     data.users.ID = data.subject.users[0].ID
+            //     data.users.Name = data.subject.users[0].Name
+            //     data.subject.users = undefined
+            // }
             return response(200, 'Success !!!', data);
         } catch (error) {
             return response(400, error.toString())
         }
     }
+
+ 
 }

@@ -59,6 +59,26 @@ export default class PostService extends BaseServices {
             return response(400, error.toString())
         }
     }
+    async getListOffSetClass(classID,writerID, page, limit, column) {
+        try {
+            const count = await this.respository.tableQuery().joinRelated('[class, users]').where('class.ID', classID)
+            .where('users.ID', writerID)
+            const offset = (page - 1) * limit
+            if (offset > count) {
+                throw 'Offset can not be greater than the number of data'
+            }
+            const data = await this.respository.listOffSet(offset, limit, column).joinRelated('[class, users]').where('class.ID', classID)
+            .where('users.ID', writerID)
+            return {
+                status: 200,
+                message: 'Success !!!',
+                totalRow: count.length,
+                data
+            }
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
     async search(query, page, limit, searchBy = [], column = ['*']) {
         try {
             for (let i = 0; i < searchBy.length; i++) {

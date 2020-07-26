@@ -28,4 +28,5 @@ export default class ClassController extends BaseController {
     removeStudent(req) {
         return this.service.removeStudent(req)
     }
+   
 }

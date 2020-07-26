@@ -27,6 +27,17 @@ router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
     }
 })
 
+router.get('/:classID/:writerID/:page&:limit',authorization,permission.GetList, (req, res) => {
+    try {
+        console.log('asdasd');
+        controller.getListOffSetClass(req.params.classID,req.params.writerID,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_GET_USER_LIST_PAGINATION');
+        return res.status(200).json(error)
+    }
+})
+
+
 router.get('/search/:page&:limit',authorization,permission.Search, (req, res) => {
     try {
         controller.search(req.query.data,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
@@ -53,7 +64,6 @@ router.put('/:id',authorization,permission.Update,validator.updateTask, (req, re
     }
    
 })
-
 
 router.delete('/:id',authorization,permission.Delete, (req, res) => {
     try {

@@ -42,6 +42,8 @@ router.get('/teacher/:subject', (req, res) => {
     }
 })
 
+
+
 router.get('/:page&:limit',authorization,permission.GetList, (req, res) => {
     try {
         controller.getListOffSet(req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
