@@ -75,7 +75,7 @@ router.get('/:id',authorization,permission.Read, (req, res) => {
 })
 
 
-router.put('/:id',authorization,permission.Update,validator.updateTask, (req, res) => {
+router.put('/:id',validator.updateTask, (req, res) => {
     try {
         controller.updateById(req, req.params.id).then(result => {return res.status(201).json(result)})
     } catch (error) {

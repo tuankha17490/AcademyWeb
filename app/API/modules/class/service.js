@@ -225,6 +225,11 @@ export default class ClassService extends BaseServices {
     async updateById(req, id) {
         try {
             const data = req.body
+            const joinQuery = await this.respository.findAt(id, ['Class.*'])
+                    .withGraphJoined('users.roles').where('users:roles.Name', 'Teacher')
+            if(joinQuery.CurrenceAmount > data.StudentAmount) {
+                throw 'error.MaxStudentMustBeGreaterThanCurrence'
+            }
             if (data.TeacherID != undefined) {
                 if (!(Number(data.TeacherID) === data.TeacherID)) {
                     if (validator.isNumeric(data.TeacherID)) {
@@ -233,8 +238,6 @@ export default class ClassService extends BaseServices {
                         throw 'TeacherID must be numberic'
                     }
                 }
-                const joinQuery = await this.respository.findAt(id, ['Class.ID', 'Class.Name'])
-                    .withGraphJoined('users.roles').where('users:roles.Name', 'Teacher')
                 await UserClass.query().where({
                     Class_Id: id,
                     User_Id: joinQuery.users[0].ID
