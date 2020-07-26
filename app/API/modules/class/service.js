@@ -4,7 +4,9 @@ import UserClass from "../../../Models/Class/User_Class"
 import BaseServices from '../../core/Service';
 import getSlug from "slugify"
 import Class from "../../../Models/Class/Class"
-import {raw} from "objection"
+import {
+    raw
+} from "objection"
 import response from "../../../Util/Response"
 import validator from "validator"
 
@@ -65,11 +67,14 @@ export default class ClassService extends BaseServices {
             if (offset > count) {
                 throw 'Offset can not be greater than the number of data'
             }
-            const data = await this.respository.listOffSet(offset, limit, column).withGraphJoined('[subject, users]').where('subject.Name', req.params.subject)
-            data.forEach(element => {
-                element.TeacherName = element.users[0].Name
-                element.users = undefined
-            });
+            const data = await this.respository.listOffSet(offset, limit, column)
+            .withGraphJoined('[subject, users.roles]').where('subject.Name', req.params.subject).where('users:roles.Name', 'Teacher')
+            if (data) {
+                data.forEach(element => {
+                    element.TeacherName = element.users[0].Name
+                    element.users = undefined
+                });
+            }
             return {
                 status: 200,
                 message: 'Success !!!',
@@ -86,9 +91,8 @@ export default class ClassService extends BaseServices {
                 .where('subject.Name', subject)
                 .where('Class.Name', 'like', `%${query}%`).count('subject.ID as CNT');
             const offset = (page - 1) * limit
-            const data = await this.respository.listOffSet(offset, limit, column).withGraphJoined('[subject, users]')
-                .where('subject.Name', subject).where('Class.Name', 'like', `%${query}%`)
-
+            const data = await this.respository.listOffSet(offset, limit, column).withGraphJoined('[subject, users.roles]')
+                .where('subject.Name', subject).where('users:roles.Name', 'Teacher').where('Class.Name', 'like', `%${query}%`)
             if (data.length != 0) {
                 data.forEach(element => {
                     element.TeacherName = element.users[0].Name
@@ -220,7 +224,11 @@ export default class ClassService extends BaseServices {
                 Class_Id: classID,
                 User_Id: studentID
             }).delete()
-            await Class.query().where({ID: classID}).patch({CurrenceAmount: raw('CurrenceAmount - 1')})
+            await Class.query().where({
+                ID: classID
+            }).patch({
+                CurrenceAmount: raw('CurrenceAmount - 1')
+            })
             return response(200, 'Success !!!')
         } catch (error) {
             return response(400, error.toString())
@@ -230,8 +238,8 @@ export default class ClassService extends BaseServices {
         try {
             const data = req.body
             const joinQuery = await this.respository.findAt(id, ['Class.*'])
-                    .withGraphJoined('users.roles').where('users:roles.Name', 'Teacher')
-            if(joinQuery.CurrenceAmount > data.StudentAmount) {
+                .withGraphJoined('users.roles').where('users:roles.Name', 'Teacher')
+            if (joinQuery.CurrenceAmount > data.StudentAmount) {
                 throw 'error.MaxStudentMustBeGreaterThanCurrence'
             }
             if (data.TeacherID != undefined) {
@@ -273,5 +281,5 @@ export default class ClassService extends BaseServices {
         }
     }
 
- 
+
 }

@@ -96,7 +96,7 @@ router.delete('/:id',authorization,permission.Delete, (req, res) => {
     }
 })
 
-router.delete('/remove-student/:classID&:studentID', (req, res) => {
+router.delete('/remove-student/:classID&:studentID',authorization,permission.RemoveStudent, (req, res) => {
     try {
         controller.removeStudent(req).then(result => {return res.status(200).json(result)})
     } catch (error) {

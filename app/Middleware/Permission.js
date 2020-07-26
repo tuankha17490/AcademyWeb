@@ -6,8 +6,11 @@ const Excute = async (req, res, method) => {
             Name: roleName
         })
         .withGraphFetched('permissions.[modules, methods]')
+        console.log('asdasdasdasd', module);
     const data = roleFetched[0].permissions
     for (let i = 0; i < data.length; i++) {
+        console.log('module',data[i].modules[0].Name);
+        console.log('method',data[i].methods[0].Name);
         if (data[i].modules[0].Name == module && data[i].methods[0].Name == method) {
             break
         }
@@ -65,6 +68,16 @@ export default class Permissions {
     }
     async UpdateMyUser(req, res, next) {
         const excute = await Excute(req, res, 'UpdateMyUser')
+        if(excute != true) return excute
+        next()
+    }
+    async AddStudent(req, res, next) {
+        const excute = await Excute(req, res, 'AddStudent')
+        if(excute != true) return excute
+        next()
+    }
+    async RemoveStudent(req, res, next) {
+        const excute = await Excute(req, res, 'RemoveStudent')
         if(excute != true) return excute
         next()
     }

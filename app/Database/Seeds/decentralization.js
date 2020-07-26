@@ -29,6 +29,10 @@ const methods = [{
   {
     ID: 8,
     Name: 'UpdateMyUser'
+  },
+  {
+    ID: 9,
+    Name: 'RemoveStudent'
   }
 ]
 
@@ -169,7 +173,7 @@ exports.seed = async function (knex) {
   await TeacherRole('Post', ['Read', 'Create', 'Update', 'Delete'])
 
   await ModeratorRole('Users', ['Create', 'GetList','UpdateMyUser', 'Search', 'Update'])
-  await ModeratorRole('Class', ['Read', 'JoinClass','GetList', 'Search'])
+  await ModeratorRole('Class', ['Read', 'JoinClass','GetList', 'Search', 'RemoveStudent'])
   await ModeratorRole('Subject', ['Read', 'GetList', 'Search'])
   await ModeratorRole('Post', ['Read', 'GetList', 'Search'])
 
