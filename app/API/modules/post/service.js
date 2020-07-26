@@ -130,12 +130,17 @@ export default class PostService extends BaseServices {
     }
     async getInforById(req) {
         try {
+            if(req.userData.Role == 'Student') {
+                const checkUser = await UserClass.query().where({User_Id: req.userData.ID, Class_Id: req.params.classID})
+                if(!checkUser) {
+                    throw 'error.MustBeJoinedToAccess'
+                }
+            }
             const id = req.params.id
             const data = await this.respository
                 .findAt(id, ['ID', 'Title', 'Content', 'created_at', 'updated_at']).withGraphFetched('[users,class]')
             if (data) {
-                data.WriterName = data.users.Name
-                data.users = undefined
+                data.users.Password = undefined
                 data.ClassName = data.class.Name
                 data.class = undefined
             }
