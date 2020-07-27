@@ -2,6 +2,8 @@ import PostRespository from "./respository"
 import BaseServices from '../../core/Service';
 import response from "../../../Util/Response";
 import UserClass from "../../../Models/Class/User_Class"
+import Class from "../../../Models/Class/Class"
+import {raw} from "objection"
 import validator from "validator";
 export default class PostService extends BaseServices {
     static _Instance;
@@ -156,6 +158,17 @@ export default class PostService extends BaseServices {
                 data.class = undefined
             }
             return response(200, 'Success !!!', data);
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+
+    async deleteById(id) {
+        try {
+            const data = await this.respository.findAt(id)
+            await Class.query().where({ID: data.Class_Id}).patch({PostAmount: raw('PostAmount - 1')})
+            await this.respository.deleteById(id);
+            return response(200, 'Success !!!');
         } catch (error) {
             return response(400, error.toString())
         }

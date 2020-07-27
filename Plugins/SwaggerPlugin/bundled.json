@@ -30,7 +30,7 @@
       "url": "https://academy-web.herokuapp.com/"
     },
     {
-      "url": "http://academy-web.herokuapp.com/"
+      "url": "http://localhost:3000/"
     }
   ],
   "tags": [

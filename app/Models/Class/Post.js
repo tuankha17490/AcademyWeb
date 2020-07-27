@@ -28,6 +28,7 @@ export default class Post extends Model {
     async $afterInsert() {
        await Class.query().where({ID: this.Class_Id}).patch({PostAmount: raw('PostAmount + 1')})
     }
+   
     // To do validate 
     static get jsonSchema() {
         return {
