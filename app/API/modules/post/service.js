@@ -24,11 +24,16 @@ export default class PostService extends BaseServices {
                     throw 'Class ID must be numberic'
                 }
             }
-            data.User_Id = req.userData.ID
-            const checkUser = await UserClass.query().where({User_Id: req.userData.ID, Class_Id: data.Class_Id})
-            if(checkUser.length == 0) {
-                throw 'error.MustBeTeachingInClassToAccess'
+            if (req.userData.Role == 'Teacher') {
+                const checkUser = await UserClass.query().where({
+                    User_Id: req.userData.ID,
+                    Class_Id: data.Class_Id
+                })
+                if (checkUser.length == 0) {
+                    throw 'error.MustBeTeachingInClassToAccess'
+                }
             }
+            data.User_Id = req.userData.ID
             await this.respository.create(data)
             return response(201, 'Success !!!')
 
@@ -65,9 +70,12 @@ export default class PostService extends BaseServices {
     }
     async getListOffSetClass(req, column) {
         try {
-            if(req.userData.Role == 'Student') {
-                const checkUser = await UserClass.query().where({User_Id: req.userData.ID, Class_Id: req.params.classID})
-                if(!checkUser) {
+            if (req.userData.Role == 'Student') {
+                const checkUser = await UserClass.query().where({
+                    User_Id: req.userData.ID,
+                    Class_Id: req.params.classID
+                })
+                if (!checkUser) {
                     throw 'error.MustBeJoinedToAccess'
                 }
             }
@@ -80,7 +88,7 @@ export default class PostService extends BaseServices {
                 throw 'Offset can not be greater than the number of data'
             }
             const data = await this.respository.listOffSet(offset, limit, column).withGraphJoined('[class, users]').where('class.ID', classID)
-            if(data.length > 0) {
+            if (data.length > 0) {
                 data.forEach(element => {
                     element.users.Password = undefined
                     element.ClassName = element.class.Name
@@ -130,9 +138,12 @@ export default class PostService extends BaseServices {
     }
     async getInforById(req) {
         try {
-            if(req.userData.Role == 'Student') {
-                const checkUser = await UserClass.query().where({User_Id: req.userData.ID, Class_Id: req.params.classID})
-                if(!checkUser) {
+            if (req.userData.Role == 'Student') {
+                const checkUser = await UserClass.query().where({
+                    User_Id: req.userData.ID,
+                    Class_Id: req.params.classID
+                })
+                if (!checkUser) {
                     throw 'error.MustBeJoinedToAccess'
                 }
             }
