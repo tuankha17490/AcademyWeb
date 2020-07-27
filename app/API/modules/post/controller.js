@@ -16,4 +16,7 @@ export default class PostController extends BaseController {
     getListOffSetClass(req) {
         return this.service.getListOffSetClass(req,['Post.ID', 'Post.Title', 'Post.Content', 'Post.created_at', 'Post.updated_at'])
     }
+    uploadImage(req) {
+        return this.service.uploadImage(req)
+    }
 }

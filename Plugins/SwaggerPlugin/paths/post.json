@@ -32,6 +32,11 @@
         "get": {
             "$ref": "../components/post.json#/paginationClass"
         }
+    },
+    "uploadImage": {
+        "put": {
+            "$ref":"../components/post.json#/uploadImage"
+        }
     }
     
 }

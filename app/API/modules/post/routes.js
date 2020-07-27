@@ -4,6 +4,7 @@ import PostController from "./controller"
 import authorization from "../../../Middleware/Authorization"
 import PostValidator from "./validator"
 import UserPermission from "../../../Middleware/Permission"
+import multer from "../../../Config/multer"
 const controller = new PostController()
 const validator = new PostValidator()
 const permission = new UserPermission()
@@ -13,6 +14,16 @@ router.post('/create',authorization,permission.setModulePost,permission.Create,v
         controller.create(req).then(result => {return res.status(201).json(result)})
     } catch (error) {
         console.log('CONTROLLER_CREATE_USER')
+        return res.status(200).json(error)
+    }
+})
+
+
+router.put('/upload-image',authorization,permission.setModuleUsers,permission.UpdateMyUser,multer.single('image'), (req, res) => {
+    try {
+        controller.uploadImage(req).then(result => {return res.status(201).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_UPLOAD_AVATAR')
         return res.status(200).json(error)
     }
 })

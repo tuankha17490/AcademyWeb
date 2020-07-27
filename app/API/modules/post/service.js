@@ -2,9 +2,12 @@ import PostRespository from "./respository"
 import BaseServices from '../../core/Service';
 import response from "../../../Util/Response";
 import UserClass from "../../../Models/Class/User_Class"
-import Class from "../../../Models/Class/Class"
-import {raw} from "objection"
+import Post from "../../../Models/Class/Post"
 import validator from "validator";
+import fs from "fs"
+import {
+    uploads
+} from "../../../Config/cloundinary"
 export default class PostService extends BaseServices {
     static _Instance;
     static Instance() {
@@ -165,10 +168,23 @@ export default class PostService extends BaseServices {
 
     async deleteById(id) {
         try {
-            const data = await this.respository.findAt(id)
-            await Class.query().where({ID: data.Class_Id}).patch({PostAmount: raw('PostAmount - 1')})
-            await this.respository.deleteById(id);
-            return response(200, 'Success !!!');
+            const post = await Post.query().findById(id)
+            const result = await post.$query().deleteById(id)
+            return response(200, 'Success !!!',result);
+        } catch (error) {
+            return response(400, error.toString())
+        }
+    }
+    async uploadImage(req) {
+        try {
+            const file = req.file
+            const image = await uploads(file.path, 'Post');
+            const Avatar = image.url
+            // await this.respository.updateById({
+            //     Avatar
+            // }, id)
+            await fs.unlinkSync(file.path)
+            return response(200, 'Success !!!', Avatar)
         } catch (error) {
             return response(400, error.toString())
         }

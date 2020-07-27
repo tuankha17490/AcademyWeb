@@ -189,6 +189,9 @@
         },
         "/post/{classID}/{writerID}/{page}&{limit}": {
             "$ref": "./paths/post.json#/paginationClass"
+        },
+        "/post/upload-image": {
+            "$ref": "./paths/post.json#/uploadImage"
         }
     }
 }

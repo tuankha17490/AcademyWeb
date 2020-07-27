@@ -166,6 +166,9 @@
                             "Content": {
                                 "type": "string"
                             },
+                            "imageURL": {
+                                "type": "string"
+                            },
                             "Class_Id": {
                                 "type": "integer"
                             }
@@ -378,5 +381,48 @@
                 "content": {}
             }
         }
-    }
+    },
+    "uploadImage": {
+        "tags": [
+            "post"
+        ],
+        "summary": "Upload image of post",
+        "description": "Upload image of post.",
+        "operationId": "uploadImage",
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "requestBody": {
+            "description": "Upload post object",
+            "content": {
+                "multipart/form-data": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "image": {
+                                "type": "string",
+                                "format": "binary"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "400": {
+                "description": "Invalid post supplied",
+                "content": {}
+            },
+            "404": {
+                "description": "file not found",
+                "content": {}
+            },
+            "401": {
+                "description": "Access token is missing or invalid",
+                "content": {}
+            }
+        }
+    },
 }

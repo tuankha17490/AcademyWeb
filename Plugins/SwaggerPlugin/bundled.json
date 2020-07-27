@@ -30,7 +30,7 @@
       "url": "https://academy-web.herokuapp.com/"
     },
     {
-      "url": "http://localhost:3000/"
+      "url": "http://academy-web.herokuapp.com/"
     }
   ],
   "tags": [
@@ -2647,6 +2647,9 @@
                   "Content": {
                     "type": "string"
                   },
+                  "imageURL": {
+                    "type": "string"
+                  },
                   "Class_Id": {
                     "type": "integer"
                   }
@@ -2976,6 +2979,51 @@
           },
           "404": {
             "description": "post not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/post/upload-image": {
+      "put": {
+        "tags": [
+          "post"
+        ],
+        "summary": "Upload image of post",
+        "description": "Upload image of post.",
+        "operationId": "uploadImage",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Upload post object",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid post supplied",
+            "content": {}
+          },
+          "401": {
+            "description": "Access token is missing or invalid",
+            "content": {}
+          },
+          "404": {
+            "description": "file not found",
             "content": {}
           }
         }

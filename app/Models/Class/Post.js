@@ -25,6 +25,9 @@ export default class Post extends Model {
     async $beforeUpdate() {
         this.updated_at = new Date()
     }
+    async $afterDelete() {
+        await Class.query().where({ID: this.Class_Id}).patch({PostAmount: raw('PostAmount - 1')})
+    }
     async $afterInsert() {
        await Class.query().where({ID: this.Class_Id}).patch({PostAmount: raw('PostAmount + 1')})
     }
