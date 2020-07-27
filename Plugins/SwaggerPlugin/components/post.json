@@ -329,15 +329,6 @@
                 }
             },
             {
-                "name": "writerID",
-                "in": "path",
-                "description": "The id of user that needs to be fetched.",
-                "required": true,
-                "schema": {
-                    "type": "string"
-                }
-            },
-            {
                 "name": "page",
                 "in": "path",
                 "description": "The offset that needs to be fetched.",

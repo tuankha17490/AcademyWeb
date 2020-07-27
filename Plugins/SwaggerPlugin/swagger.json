@@ -187,7 +187,7 @@
         "/post/{page}&{limit}": {
             "$ref": "./paths/post.json#/pagination"
         },
-        "/post/{classID}/{writerID}/{page}&{limit}": {
+        "/post/{classID}/{page}&{limit}": {
             "$ref": "./paths/post.json#/paginationClass"
         },
         "/post/upload-image": {

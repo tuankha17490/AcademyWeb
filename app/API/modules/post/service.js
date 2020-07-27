@@ -21,6 +21,7 @@ export default class PostService extends BaseServices {
     }
     async create(req) {
         try {
+            console.log(req.body);
             const data = req.body
             if (!(Number(data.Class_Id) === data.Class_Id)) {
                 if (validator.isNumeric(data.Class_Id)) {
@@ -154,7 +155,7 @@ export default class PostService extends BaseServices {
             }
             const id = req.params.id
             const data = await this.respository
-                .findAt(id, ['ID', 'Title', 'Content', 'created_at', 'updated_at']).withGraphFetched('[users,class]')
+                .findAt(id, ['ID', 'Title', 'Content','imageURL', 'created_at', 'updated_at']).withGraphFetched('[users,class]')
             if (data) {
                 data.users.Password = undefined
                 data.ClassName = data.class.Name

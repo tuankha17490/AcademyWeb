@@ -2868,7 +2868,7 @@
         }
       }
     },
-    "/post/{classID}/{writerID}/{page}&{limit}": {
+    "/post/{classID}/{page}&{limit}": {
       "get": {
         "tags": [
           "post"
@@ -2886,15 +2886,6 @@
             "name": "classID",
             "in": "path",
             "description": "The id of class that needs to be fetched.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "writerID",
-            "in": "path",
-            "description": "The id of user that needs to be fetched.",
             "required": true,
             "schema": {
               "type": "string"
