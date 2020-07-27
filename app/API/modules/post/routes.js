@@ -26,6 +26,15 @@ router.get('/:page&:limit',authorization,permission.setModulePost,permission.Get
     }
 })
 
+router.get('/search/:page&:limit',authorization,permission.setModulePost,permission.Search, (req, res) => {
+    try {
+        controller.search(req.query.data,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
+    } catch (error) {
+        console.log('CONTROLLER_SEARCH_USER');
+        return res.status(200).json(error)
+    }
+})
+
 router.get('/:classID/:page&:limit',authorization, (req, res) => {
     try {
         controller.getListOffSetClass(req).then(result => {return res.status(200).json(result)})
@@ -36,14 +45,7 @@ router.get('/:classID/:page&:limit',authorization, (req, res) => {
 })
 
 
-router.get('/search/:page&:limit',authorization,permission.setModulePost,permission.Search, (req, res) => {
-    try {
-        controller.search(req.query.data,req.params.page,req.params.limit).then(result => {return res.status(200).json(result)})
-    } catch (error) {
-        console.log('CONTROLLER_SEARCH_USER');
-        return res.status(200).json(error)
-    }
-})
+
 router.get('/:id',authorization, (req, res) => {
     try {
         controller.getInforById(req).then(result =>{return res.status(200).json(result)})
