@@ -110,6 +110,8 @@ export default class UserService extends BaseServices {
                 throw 'error.EmailAlreadyRegister'
 
             }
+            if(param.Gender == "true") param.Gender = true
+            else param.Gender = false
             const Slug = getSlug(param.Name + ' ' + Date.now(), {
                 replacement: '.',
                 lower: true
